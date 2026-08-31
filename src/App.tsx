@@ -1,13 +1,15 @@
+
+import Login from "./components/pages/Login"
 import CardProducto from "./components/services/CardProducto"
-import ItemTablaProducto from "./components/services/ItemTablaProducto"
+
 
 
 
 function App() {
 
   return (
-    <CardProducto />
- 
+    
+ <Login />
  
     
   )

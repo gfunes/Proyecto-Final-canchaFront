@@ -11,7 +11,7 @@ const Administrador = () => {
             Panel de Administración
           </h1>
           <p className="text-zinc-500 text-sm">
-            Gestion Catálogo Productos disponibles.
+            Gestion Catálogo Productos
           </p>
         </div>
         <a
