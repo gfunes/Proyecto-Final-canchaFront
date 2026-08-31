@@ -1,5 +1,5 @@
 
-import Login from "./components/pages/Login"
+import Inicio from "./components/pages/Inicio"
 import CardProducto from "./components/services/CardProducto"
 
 
@@ -9,7 +9,7 @@ function App() {
 
   return (
     
- <Login />
+ <Inicio />
  
     
   )
