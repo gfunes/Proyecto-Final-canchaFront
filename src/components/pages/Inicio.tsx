@@ -10,7 +10,7 @@ const Inicio = () => {
             Catálogo de <span className="text-blue-500">Productos</span>
           </h1>
           <p className="text-zinc-400 mt-1 text-sm">
-            Explora nuestras soluciones tecnológicas personalizadas.
+            Reserva tu turno en nuestras canchas o adquiere nuestros productos
           </p>
         </div>
 
