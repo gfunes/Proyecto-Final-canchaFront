@@ -17,12 +17,12 @@ const CardProducto = () => {
       </div>
 
       {/* Cuerpo de la Card */}
-      <div className="p-5 flex flex-col flex-grow">
+      <div className="p-5 flex flex-col grow">
         <h3 className="text-xl font-bold text-zinc-100 mb-2 group-hover:text-blue-400 transition-colors">
           nombre
         </h3>
         
-        <p className="text-zinc-400 text-sm line-clamp-3 mb-4 flex-grow">
+        <p className="text-zinc-400 text-sm line-clamp-3 mb-4 grow">
           descripcion
         </p>
 
