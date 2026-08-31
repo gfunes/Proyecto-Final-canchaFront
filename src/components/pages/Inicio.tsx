@@ -1,4 +1,4 @@
-import CardProducto from "../services/CardProducto";
+import CardProducto from "../services/CardCancha";
 
 const Inicio = () => {
   return (
