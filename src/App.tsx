@@ -1,16 +1,12 @@
+import CardProducto from "./components/services/CardProducto"
 
 
 
 function App() {
 
   return (
-    <>
-      <div>
-        <p>
-          hola mundo
-        </p>
-      </div>
-    </>
+    <CardProducto />
+    
   )
 }
 export default App
