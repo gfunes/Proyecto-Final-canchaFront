@@ -1,6 +1,8 @@
-
-import Inicio from "./components/pages/Inicio"
 import CardProducto from "./components/services/CardProducto"
+import Footer from "./components/shared/Footer"
+import Menu from "./components/shared/Menu"
+
+
 
 
 
@@ -8,8 +10,12 @@ import CardProducto from "./components/services/CardProducto"
 function App() {
 
   return (
-    
- <Inicio />
+  <>
+  <Menu />
+  <CardProducto/>
+  <Footer/>
+  </>  
+ 
  
     
   )

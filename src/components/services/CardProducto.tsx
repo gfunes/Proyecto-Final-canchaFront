@@ -1,48 +1,65 @@
-const CardProducto = () => {
+import React from 'react';
 
+const CanchaCard = ({ 
+  //id = 1,
+  categoria = "Fútbol 5", 
+  imagen = "https://images.unsplash.com/photo-1579952363873-27f3bade9f55?auto=format&fit=crop&w=600&q=80", 
+  nombre = "El Monumentalito", 
+  descripcion = "Cancha de césped sintético de última generación. Ideal para partidos rápidos con amigos. Incluye vestuarios y estacionamiento.", 
+  precio = "15.000",
+ // onVerTurnos // Función callback para manejar el click
+}) => {
   return (
-    <article className="group bg-zinc-900 rounded-xl overflow-hidden border border-zinc-800 hover:border-blue-500/50 transition-all duration-300 shadow-lg hover:shadow-blue-500/10 flex flex-col h-full">
-      {/* Contenedor de Imagen */}
-      <div className="relative h-48 overflow-hidden">
+    <div className="w-full max-w-sm bg-white rounded-2xl shadow-md overflow-hidden border-b-4 border-green-600 hover:shadow-2xl transition-shadow duration-300 relative flex flex-col">
+      
+      {/* Contenedor Superior: Imagen y Categoría */}
+      <div className="relative h-52 w-full bg-slate-200">
         <img
-          src=''
-          alt=''
-          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+          src={imagen}
+          alt={`Imagen de la cancha ${nombre}`}
+          className="w-full h-full object-cover"
         />
-        <div className="absolute top-2 right-2">
-          <span className="bg-zinc-950/80 backdrop-blur-sm text-blue-400 text-xs font-bold px-2 py-1 rounded border border-zinc-700 uppercase tracking-wider">
-            categoria
-          </span>
+        <div className="absolute top-3 right-3 bg-gradient-to-r from-green-500 to-green-700 text-white text-xs font-black px-4 py-1.5 rounded-full shadow-lg uppercase tracking-widest border border-white/20">
+          {categoria}
         </div>
       </div>
 
-      {/* Cuerpo de la Card */}
+      {/* Contenedor Inferior: Textos y Acciones */}
       <div className="p-5 flex flex-col grow">
-        <h3 className="text-xl font-bold text-zinc-100 mb-2 group-hover:text-blue-400 transition-colors">
-          nombre
+        
+        <h3 className="text-2xl font-black text-slate-800 uppercase italic tracking-tight mb-2">
+          {nombre}
         </h3>
         
-        <p className="text-zinc-400 text-sm line-clamp-3 mb-4 grow">
-          descripcion
+        <p className="text-slate-600 text-sm mb-6 line-clamp-3">
+          {descripcion}
         </p>
 
-        <div className="pt-4 border-t border-zinc-800 mt-auto">
-          <div className="flex items-center justify-between gap-2">
-            <div>
-              <p className="text-xs text-zinc-500 uppercase font-semibold">Precio</p>
-              <p className="text-lg font-mono text-zinc-200">
-                precio
-              </p>
-            </div>
-            
-            <button className="bg-blue-600 hover:bg-blue-500 text-white px-4 py-2 rounded-lg text-sm font-bold transition-colors shadow-md shadow-blue-900/20 active:scale-95">
-              Ver detalle
-            </button>
+        {/* Borde inferior (Precio y Botón) */}
+        <div className="flex justify-between items-end border-t-2 border-dashed border-green-200 pt-4 mt-auto">
+          
+          <div>
+            <span className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">
+              Precio / Hora
+            </span>
+            <span className="text-2xl font-black text-green-600 flex items-start">
+              <span className="text-lg mt-1 mr-1">$</span>
+              {precio}
+            </span>
           </div>
+
+          {/* Botón Ver Turnos */}
+          <button 
+            onClick={() => onVerTurnos(id)}
+            className="bg-slate-900 hover:bg-green-600 text-white font-bold py-2.5 px-3 rounded-xl shadow-md transition-colors duration-300 transform active:scale-95 uppercase text-[10px] tracking-wider text-center max-w-[130px]"
+          >
+            Ver turnos disponibles
+          </button>
+          
         </div>
       </div>
-    </article>
+    </div>
   );
 };
 
-export default CardProducto;
+export default CanchaCard;
