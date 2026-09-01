@@ -9,9 +9,7 @@ const Formulario = () => {
     // setValue,
   } = useForm();
 
-  const onSubmit = () => {
-    
-  };
+  const onSubmit = () => {};
 
   // Clase utilitaria para inputs
   const inputClass = (hasError: boolean) => `
@@ -24,11 +22,10 @@ const Formulario = () => {
     <section className="max-w-4xl mx-auto animate-fadeIn">
       <div className="bg-slate-900 p-8 rounded-2xl border border-slate-900 shadow-xl my-3">
         <h1 className="text-3xl text-right font-bold text-white mb-8 border-b border-slate-500 pb-4">
-            Formulario Productos
+          Formulario Productos
         </h1>
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {/* Nombre del Servicio */}
             <div className="md:col-span-2">
               <label className="block text-sm font-medium text-slate-500 mb-2">
                 Nombre del Producto*
@@ -36,19 +33,17 @@ const Formulario = () => {
               <input
                 type="text"
                 placeholder="Ej: Cancha techada 1"
-                className={inputClass(!!errors.nombreServicio)}
-                {...register("nombreServicio", {
+                className={inputClass(!!errors.nombreProducto)}
+                {...register("nombreProducto", {
                   required: "El nombre es obligatorio",
                   minLength: { value: 5, message: "Mínimo 5 caracteres" },
                   maxLength: { value: 100, message: "Máximo 100 caracteres" },
                 })}
               />
               <p className="text-red-500 text-xs mt-1 italic">
-                {/* {errors.nombreServicio?.message} */}
+                {errors.nombreProducto?.message}
               </p>
             </div>
-
-            {/* Precio */}
             <div>
               <label className="block text-sm font-medium text-slate-500 mb-2">
                 Precio*
@@ -64,11 +59,9 @@ const Formulario = () => {
                 })}
               />
               <p className="text-red-500 text-xs mt-1 italic">
-                {/* {errors.precio?.message} */}
+                {errors.precio?.message}
               </p>
             </div>
-
-            {/* Categoría */}
             <div>
               <label className="block text-sm font-medium text-slate-500 mb-2">
                 Categoría*
@@ -90,11 +83,9 @@ const Formulario = () => {
                 </option>
               </select>
               <p className="text-red-500 text-xs mt-1 italic">
-                {/* {errors.categoria?.message} */}
+                {errors.categoria?.message}
               </p>
             </div>
-
-            {/* URL Imagen */}
             <div className="md:col-span-2">
               <label className="block text-sm font-medium text-slate-500 mb-2">
                 URL de Imagen*
@@ -113,11 +104,10 @@ const Formulario = () => {
                 })}
               />
               <p className="text-red-500 text-xs mt-1 italic">
-                {/* {errors.imagen?.message} */}
+                {errors.imagen?.message}
               </p>
             </div>
 
-            {/* Descripción */}
             <div className="md:col-span-2">
               <label className="block text-sm font-medium text-slate-500 mb-2">
                 Descripción*
@@ -133,11 +123,11 @@ const Formulario = () => {
                 })}
               />
               <p className="text-red-500 text-xs mt-1 italic">
-                {/* {errors.descripcion?.message} */}
+                {errors.descripcion?.message}
               </p>
             </div>
           </div>
-
+          
           <div className="pt-4">
             <button
               type="submit"
