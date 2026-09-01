@@ -18,18 +18,22 @@ const Error404 = () => {
         </div>
 
         {/* Botón de Acción Principal */}
-        <div className="mb-8">
+        <div className="bg-green-500 hover:bg-green-600 text-white font-bold px-6 py-3 rounded-xl shadow-lg transition-all duration-300 inline-flex items-center gap-2">
           <span>Volver a la Cancha Principal</span>
         </div>
 
         {/* Imagen Ilustrativa (La cancha en reparación con su texto integrado) */}
         <div className="w-full flex justify-center my-4">
           <img
-            src="https://res.cloudinary.com/ddhyg9uee/image/upload/v1788222462/Gemini_Generated_Image_wwkjuxwwkjuxwwkj.jpg_xeyyfb.jpg"
+            src="https://res.cloudinary.com/ddhyg9uee/image/upload/v1788223015/error404.jpg_zkrrjt.jpg"
             alt="Cancha de fútbol en reparación - Error 404"
-            className="max-w-full h-auto rounded-xl shadow-md border border-[#64748B]/10"
+            className=""
           />
         </div>
+        <p className="text-[#64748B] text-base">
+          ¡El árbitro detuvo el juego! Esta sección del campo está temporalmente
+          fuera de servicio.
+        </p>
 
         {/* Pie de página institucional */}
         <div className="mt-8 text-center text-xs text-[#64748B] border-t border-[#64748B]/20 pt-4 w-full">
