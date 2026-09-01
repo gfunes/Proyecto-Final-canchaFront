@@ -4,14 +4,14 @@ import Formulario from "./components/pages/Formulario"
 // import Login from "./components/pages/Login"
 import Footer from "./components/shared/Footer"
 import Menu from "./components/shared/Menu"
+import Error404 from "./components/pages/Error404"
 
 function App() {
 
   return (
   <>
   <Menu />
-  <Administrador/>
-  <Formulario/>
+  <Error404/>
   <Footer/>
   </>  
  
