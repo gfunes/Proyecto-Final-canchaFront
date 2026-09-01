@@ -12,8 +12,8 @@ const Login = () => {
   };
 
   return (
-    <section className="flex grow items-center justify-center py-12 px-4 sm:px-6 lg:px-8 animate-fadeIn">
-      <div className="max-w-md w-full space-y-8 bg-zinc-900/50 p-8 rounded-2xl border border-zinc-800 shadow-2xl backdrop-blur-sm">
+    <section className="flex grow items-center bg-slate-500 justify-center py-12 px-4 sm:px-6 lg:px-8 animate-fadeIn">
+      <div className="max-w-md w-full space-y-8 bg-slate-800 p-8 rounded-2xl border border-zinc-800 shadow-2xl backdrop-blur-sm">
         <div>
           <h2 className="mt-6 text-center text-3xl font-extrabold text-white">
             Iniciar Sesión
@@ -38,7 +38,7 @@ const Login = () => {
                 id="email"
                 type="email"
                 autoComplete="email"
-                className={`w-full px-4 py-3 bg-zinc-950 border ${errors.email ? "border-red-500" : "border-zinc-700"} rounded-lg text-zinc-100 focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition-all`}
+                className={`w-full px-4 py-3 bg-zinc-950 border ${errors.email ? "border-red-500" : "border-green-600"} rounded-lg text-zinc-100 focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition-all`}
                 placeholder="correo@dominio.com"
                 {...register("email", {
                   required: "El email es obligatorio",
@@ -68,7 +68,7 @@ const Login = () => {
                 id="password"
                 type="password"
                 autoComplete="current-password"
-                className={`w-full px-4 py-3 bg-zinc-950 border ${errors.password ? "border-red-500" : "border-zinc-700"} rounded-lg text-zinc-100 focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition-all`}
+                className={`w-full px-4 py-3 bg-zinc-950 border ${errors.password ? "border-red-500" : "border-green-600"} rounded-lg text-zinc-100 focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition-all`}
                 placeholder="••••••••"
                 {...register("password", {
                   required: "La contraseña es obligatoria",
@@ -91,7 +91,7 @@ const Login = () => {
           <div>
             <button
               type="submit"
-              className="group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-bold rounded-lg text-white bg-blue-600 hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-zinc-950 focus:ring-blue-500 transition-all active:scale-95"
+              className="group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-bold rounded-lg text-white bg-green-500 hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-zinc-950 focus:ring-blue-500 transition-all active:scale-95"
             >
               Ingresar al sistema
             </button>
