@@ -5,6 +5,7 @@ import Formulario from "./components/pages/Formulario"
 import Footer from "./components/shared/Footer"
 import Menu from "./components/shared/Menu"
 import Error404 from "./components/pages/Error404"
+import Login from "./components/pages/Login"
 
 function App() {
 
