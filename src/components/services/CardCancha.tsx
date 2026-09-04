@@ -37,24 +37,13 @@ const CardCancha = ({ cancha, onVerTurnos }) => {
         </p>
 
         {/* Borde inferior (Precio y Botón) */}
-        <div className="flex justify-between items-end border-t-2 border-dashed border-green-200 pt-4 mt-auto">
-          
-          <div>
-            <span className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">
-              Precio / Hora
-            </span>
-            <span className="text-2xl font-black text-green-600 flex items-start">
-              <span className="text-lg mt-1 mr-1">$</span>
-              {precio}
-            </span>
-          </div>
-
+        <div className="flex justify-center items-end border-t-2 border-dashed border-green-200 pt-4 mt-auto">
+         
           {/* Botón Ver Turnos */}
           <button 
             onClick={() => onVerTurnos(cancha)} 
             className="bg-slate-900 hover:bg-green-600 text-white font-bold py-2.5 px-3 rounded-xl shadow-md transition-colors duration-300 transform active:scale-95 uppercase text-[10px] tracking-wider text-center max-w-[130px] cursor-pointer"
-          >
-            Ver turnos disponibles
+          >Ver turnos disponibles
           </button>
           
         </div>
