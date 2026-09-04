@@ -1,4 +1,4 @@
-import CardProducto from "../services/CardCancha";
+import CardProducto from "../services/CardProducto";
 
 const Inicio = () => {
   return (
@@ -19,6 +19,8 @@ const Inicio = () => {
         </div>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        <CardProducto />
+        <CardProducto />
         <CardProducto />
       </div>
     </section>
