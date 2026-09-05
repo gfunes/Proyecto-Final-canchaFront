@@ -1,7 +1,20 @@
-import React from 'react';
+// 1. Interfaz del objeto cancha
+export interface CanchaData {
+  id?: string | number;
+  categoria?: string;
+  imagen?: string;
+  nombre?: string;
+  descripcion?: string;
+  precio?: string | number;
+}
 
-const CardCancha = ({ cancha, onVerTurnos }) => {
-  // Extraemos las propiedades del objeto cancha y asignamos valores por defecto por si alguno falta
+// 2. Interfaz de las props del componente
+interface CardCanchaProps {
+  cancha: CanchaData;
+  onVerTurnos?: (cancha: CanchaData) => void;
+}
+
+const CardCancha = ({ cancha, onVerTurnos }: CardCanchaProps) => {
   const { 
     categoria = "Fútbol 5", 
     imagen = "https://images.unsplash.com/photo-1579952363873-27f3bade9f55?auto=format&fit=crop&w=600&q=80", 
@@ -37,13 +50,20 @@ const CardCancha = ({ cancha, onVerTurnos }) => {
         </p>
 
         {/* Borde inferior (Precio y Botón) */}
-        <div className="flex justify-center items-end border-t-2 border-dashed border-green-200 pt-4 mt-auto">
-         
+        <div className="flex justify-between items-center border-t-2 border-dashed border-green-200 pt-4 mt-auto">
+          
+          <div className="flex flex-col">
+            <span className="text-[10px] uppercase text-slate-400 font-bold">Precio</span>
+            <span className="text-lg font-black text-green-700">${precio}</span>
+          </div>
+
           {/* Botón Ver Turnos */}
           <button 
-            onClick={() => onVerTurnos(cancha)} 
+            type="button"
+            onClick={() => onVerTurnos && onVerTurnos(cancha)} 
             className="bg-slate-900 hover:bg-green-600 text-white font-bold py-2.5 px-3 rounded-xl shadow-md transition-colors duration-300 transform active:scale-95 uppercase text-[10px] tracking-wider text-center max-w-32.5 cursor-pointer"
-          >Ver turnos disponibles
+          >
+            Ver turnos disponibles
           </button>
           
         </div>

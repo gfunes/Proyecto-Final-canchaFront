@@ -1,14 +1,11 @@
 import { useState } from "react";
 import SelectorCancha from "./SelectorCancha"
 import CalendarioReservas from "./CalendarioReservas"
-
-
-
-
+import { type CanchaData } from "../services/CardCancha";
 
 export default function SistemaReservas() {
   // Estado para guardar la cancha que el usuario seleccionó
-  const [canchaSeleccionada, setCanchaSeleccionada] = useState(null);
+  const [canchaSeleccionada, setCanchaSeleccionada] = useState<CanchaData | null>(null);
 
   return (
   
