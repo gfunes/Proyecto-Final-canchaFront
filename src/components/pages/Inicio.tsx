@@ -20,9 +20,10 @@ const Inicio = () => {
           Productos disponibles
         </div>
       </div>
-      <div className="grid grid-cols-4 md:grid-cols-4 lg:grid-cols-2 gap-6">
+      {/* <div className="grid grid-cols-4 md:grid-cols-4 lg:grid-cols-2 gap-6">
         <SistemaReservas />
-      </div>
+      </div> */}
+      <SistemaReservas />
     </section>
   );
 };
