@@ -21,6 +21,9 @@ const ItemTablaReservas = () => {
           <a className="text-red-500 hover:text-red-600 transition-colors flex items-center gap-1 cursor-pointer">
             <i className="bi bi-trash"></i> Borrar
           </a>
+          <a className="text-red-500 hover:text-red-600 transition-colors flex items-center gap-1 cursor-pointer">
+            <i className="bi bi-trash"></i> Confirmar
+          </a>
         </div>
       </td>
     </tr>

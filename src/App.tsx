@@ -7,6 +7,7 @@ import Menu from "./components/shared/Menu"
 import Error404 from "./components/pages/Error404"
 import { BrowserRouter, Routes, Route } from "react-router";
 import RegistroUsuario from "./components/pages/RegistroUsuario"
+import AdmReservas from "./components/pages/AdmReservas"
 
 function App() {
 
@@ -19,6 +20,7 @@ function App() {
             <Route path="/" element={<Inicio></Inicio>}/>
             <Route path="/login" element={<Login></Login>}/>
             <Route path="/administrador" element={<Administrador></Administrador>}/>
+            <Route path="/reservas" element={<AdmReservas></AdmReservas>}/>
             <Route path="/administrador/crear" element={<Formulario titulo={'Crear Producto'}></Formulario>}/>
             <Route path="/administrador/editar/:id" element={<Formulario titulo={'Editar Producto'}></Formulario>}/> */}
             <Route path="/registrate" element={<RegistroUsuario/>} />
