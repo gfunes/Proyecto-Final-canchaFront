@@ -20,7 +20,7 @@ const CardCancha = ({ cancha, onVerTurnos }) => {
           alt={`Imagen de la cancha ${nombre}`}
           className="w-full h-full object-cover"
         />
-        <div className="absolute top-3 right-3 bg-gradient-to-r from-green-500 to-green-700 text-white text-xs font-black px-4 py-1.5 rounded-full shadow-lg uppercase tracking-widest border border-white/20">
+        <div className="absolute top-3 right-3 bg-linear-to-r from-green-500 to-green-700 text-white text-xs font-black px-4 py-1.5 rounded-full shadow-lg uppercase tracking-widest border border-white/20">
           {categoria}
         </div>
       </div>
@@ -42,7 +42,7 @@ const CardCancha = ({ cancha, onVerTurnos }) => {
           {/* Botón Ver Turnos */}
           <button 
             onClick={() => onVerTurnos(cancha)} 
-            className="bg-slate-900 hover:bg-green-600 text-white font-bold py-2.5 px-3 rounded-xl shadow-md transition-colors duration-300 transform active:scale-95 uppercase text-[10px] tracking-wider text-center max-w-[130px] cursor-pointer"
+            className="bg-slate-900 hover:bg-green-600 text-white font-bold py-2.5 px-3 rounded-xl shadow-md transition-colors duration-300 transform active:scale-95 uppercase text-[10px] tracking-wider text-center max-w-32.5 cursor-pointer"
           >Ver turnos disponibles
           </button>
           
