@@ -1,4 +1,5 @@
-import CardProducto from "../services/CardCancha";
+//import CardProducto from "../services/CardCancha";
+import SistemaReservas from "./SistemaReservas";
 
 const Inicio = () => {
   return (
@@ -18,9 +19,7 @@ const Inicio = () => {
           Productos disponibles
         </div>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
-        <CardProducto />
-      </div>
+       <SistemaReservas />
     </section>
   );
 };
