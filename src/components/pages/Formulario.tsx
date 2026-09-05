@@ -1,16 +1,28 @@
 import { useForm } from "react-hook-form";
 
-const Formulario = () => {
+// 1. Tipado de los datos del formulario para TypeScript
+interface ProductoInputs {
+  nombreProducto: string;
+  precio: number;
+  categoria: string;
+  imagen: string;
+  descripcion: string;
+}
+
+// 2. Interfaz de las props
+interface FormularioProps {
+  titulo: string;
+}
+
+const Formulario = ({ titulo }: FormularioProps) => {
   const {
     register,
     handleSubmit,
     formState: { errors },
-    // reset,
-    // setValue,
-  } = useForm();
+  } = useForm<ProductoInputs>();
 
-  const onSubmit = () => {
-    
+  const onSubmit = (data: ProductoInputs) => {
+    console.log("Datos enviados:", data);
   };
 
   // Clase utilitaria para inputs
@@ -24,7 +36,7 @@ const Formulario = () => {
     <section className="max-w-4xl mx-auto animate-fadeIn">
       <div className="bg-slate-900 p-8 rounded-2xl border border-slate-900 shadow-xl my-3">
         <h1 className="text-3xl text-right font-bold text-white mb-8 border-b border-slate-500 pb-4">
-          Formulario Productos
+          {titulo}
         </h1>
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -46,6 +58,7 @@ const Formulario = () => {
                 {errors.nombreProducto?.message}
               </p>
             </div>
+
             <div>
               <label className="block text-sm font-medium text-slate-500 mb-2">
                 Precio*
@@ -64,6 +77,7 @@ const Formulario = () => {
                 {errors.precio?.message}
               </p>
             </div>
+
             <div>
               <label className="block text-sm font-medium text-slate-500 mb-2">
                 Categoría*
@@ -88,6 +102,7 @@ const Formulario = () => {
                 {errors.categoria?.message}
               </p>
             </div>
+
             <div className="md:col-span-2">
               <label className="block text-sm font-medium text-slate-500 mb-2">
                 URL de Imagen*
@@ -129,7 +144,7 @@ const Formulario = () => {
               </p>
             </div>
           </div>
-          
+
           <div className="pt-4">
             <button
               type="submit"

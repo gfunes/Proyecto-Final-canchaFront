@@ -20,7 +20,7 @@ function App() {
             <Route path="/login" element={<Login></Login>}/>
             <Route path="/administrador" element={<Administrador></Administrador>}/>
             <Route path="/administrador/crear" element={<Formulario titulo={'Crear Producto'}></Formulario>}/>
-            <Route path="/administrador/editar/:id" element={<Formulario titulo={'Editar Producto'}></Formulario>}/> */}
+            <Route path="/administrador/editar/:id" element={<Formulario titulo={'Editar Producto'}></Formulario>}/>
             <Route path="/registrate" element={<RegistroUsuario/>} />
             <Route path="*" element={<Error404></Error404>}/>
           </Routes>
