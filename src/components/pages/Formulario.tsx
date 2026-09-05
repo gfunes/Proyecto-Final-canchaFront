@@ -9,7 +9,9 @@ const Formulario = () => {
     // setValue,
   } = useForm();
 
-  const onSubmit = () => {};
+  const onSubmit = () => {
+    
+  };
 
   // Clase utilitaria para inputs
   const inputClass = (hasError: boolean) => `
