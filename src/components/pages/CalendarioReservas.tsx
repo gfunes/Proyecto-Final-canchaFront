@@ -94,13 +94,13 @@ export default function CalendarioReservas({ cancha, onVolver }) {
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
         {/* Panel Izquierdo: Resumen de cancha y Calendario */}
-        <div className="lg:col-span-4 bg-white p-6 rounded-2xl shadow-sm border border-emerald-100 h-fit">
+        <div className="lg:col-span-4 bg-slate-400 p-6 rounded-2xl shadow-sm border border-emerald-100 h-fit">
           <div className="mb-6 pb-6 border-b border-slate-100">
-            <h2 className="text-xl font-bold text-slate-800">{cancha.nombre}</h2>
-            <p className="text-slate-500 text-sm">{cancha.tipo}</p>
+            <h2 className="text-5xl font-bold text-slate-800">{cancha.nombre}</h2>
+            <p className="text-slate-500 text-xl">{cancha.tipo}</p>
           </div>
 
-          <label className="block mb-4 font-bold text-slate-700">Paso 2: Elegí la fecha</label>
+          <label className="block mb-4 font-bold text-slate-700">Segundo Pase: Elegí la fecha</label>
           <div className="calendar-wrapper overflow-hidden rounded-xl border border-slate-200">
             <Calendar
               onChange={setFechaSeleccionada}
@@ -113,7 +113,7 @@ export default function CalendarioReservas({ cancha, onVolver }) {
         </div>
 
         {/* Panel Derecho: Grilla de turnos (El código aquí es el mismo del paso anterior) */}
-        <div className="lg:col-span-8 bg-white p-6 md:p-8 rounded-2xl shadow-sm border border-emerald-100">
+        <div className="lg:col-span-8 bg-slate-400 p-6 md:p-8 rounded-2xl shadow-sm border border-emerald-100">
           <h2 className="text-2xl font-bold text-slate-800 mb-6 capitalize border-b-2 border-emerald-100 pb-4">
             Turnos del <span className="text-emerald-600">{fechaSeleccionada.toLocaleDateString("es-AR", { weekday: "long", day: "numeric", month: "long" })}</span>
           </h2>
@@ -184,7 +184,7 @@ export default function CalendarioReservas({ cancha, onVolver }) {
 
           {/* Resumen / "Marcador" de Checkout */}
           {turnoSeleccionado && (
-            <div className="mt-10 bg-slate-900 text-white p-6 rounded-2xl flex flex-col md:flex-row justify-between items-center gap-6 shadow-xl border-t-4 border-emerald-500">
+            <div className="mt-10 bg-slate-700 text-white p-6 rounded-2xl flex flex-col md:flex-row justify-between items-center gap-6 shadow-xl border-t-4 border-emerald-500">
               <div className="flex gap-8 w-full md:w-auto">
                 <div>
                   <span className="block text-slate-400 text-xs uppercase tracking-wider font-bold mb-1">Tu Horario</span>
