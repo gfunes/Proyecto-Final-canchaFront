@@ -1,16 +1,17 @@
+import React from 'react';
 
+const CardCancha = ({ cancha, onVerTurnos }) => {
+  // Extraemos las propiedades del objeto cancha y asignamos valores por defecto por si alguno falta
+  const { 
+    categoria = "Fútbol 5", 
+    imagen = "https://images.unsplash.com/photo-1579952363873-27f3bade9f55?auto=format&fit=crop&w=600&q=80", 
+    nombre = "El Monumentalito", 
+    descripcion = "Cancha de césped sintético de última generación. Ideal para partidos rápidos con amigos.", 
+    precio = "15.000"
+  } = cancha;
 
-const CardCancha = ({ 
-  //id = 1,
-  categoria = "Fútbol 5", 
-  imagen = "https://images.unsplash.com/photo-1579952363873-27f3bade9f55?auto=format&fit=crop&w=600&q=80", 
-  nombre = "El Monumentalito", 
-  descripcion = "Cancha de césped sintético de última generación. Ideal para partidos rápidos con amigos. Incluye vestuarios y estacionamiento.", 
-  precio = "15.000",
- // onVerTurnos // Función callback para manejar el click
-}) => {
   return (
-    <div className="w-full max-w-sm bg-white rounded-2xl shadow-md overflow-hidden border-b-4 border-green-600 hover:shadow-2xl transition-shadow duration-300 relative flex flex-col">
+    <div className="w-full max-w-sm bg-white rounded-2xl shadow-md overflow-hidden border-b-4 border-green-600 hover:shadow-2xl transition-shadow duration-300 relative flex flex-col mx-auto">
       
       {/* Contenedor Superior: Imagen y Categoría */}
       <div className="relative h-52 w-full bg-slate-200">
@@ -36,24 +37,13 @@ const CardCancha = ({
         </p>
 
         {/* Borde inferior (Precio y Botón) */}
-        <div className="flex justify-between items-end border-t-2 border-dashed border-green-200 pt-4 mt-auto">
-          
-          <div>
-            <span className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">
-              Precio / Hora
-            </span>
-            <span className="text-2xl font-black text-green-600 flex items-start">
-              <span className="text-lg mt-1 mr-1">$</span>
-              {precio}
-            </span>
-          </div>
-
+        <div className="flex justify-center items-end border-t-2 border-dashed border-green-200 pt-4 mt-auto">
+         
           {/* Botón Ver Turnos */}
           <button 
-            //onClick=() 
-            className="bg-slate-900 hover:bg-green-600 text-white font-bold py-2.5 px-3 rounded-xl shadow-md transition-colors duration-300 transform active:scale-95 uppercase text-[10px] tracking-wider text-center max-w-[130px]"
-          >
-            Ver turnos disponibles
+            onClick={() => onVerTurnos(cancha)} 
+            className="bg-slate-900 hover:bg-green-600 text-white font-bold py-2.5 px-3 rounded-xl shadow-md transition-colors duration-300 transform active:scale-95 uppercase text-[10px] tracking-wider text-center max-w-32.5 cursor-pointer"
+          >Ver turnos disponibles
           </button>
           
         </div>

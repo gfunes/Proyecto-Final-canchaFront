@@ -12,7 +12,7 @@ const Login = () => {
   };
 
   return (
-    <section className="flex grow items-center bg-slate-500 justify-center py-12 px-4 sm:px-6 lg:px-8 animate-fadeIn">
+    <section className="flex grow items-center justify-center py-12 px-4 sm:px-6 lg:px-8 animate-fadeIn">
       <div className="max-w-md w-full space-y-8 bg-slate-800 p-8 rounded-2xl border border-zinc-800 shadow-2xl backdrop-blur-sm">
         <div>
           <h2 className="mt-6 text-center text-3xl font-extrabold text-white">
@@ -20,7 +20,7 @@ const Login = () => {
           </h2>
           <p className="mt-2 text-center text-sm text-zinc-400">
             Accede al panel de control de{" "}
-            <span className="text-blue-500 font-semibold">RollingFutbol</span>
+            <span className="text-green-500 font-semibold">RollingClub</span>
           </p>
         </div>
 
@@ -38,7 +38,7 @@ const Login = () => {
                 id="email"
                 type="email"
                 autoComplete="email"
-                className={`w-full px-4 py-3 bg-zinc-950 border ${errors.email ? "border-red-500" : "border-green-600"} rounded-lg text-zinc-100 focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition-all`}
+                className={`w-full px-4 py-3 bg-zinc-950 border ${errors.email ? "border-red-500" : "border-zinc-700"} rounded-lg text-zinc-100 focus:outline-none focus:ring-2 focus:ring-green-500 transition-all`}
                 placeholder="correo@dominio.com"
                 {...register("email", {
                   required: "El email es obligatorio",
@@ -68,7 +68,7 @@ const Login = () => {
                 id="password"
                 type="password"
                 autoComplete="current-password"
-                className={`w-full px-4 py-3 bg-zinc-950 border ${errors.password ? "border-red-500" : "border-green-600"} rounded-lg text-zinc-100 focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition-all`}
+                className={`w-full px-4 py-3 bg-zinc-950 border ${errors.password ? "border-red-500" : "border-zinc-700"} rounded-lg text-zinc-100 focus:outline-none focus:ring-2 focus:ring-green-500 transition-all`}
                 placeholder="••••••••"
                 {...register("password", {
                   required: "La contraseña es obligatoria",

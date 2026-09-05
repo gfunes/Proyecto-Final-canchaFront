@@ -1,5 +1,5 @@
 import Administrador from "./components/pages/Administrador"
-//import Formulario from "./components/pages/Formulario"
+import Formulario from "./components/pages/Formulario"
 import Inicio from "./components/pages/Inicio"
 import Login from "./components/pages/Login"
 import Footer from "./components/shared/Footer"
@@ -19,7 +19,7 @@ function App() {
             <Route path="/" element={<Inicio></Inicio>}/>
             <Route path="/login" element={<Login></Login>}/>
             <Route path="/administrador" element={<Administrador></Administrador>}/>
-            {/* <Route path="/administrador/crear" element={<Formulario titulo={'Crear Producto'}></Formulario>}/>
+            <Route path="/administrador/crear" element={<Formulario titulo={'Crear Producto'}></Formulario>}/>
             <Route path="/administrador/editar/:id" element={<Formulario titulo={'Editar Producto'}></Formulario>}/> */}
             <Route path="/registrate" element={<RegistroUsuario/>} />
             <Route path="*" element={<Error404></Error404>}/>

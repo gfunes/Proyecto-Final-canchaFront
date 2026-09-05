@@ -6,18 +6,23 @@ const Menu = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const navLinkStyles = ({ isActive }: { isActive: boolean }) =>
-    `block py-2 px-3 transition-colors duration-200 md:p-0 ${isActive
-      ? "text-blue-500 font-semibold"
-      : "text-zinc-300 hover:text-blue-400"
+    `block py-2 px-3 transition-colors duration-200 md:p-0 ${
+      isActive
+        ? "text-green-500 font-semibold"
+        : "text-zinc-300 hover:text-gren-600"
     }`;
 
   return (
     <nav className="bg-slate-500 border-b border-zinc-800 text-zinc-100 sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16">
-          <img src="https://res.cloudinary.com/ddhyg9uee/image/upload/v1788274566/rollingclub_nohrp6.png" alt="logo institucional" className="h-23 " />
+        <div className="flex items-center justify-between h-20">
+          <img
+            src="https://res.cloudinary.com/ddhyg9uee/image/upload/v1788274566/rollingclub_nohrp6.png"
+            alt="logo institucional"
+            className="h-30"
+          />
 
-<div className="md:hidden flex items-center">
+          <div className="md:hidden flex items-center">
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
               type="button"
@@ -31,11 +36,10 @@ const Menu = () => {
               )}
             </button>
           </div>
-          
 
           {/* Desktop Menu */}
-            <div className="hidden md:block">
-            <div className="ml-10 flex items-center space-x-8 capitalize">
+          <div className="hidden md:block">
+            <div className="ml-10 flex items-center space-x-8 capitalize font-bold ">
               <NavLink to="/" className={navLinkStyles}>
                 Inicio
               </NavLink>
@@ -51,7 +55,7 @@ const Menu = () => {
           </div>
         </div>
       </div>
-{/* Menú Mobile Desplegable */}
+      {/* Menú Mobile Desplegable */}
       <div
         className={`${
           isMenuOpen
@@ -85,8 +89,6 @@ const Menu = () => {
           </NavLink>
         </div>
       </div>
-
-
     </nav>
   );
 };

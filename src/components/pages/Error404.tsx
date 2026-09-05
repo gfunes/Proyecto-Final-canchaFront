@@ -1,6 +1,6 @@
 const Error404 = () => {
   return (
-    <div className="min-h-screen bg-slate-500 flex items-center justify-center p-4">
+    <div className="flex items-center justify-center p-4">
       {/* Tarjeta Principal */}
       <div className="bg-[#FFFFFF] rounded-2xl shadow-2xl max-w-4xl w-full p-8 md:p-12 text-[#1E293B] flex flex-col items-center">
         {/* Cabecera / Logo */}
@@ -18,9 +18,9 @@ const Error404 = () => {
         </div>
 
         {/* Botón de Acción Principal */}
-        <div className="bg-green-500 hover:bg-green-600 text-white font-bold px-6 py-3 rounded-xl shadow-lg transition-all duration-300 inline-flex items-center gap-2">
-          <span>Volver a la Cancha Principal</span>
-        </div>
+        <a className="bg-green-500 hover:bg-green-600 text-white font-bold px-6 py-3 rounded-xl shadow-lg transition-all duration-300 inline-flex items-center gap-2" href="/">
+          Volver a la Cancha Principal
+        </a>
 
         {/* Imagen Ilustrativa (La cancha en reparación con su texto integrado) */}
         <div className="w-full flex justify-center my-4">
@@ -30,15 +30,10 @@ const Error404 = () => {
             className=""
           />
         </div>
-        <p className="text-[#64748B] text-base">
+        <p className="text-slate-900 text-base font-bold">
           ¡El árbitro detuvo el juego! Esta sección del campo está temporalmente
           fuera de servicio.
         </p>
-
-        {/* Pie de página institucional */}
-        <div className="mt-8 text-center text-xs text-[#64748B] border-t border-[#64748B]/20 pt-4 w-full">
-          © 2026 ROLLINGCLUB — Todos los derechos reservados
-        </div>
       </div>
     </div>
   );
