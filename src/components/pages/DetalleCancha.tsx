@@ -135,7 +135,7 @@ export default function CalendarioReservas() {
               value={fechaSeleccionada}
               minDate={new Date()}
               locale="es-AR"
-              className="!w-full !border-none !font-sans"
+              className="w-full border-none font-sans"
             />
           </div>
         </div>
