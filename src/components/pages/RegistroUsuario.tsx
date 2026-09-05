@@ -1,20 +1,32 @@
 import { useForm } from "react-hook-form";
 
+// 1. Define los campos del formulario de registro
+
+interface RegistroFormInputs {
+  nombre: string;
+  apellido?: string;
+  nombreUsuario: string;
+  email: string;
+  password: string;
+  telefono: string; // <-- agrega este campo
+  // Agrega aquí otros campos si tu formulario los incluye (ej: nombre, apellido, etc.)
+}
+
 const RegistroUsuario = () => {
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm();
+  } = useForm<RegistroFormInputs>();            //********************** */
 
   // Función que se ejecuta si todas las validaciones pasan
-  const onSubmit = (data) => {
+  const onSubmit = (data: RegistroFormInputs) => {          //****************** */
     console.log("Datos del formulario válidos:", data);
     // Aquí puedes enviar los datos a tu backend
   };
 
   // Función auxiliar para mantener limpios los inputs
-  const getInputClass = (hasError) => `
+  const getInputClass = (hasError:boolean | any) => `  //***********************
         w-full px-4 py-3 bg-zinc-900 border rounded-lg text-zinc-100 
         focus:outline-none focus:ring-2 focus:ring-green-500 transition-all
         ${hasError ? "border-red-500" : "border-zinc-700"}

@@ -1,14 +1,19 @@
-import { useForm } from "react-hook-form";
+import { useForm, type SubmitHandler} from "react-hook-form";
+
+interface LoginFormInputs {
+  email: string;
+  password: string;
+}
 
 const Login = () => {
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm();
+  } = useForm<LoginFormInputs>();
 
-  const onSubmit = (data: any) => {
-    console.log(data);
+ const onSubmit: SubmitHandler<LoginFormInputs> = (data) => {
+    console.log(data );
   };
 
   return (
@@ -50,9 +55,9 @@ const Login = () => {
                 })}
               />
               {errors.email && (
-                <span className="text-red-500 text-xs mt-1 italic">
-                  {errors.email.message}
-                </span>
+                <p className="text-red-500 text-xs mt-1 italic">
+                  {String(errors.email?.message || "")}
+                </p>
               )}
             </div>
 
@@ -81,9 +86,9 @@ const Login = () => {
                 })}
               />
               {errors.password && (
-                <span className="text-red-500 text-xs mt-1 italic">
-                  {errors.password.message}
-                </span>
+                <p className="text-red-500 text-xs mt-1 italic">
+                  {String(errors.password?.message || "")}
+                </p>
               )}
             </div>
           </div>
