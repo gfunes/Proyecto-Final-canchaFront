@@ -10,11 +10,9 @@ const ItemTablaCanchas = () => {
       <td className="px-6 py-4 whitespace-nowrap text-sm text-zinc-400 font-mono">
         TipoCancha
       </td>
+      
       <td className="px-6 py-4 whitespace-nowrap text-sm text-zinc-400 font-mono">
-        descripcionCancha
-      </td>
-      <td className="px-6 py-4 whitespace-nowrap text-sm text-zinc-400 font-mono">
-        descripcionCancha
+        precio
       </td>
       <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
         <div className="flex gap-3">
