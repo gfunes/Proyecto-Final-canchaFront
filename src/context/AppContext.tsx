@@ -13,3 +13,4 @@ export function useAppContext() {
     throw new Error("useAppContext debe usarse dentro de un AppProvider");
   }
   return context;
+}
