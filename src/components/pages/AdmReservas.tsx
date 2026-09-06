@@ -21,9 +21,9 @@ const AdmReservas = () => {
       <div className="overflow-x-auto rounded-2xl border border-zinc-800 bg-zinc-900/20">
         <table className="w-full text-left border-collapse">
           <thead>
-            <tr className="bg-zinc-900/60 border-b border-zinc-800">
+            <tr className="bg-zinc-900/60 border-b border-slate-400">
               <th className="px-6 py-4 text-xs uppercase tracking-wider text-zinc-500 font-bold">
-                Codigo Reseerva
+                Codigo Reserva
               </th>
               <th className="px-6 py-4 text-xs uppercase tracking-wider text-zinc-500 font-bold">
                 Fecha
@@ -36,7 +36,7 @@ const AdmReservas = () => {
               </th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-zinc-800/50">
+          <tbody className="divide-y divide-slate-400">
             <ItemTabla />
           </tbody>
         </table>
