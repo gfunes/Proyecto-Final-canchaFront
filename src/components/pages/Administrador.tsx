@@ -15,6 +15,7 @@ const Administrador = () => {
           <i className="bi bi-plus-lg"></i>
           Alta Producto
         </a>
+        
       </div>
 
       {/* Contenedor de la Tabla con Scroll Horizontal para móviles */}
