@@ -53,8 +53,8 @@ const Menu = () => {
              <NavLink to="/canchas" className={navLinkStyles}>
             Canchas
           </NavLink>
-              <NavLink to="/registrate" className={navLinkStyles}>
-                Registrate
+              <NavLink to="/login" className={navLinkStyles}>
+                Login
               </NavLink>
             </div>
           </div>
@@ -99,11 +99,11 @@ const Menu = () => {
             Canchas
           </NavLink>
           <NavLink
-            to="/registrate"
+            to="/login"
             className={navLinkStyles}
             onClick={() => setIsMenuOpen(false)}
           >
-            Registrate
+            login
           </NavLink>
         </div>
       </div>
