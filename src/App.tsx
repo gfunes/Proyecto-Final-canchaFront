@@ -25,6 +25,9 @@ function App() {
             <Route path="/canchas" element={<AdmCanchas></AdmCanchas>}/>
             <Route path="/administrador/crear" element={<Formulario titulo={'Crear Producto'}></Formulario>}/>
             <Route path="/administrador/editar/:id" element={<Formulario titulo={'Editar Producto'}></Formulario>}/> */}
+            <Route path="/canchas/crear" element={<Formulario titulo={'Crear cancha'}></Formulario>}/>
+            <Route path="/canchas/editar/:id" element={<Formulario titulo={'Editar cancha'}></Formulario>}/> */}
+            
             <Route path="/registrate" element={<RegistroUsuario/>} />
             <Route path="*" element={<Error404></Error404>}/>
           </Routes>
