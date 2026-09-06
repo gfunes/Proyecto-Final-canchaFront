@@ -92,6 +92,13 @@ const Menu = () => {
             Reservas
           </NavLink>
           <NavLink
+            to="/canchas"
+            className={navLinkStyles}
+            onClick={() => setIsMenuOpen(false)}
+          >
+            Canchas
+          </NavLink>
+          <NavLink
             to="/registrate"
             className={navLinkStyles}
             onClick={() => setIsMenuOpen(false)}
