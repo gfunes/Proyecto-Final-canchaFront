@@ -1,6 +1,6 @@
 import Administrador from "./components/pages/Administrador"
 import Formulario from "./components/pages/Formulario"
-import FormCancha from "./components/pages/formCancha"
+import FormCancha from "./components/pages/FormCancha"
 import Inicio from "./components/pages/Inicio"
 import Login from "./components/pages/Login"
 import Footer from "./components/shared/Footer"
