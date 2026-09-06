@@ -1,5 +1,6 @@
 import Administrador from "./components/pages/Administrador"
 import Formulario from "./components/pages/Formulario"
+import FormCancha from "./components/pages/formCancha"
 import Inicio from "./components/pages/Inicio"
 import Login from "./components/pages/Login"
 import Footer from "./components/shared/Footer"
@@ -25,8 +26,8 @@ function App() {
             <Route path="/canchas" element={<AdmCanchas></AdmCanchas>}/>
             <Route path="/administrador/crear" element={<Formulario titulo={'Crear Producto'}></Formulario>}/>
             <Route path="/administrador/editar/:id" element={<Formulario titulo={'Editar Producto'}></Formulario>}/> */}
-            <Route path="/canchas/crear" element={<Formulario titulo={'Crear cancha'}></Formulario>}/>
-            <Route path="/canchas/editar/:id" element={<Formulario titulo={'Editar cancha'}></Formulario>}/> */}
+            <Route path="/canchas/crear" element={<FormCancha titulo={'Crear cancha'}></FormCancha>}/>
+            <Route path="/canchas/editar/:id" element={<FormCancha titulo={'Editar cancha'}></FormCancha>}/> */}
             
             <Route path="/registrate" element={<RegistroUsuario/>} />
             <Route path="*" element={<Error404></Error404>}/>
