@@ -10,11 +10,28 @@ import { BrowserRouter, Routes, Route } from "react-router";
 import RegistroUsuario from "./components/pages/RegistroUsuario"
 import AdmReservas from "./components/pages/AdmReservas"
 import AdmCanchas from "./components/pages/AdmCanchas"
+import { useEffect, useState } from "react";
+import { AppContext } from "./context/AppContext";
+
 
 function App() {
+const usuarioSessionStorage = JSON.parse(
+    sessionStorage.getItem("usuarioKey") || "false",
+  );
+  const [usuarioLogueado, setUsuarioLogueado] = useState<boolean>(usuarioSessionStorage);
+
+   useEffect(() => {
+    sessionStorage.setItem("usuarioKey", JSON.stringify(usuarioLogueado));
+  }, [usuarioLogueado]);
+
 
   return (
-  <BrowserRouter>
+    <AppContext.Provider 
+    value={{
+      usuarioLogueado,
+      setUsuarioLogueado
+    }}>
+    <BrowserRouter>
       <div className="min-h-screen bg-zinc-950 text-zinc-100 flex flex-col">
         <Menu />
         <main className="container grow mx-auto px-4 py-8">
@@ -36,8 +53,7 @@ function App() {
         <Footer />
       </div>
     </BrowserRouter>
- 
-    
-  )
+     </AppContext.Provider>
+   );
 }
 export default App
