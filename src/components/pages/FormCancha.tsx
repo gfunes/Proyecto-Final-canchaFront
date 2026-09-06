@@ -22,7 +22,7 @@ const FormCancha = () => {
 
   return (
     <section className="max-w-4xl mx-auto animate-fadeIn">
-      <div className="bg-slate-900 p-8 rounded-2xl border border-slate-900 shadow-xl my-3">
+      <div className="bg-slate-700 p-8 rounded-2xl border border-slate-900 shadow-xl my-3">
         <h1 className="text-3xl text-right font-bold text-white mb-8 border-b border-slate-500 pb-4">
           Formulario Canchas
         </h1>
@@ -35,15 +35,15 @@ const FormCancha = () => {
               <input
                 type="text"
                 placeholder="Ej: Cancha techada 1"
-                className={inputClass(!!errors.nombreProducto)}
-                {...register("nombreProducto", {
+                className={inputClass(!!errors.nombreCancha)}
+                {...register("nombreCancha", {
                   required: "El nombre es obligatorio",
                   minLength: { value: 5, message: "Mínimo 5 caracteres" },
                   maxLength: { value: 100, message: "Máximo 100 caracteres" },
                 })}
               />
               <p className="text-red-500 text-xs mt-1 italic">
-                {errors.nombreProducto?.message}
+                {errors.nombreCancha?.message}
               </p>
             </div>
             <div>
@@ -77,10 +77,10 @@ const FormCancha = () => {
                 <option value="" className="bg-zinc-900">
                   Seleccione una opción
                 </option>
-                <option value="Desarrollo Web" className="bg-zinc-900">
+                <option value="Cancha Techada" className="bg-zinc-900">
                   Cancha techada
                 </option>
-                <option value="Backend & API" className="bg-zinc-900">
+                <option value="Cancha Aire Libre" className="bg-zinc-900">
                  Cancha aire libre
                 </option>
               </select>
@@ -135,7 +135,7 @@ const FormCancha = () => {
               type="submit"
               className="w-full md:w-auto px-8 py-3 bg-green-500 hover:bg-green-600 text-white font-bold rounded-lg transition-all active:scale-95 shadow-lg shadow-blue-900/20"
             >
-              Guardar Producto
+              Guardar Cancha
             </button>
           </div>
         </form>
