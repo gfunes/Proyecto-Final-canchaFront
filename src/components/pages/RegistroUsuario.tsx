@@ -22,7 +22,7 @@ const RegistroUsuario = () => {
 
   return (
     <section className="flex justify-center">
-      <div className="bg-slate-800 w-full max-w-lg rounded-2xl shadow-xl p-8">
+      <div className="bg-slate-600 w-full max-w-lg rounded-2xl shadow-xl p-8">
         <div className="text-center mb-8">
           <h2 className="text-3xl font-bold text-white">Únete al Club</h2>
           <p className="text-[#64748B] mt-2">
