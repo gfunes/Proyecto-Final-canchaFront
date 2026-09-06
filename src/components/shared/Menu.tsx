@@ -47,12 +47,12 @@ const Menu = () => {
               <NavLink to="/administrador" className={navLinkStyles}>
                 Administrador
               </NavLink>
-              <NavLink to="/reservas" className={navLinkStyles}
-        
-          >
+              <NavLink to="/reservas" className={navLinkStyles}>
             Reservas
           </NavLink>
-
+             <NavLink to="/canchas" className={navLinkStyles}>
+            Canchas
+          </NavLink>
               <NavLink to="/registrate" className={navLinkStyles}>
                 Registrate
               </NavLink>
@@ -90,6 +90,13 @@ const Menu = () => {
             onClick={() => setIsMenuOpen(false)}
           >
             Reservas
+          </NavLink>
+          <NavLink
+            to="/canchas"
+            className={navLinkStyles}
+            onClick={() => setIsMenuOpen(false)}
+          >
+            Canchas
           </NavLink>
           <NavLink
             to="/registrate"

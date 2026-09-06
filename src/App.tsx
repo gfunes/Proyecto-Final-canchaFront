@@ -8,6 +8,7 @@ import Error404 from "./components/pages/Error404"
 import { BrowserRouter, Routes, Route } from "react-router";
 import RegistroUsuario from "./components/pages/RegistroUsuario"
 import AdmReservas from "./components/pages/AdmReservas"
+import AdmCanchas from "./components/pages/AdmCanchas"
 
 function App() {
 
@@ -21,8 +22,12 @@ function App() {
             <Route path="/login" element={<Login></Login>}/>
             <Route path="/administrador" element={<Administrador></Administrador>}/>
             <Route path="/reservas" element={<AdmReservas></AdmReservas>}/>
+            <Route path="/canchas" element={<AdmCanchas></AdmCanchas>}/>
             <Route path="/administrador/crear" element={<Formulario titulo={'Crear Producto'}></Formulario>}/>
             <Route path="/administrador/editar/:id" element={<Formulario titulo={'Editar Producto'}></Formulario>}/> */}
+            <Route path="/canchas/crear" element={<Formulario titulo={'Crear cancha'}></Formulario>}/>
+            <Route path="/canchas/editar/:id" element={<Formulario titulo={'Editar cancha'}></Formulario>}/> */}
+            
             <Route path="/registrate" element={<RegistroUsuario/>} />
             <Route path="*" element={<Error404></Error404>}/>
           </Routes>
