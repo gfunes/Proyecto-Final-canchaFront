@@ -31,7 +31,7 @@ const Administrador = () => {
                 Tipo Cancha
               </th>
               <th className="px-6 py-4 text-xs uppercase tracking-wider text-zinc-500 font-bold text-center">
-                Descripcion
+                Precio
               </th>
 <th className="px-6 py-4 text-xs uppercase tracking-wider text-zinc-500 font-bold text-center">
                 Acciones
@@ -55,7 +55,10 @@ const Administrador = () => {
                 #
               </th>
               <th className="px-6 py-4 text-xs uppercase tracking-wider text-zinc-500 font-bold">
-                Producto
+               Nombre Producto
+              </th>
+              <th className="px-6 py-4 text-xs uppercase tracking-wider text-zinc-500 font-bold">
+                Tipo Producto
               </th>
               <th className="px-6 py-4 text-xs uppercase tracking-wider text-zinc-500 font-bold">
                 Precio

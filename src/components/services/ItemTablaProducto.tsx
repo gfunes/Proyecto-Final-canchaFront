@@ -7,12 +7,13 @@ const ItemTablaProducto = () => {
       <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-zinc-200">
         nombreProducto
       </td>
-      <td className="px-6 py-4 whitespace-nowrap text-sm text-zinc-400 font-mono">
-        $50
-      </td>
       <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-zinc-200">
         DescripcionProducto
       </td>
+      <td className="px-6 py-4 whitespace-nowrap text-sm text-zinc-400 font-mono">
+        $50
+      </td>
+      
       <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
         <div className="flex gap-3">
           <a className="text-green-500 hover:text-green-600 transition-colors flex items-center gap-1 cursor-pointer">
