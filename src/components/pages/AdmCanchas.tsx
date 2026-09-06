@@ -1,6 +1,6 @@
 import ItemTabla from "../services/ItemTablaCanchas";
 
-const Administrador = () => {
+const AdmCanchas = () => {
   return (
     <section className="animate-fadeIn space-y-6">
       {/* Header de la sección */}
@@ -46,4 +46,4 @@ const Administrador = () => {
   );
 };
 
-export default Administrador;
+export default AdmCanchas;
