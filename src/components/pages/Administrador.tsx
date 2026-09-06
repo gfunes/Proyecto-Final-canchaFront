@@ -42,6 +42,7 @@ const Administrador = () => {
           </tbody>
         </table>
       </div>
+      
     </section>
   );
 };
