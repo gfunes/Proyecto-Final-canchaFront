@@ -173,15 +173,7 @@ const RegistroUsuario = () => {
           </button>
         </form>
 
-        <p className="text-center text-sm text-[#64748B] mt-6">
-          ¿Ya tienes cuenta?{" "}
-          <a
-            href="/login"
-            className="text-green-500 hover:text-green-600 font-semibold"
-          >
-            Inicia sesión
-          </a>
-        </p>
+        
       </div>
     </section>
   );

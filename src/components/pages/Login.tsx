@@ -19,7 +19,7 @@ const Login = () => {
             Iniciar Sesión
           </h2>
           <p className="mt-2 text-center text-sm text-zinc-400">
-            Accede al panel de control de{" "}
+            Accede al panel de {" "}
             <span className="text-green-500 font-semibold">RollingClub</span>
           </p>
         </div>
@@ -95,7 +95,16 @@ const Login = () => {
             >
               Ingresar al sistema
             </button>
-          </div>
+            </div>
+            <p className="text-center text-sm text-[#64748B] mt-6">
+          ¿No tienes cuenta?{" "}
+          <a
+            href="/registrate"
+            className="text-green-500 hover:text-green-600 font-semibold"
+          >
+            Click Aqui
+          </a>
+          </p>
         </form>
       </div>
     </section>
