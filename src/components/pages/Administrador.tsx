@@ -1,5 +1,7 @@
+import { Link } from "react-router";
 import ItemTablaCanchas from "../services/ItemTablaCanchas";
 import ItemTabla from "../services/ItemTablaProducto";
+import { LuCirclePlus } from "react-icons/lu";
 
 const Administrador = () => {
   return (
@@ -36,10 +38,14 @@ const Administrador = () => {
 <th className="px-6 py-4 text-xs uppercase tracking-wider text-zinc-500 font-bold text-center">
                 Acciones
               </th>
-              <a className="bg-green-500 hover:bg-green-600 text-white px-3 py-2.5 rounded-xl font-bold transition-all shadow-lg shadow-blue-900/20 active:scale-95 gap-2 text-center">
-          <i className="bi bi-plus-lg"></i>
-          Alta Cancha
-        </a>
+              <Link
+          to={"/administrador/canchas/crear"}
+          className="bg-green-600 hover:bg-blue-500 text-white px-5 py-2.5 rounded-xl font-bold transition-all shadow-lg shadow-blue-900/20 active:scale-95 text-center  flex
+           items-center gap-1"
+        >
+          <LuCirclePlus />
+          Agregar Cancha
+        </Link>
             </tr>
           </thead>
           <tbody className="divide-y divide-zinc-800/50">
@@ -66,10 +72,13 @@ const Administrador = () => {
               <th className="px-6 py-4 text-xs uppercase tracking-wider text-zinc-500 font-bold text-center">
                 Acciones
               </th>
-              <a className="bg-green-500 hover:bg-green-600 text-white px-3 py-2.5 rounded-xl font-bold transition-all shadow-lg shadow-blue-900/20 active:scale-95 gap-2 text-center">
-          <i className="bi bi-plus-lg"></i>
-          Alta Producto
-        </a>
+              <Link
+          to={"/administrador/crear"}
+          className="bg-slate-400 hover:bg-blue-500 text-white px-5 py-2.5 rounded-xl font-bold transition-all shadow-lg shadow-blue-900/20 active:scale-95 flex items-center gap-2"
+        >
+          <LuCirclePlus />
+          Agregar Producto
+        </Link>
             </tr>
           </thead>
           <tbody className="divide-y divide-zinc-800/50">
