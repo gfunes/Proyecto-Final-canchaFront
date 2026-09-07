@@ -12,13 +12,11 @@ const Inicio = () => {
               Catálogo de <span className="text-green-500">Productos</span>
             </h1>
             <p className="text-zinc-400 mt-1 text-sm">
-              Agrega los productos que quieras al carrito y luego termina tu compra
+              Agrega los productos que quieras al carrito y luego termina tu
+              compra
             </p>
           </div>
-
-          <div className="text-xs text-zinc-500 bg-zinc-900 px-3 py-1 rounded-full border border-zinc-800 self-start md:self-center">
-            Productos disponibles
-          </div>
+          <span className="bg-green-500 hover:bg-green-600 transition text-l py-2 px-3 rounded-2xl font-bold cursor-pointer">Reserva tu cancha⚽</span>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
           <CardProducto />
