@@ -1,5 +1,7 @@
 import React from "react";
 import { useForm } from "react-hook-form";
+import { FaWhatsapp } from "react-icons/fa";
+import { FaInstagram } from "react-icons/fa";
 
 const Contacto = () => {
   const {
@@ -17,7 +19,7 @@ const Contacto = () => {
   };
 
   return (
-    <section className="bg-slate-900 text-white py-12 px-4 flex flex-col items-center justify-center">
+    <section className="bg-slate-900 border border-slate-900 rounded-2xl text-white py-12 px-4 flex flex-col items-center justify-center">
       <div className="max-w-2xl w-full bg-slate-800 border border-slate-700 rounded-2xl p-6 sm:p-10 shadow-xl">
         {/* Título de la sección */}
         <h2 className="text-3xl sm:text-4xl font-extrabold text-center text-green-500 mb-2 tracking-tight">
@@ -54,7 +56,7 @@ const Contacto = () => {
           <div>
             <input
               type="email"
-              placeholder="Mail"
+              placeholder="Correo"
               className="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-3 text-white placeholder-slate-500 focus:outline-none focus:border-[#22C55E] transition-colors"
               {...register("email", {
                 required: "El email es obligatorio",
@@ -129,10 +131,10 @@ const Contacto = () => {
             href="https://instagram.com"
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-2 text-slate-300 hover:text-green-400 transition-colors text-sm font-medium"
+            className="flex items-center gap-2 text-slate-300 hover:text-green-400 transition-colors text-m font-medium"
           >
-            <span className="w-4 h-4 rounded-full border-2 border-current flex items-center justify-center text-[10px]">
-              📷
+            <span className="w-5 h-5 rounded-full border-2 border-current flex items-center justify-center text-[20px]">
+              <FaInstagram />
             </span>
             Instagram
           </a>
@@ -140,10 +142,10 @@ const Contacto = () => {
             href="https://wa.me/"
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-2 text-slate-300 hover:text-green-400 transition-colors text-sm font-medium"
+            className="flex items-center gap-2 text-slate-300 hover:text-green-400 transition-colors text-m font-medium"
           >
-            <span className="w-4 h-4 rounded-full border-2 border-current flex items-center justify-center text-[10px]">
-              💬
+            <span className="w-5 h-5 rounded-full border-2 border-current flex items-center justify-center text-[20px]">
+              <FaWhatsapp />
             </span>
             WhatsApp
           </a>
