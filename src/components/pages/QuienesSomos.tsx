@@ -11,12 +11,12 @@ const QuienesSomos = () => {
     {
       name: "Ingacio Holmquist",
       role: "Frontend Developer",
-      img: "https://via.placeholder.com/150",
+      img: "https://res.cloudinary.com/klxcmac0/image/upload/v1788876459/Ignacio_Holmquist.jpg",
     },
     {
       name: "Patricio Moyano",
       role: "Frontend Developer",
-      img: "https://via.placeholder.com/150",
+      img: "https://res.cloudinary.com/klxcmac0/image/upload/v1788876102/Patricio_Moyano.png",
     },
     {
       name: "Nair Paez",
@@ -26,7 +26,7 @@ const QuienesSomos = () => {
     {
       name: "Karina Miranda",
       role: "Backend Developer",
-      img: "https://via.placeholder.com/150",
+      img: "https://res.cloudinary.com/klxcmac0/image/upload/v1788875583/Karina_Miranda_2.jpg.jpg",
     },
   ];
 
@@ -35,9 +35,12 @@ const QuienesSomos = () => {
       {/* Main Content */}
       <main className="max-w-5xl mx-auto px-4 py-12 flex-grow flex flex-col items-center justify-center">
         {/* Título Principal */}
-        <h2 className="text-4xl md:text-5xl font-extrabold text-center mb-12 text-green-400 tracking-tight">
+        <h2 className="text-4xl md:text-5xl font-extrabold text-center mb-12 text-green-600 tracking-tight">
           ¿Quiénes somos?
         </h2>
+        <h3 className="text-3xl md:text-4xl font-extrabold text-center mb-12 text-green-600 tracking-tight">
+            Equipo de Desarrollo
+        </h3>
 
         {/* Sección Tarjetas de Integrantes */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 w-full mb-16">
