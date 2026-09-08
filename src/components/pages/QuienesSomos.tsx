@@ -6,7 +6,7 @@ const QuienesSomos = () => {
     {
       name: "Gabriel Funes",
       role: "Frontend Developer",
-      img: "https://via.placeholder.com/150",
+      img: "https://res.cloudinary.com/klxcmac0/image/upload/v1788881274/Gaby_Funes.jpg",
     },
     {
       name: "Ingacio Holmquist",
@@ -21,7 +21,7 @@ const QuienesSomos = () => {
     {
       name: "Nair Paez",
       role: "Backend Developer",
-      img: "https://via.placeholder.com/150",
+      img: "https://res.cloudinary.com/klxcmac0/image/upload/v1788881254/Nair_Paez.jpg",
     },
     {
       name: "Karina Miranda",
