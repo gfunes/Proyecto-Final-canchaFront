@@ -4,34 +4,34 @@ const QuienesSomos = () => {
   // Datos del equipo (puedes ajustar los nombres e imágenes)
   const teamMembers = [
     {
-      name: "Nombre Integrante 1",
+      name: "Gabriel Funes",
       role: "Frontend Developer",
       img: "https://via.placeholder.com/150",
     },
     {
-      name: "Nombre Integrante 2",
+      name: "Ingacio Holmquist",
       role: "Frontend Developer",
       img: "https://via.placeholder.com/150",
     },
     {
-      name: "Nombre Integrante 2",
+      name: "Patricio Moyano",
       role: "Frontend Developer",
       img: "https://via.placeholder.com/150",
     },
     {
-      name: "Nombre Integrante 5",
+      name: "Nair Paez",
       role: "Backend Developer",
       img: "https://via.placeholder.com/150",
     },
     {
-      name: "Nombre Integrante 5",
+      name: "Karina Miranda",
       role: "Backend Developer",
       img: "https://via.placeholder.com/150",
     },
   ];
 
   return (
-    <div className="min-h-screen bg-slate-900 text-white flex flex-col justify-between font-sans">
+    <div className="min-h-screen bg-slate-400 border border-slate-400/50 rounded-2xl text-white flex flex-col justify-between font-sans">
       {/* Main Content */}
       <main className="max-w-5xl mx-auto px-4 py-12 flex-grow flex flex-col items-center justify-center">
         {/* Título Principal */}
@@ -68,7 +68,7 @@ const QuienesSomos = () => {
           <h3 className="text-2xl font-bold text-green-400 mb-4">
             Rolling Club
           </h3>
-          <p className="text-slate-500 leading-relaxed max-w-2xl mx-auto text-base sm:text-lg">
+          <p className="text-white leading-relaxed max-w-2xl mx-auto text-base sm:text-lg">
             En RollingClub resolvemos lo más difícil del fútbol: que el partido
             realmente se juegue. Sabemos lo complejo que es coordinar con los
             pibes, encontrar cancha a última hora y conseguir horarios potables.

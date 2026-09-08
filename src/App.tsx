@@ -6,6 +6,8 @@ import Login from "./components/pages/Login"
 import Footer from "./components/shared/Footer"
 import Menu from "./components/shared/Menu"
 import Error404 from "./components/pages/Error404"
+import QuienesSomos from "./components/pages/QuienesSomos"
+import Contacto from "./components/pages/Contacto"
 import { BrowserRouter, Routes, Route } from "react-router";
 import ProtectorRutas from "./components/routes/ProtectorRutas";
 import RegistroUsuario from "./components/pages/RegistroUsuario"
@@ -50,6 +52,8 @@ const usuarioSessionStorage = JSON.parse(
             <Route path="/administrador/canchas/editar/:id" element={<FormCancha titulo={'Editar cancha'}></FormCancha>}/> */}
                    </Route>    
             <Route path="*" element={<Error404></Error404>}/>
+            <Route path="/quienessomos" element={<QuienesSomos></QuienesSomos>}/>
+            <Route path="/contacto" element={<Contacto></Contacto>}/>
           </Routes>
         </main>
         <Footer />
