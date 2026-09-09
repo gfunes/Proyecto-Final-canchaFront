@@ -1,11 +1,15 @@
 import type { Cancha } from "../interfaces/canchas";
 
 const urlCanchas = import.meta.env.VITE_ALQUILER_CANCHAS + "/canchas"
+const urlCategoriasCanchas = import.meta.env.VITE_ALQUILER_CANCHAS + "/categoriaCanchas"
+
+console.log("URL final:", urlCanchas);
 
 export const listarCanchasApi = async ():Promise<Response> =>{
     try{
         const respuesta = await fetch(urlCanchas)
         return respuesta
+        
     }catch(error){
         console.error(error)
         throw error

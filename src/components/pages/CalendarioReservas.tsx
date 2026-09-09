@@ -2,6 +2,13 @@ import { useEffect, useState } from "react";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import { obtenerDisponibilidad } from "../services/disponibilidadService";
+import type { Cancha } from "../../interfaces/canchas";
+
+
+interface CalendarioReservas {
+  cancha : Cancha
+  onVolver:void
+}
 
 // Funciones auxiliares (mantén las que tenías)
 function convertirFechaAISO(fecha) {
@@ -16,7 +23,7 @@ function formatearPrecio(precio) {
 }
 
 // Nota: Recibimos 'cancha' y 'onVolver' como props
-export default function CalendarioReservas({ cancha, onVolver }) {
+export default function CalendarioReservas({ cancha, onVolver }:CalendarioReservas) {
 
   const [fechaSeleccionada, setFechaSeleccionada] = useState(new Date());
   const [turnos, setTurnos] = useState([]);
