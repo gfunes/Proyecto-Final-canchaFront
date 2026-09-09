@@ -1,10 +1,17 @@
+export interface CategoriaProducto{
+   _id: string;
+  nombre: string; 
+   descripcion: string;
+}
+
+
 export interface Producto {
   _id: string;
   nombreProducto: string;
   precio: number;
   imagen: string;
-  categoria: string;
+  categoria: CategoriaProducto | string;
   descripcion: string;
 }
 
-export type ServicioFormData = Omit<Producto, 'id'>;
+export type ProductoFormData = Omit<Producto, '_id'>;
