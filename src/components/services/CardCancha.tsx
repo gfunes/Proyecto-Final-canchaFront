@@ -9,7 +9,7 @@ interface CardCanchaProps {
 }
 
 const CardCancha = ({ cancha, onVerTurnos }: CardCanchaProps) => {
-  console.log("Datos que llegan a la Card:", cancha.categoria);
+  
   return (
     <div className="w-full max-w-sm bg-white rounded-2xl shadow-md overflow-hidden border-b-4 border-green-600 hover:shadow-2xl transition-shadow duration-300 relative flex flex-col mx-auto">
 

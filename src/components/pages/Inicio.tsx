@@ -33,7 +33,7 @@ const cargarCanchas = async () => {
       }
     }
   
-console.log("datos de cancha en inicio 1", canchas)
+
 
   return (
     <section className="space-y-8 animate-fadeIn">

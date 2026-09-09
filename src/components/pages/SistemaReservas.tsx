@@ -13,7 +13,7 @@ interface SistemaReservasProps{
 export default function SistemaReservas({canchas}:SistemaReservasProps) {
   // Estado para guardar la cancha que el usuario seleccionó
   const [canchaSeleccionada, setCanchaSeleccionada] = useState<Cancha | null>(null);
-console.log("datos de cancha", canchas)
+
   return (
   
    <main className="min-h-screen bg-slate-400 rounded-4xl p-6 md:p-10 font-sans text-slate-800">

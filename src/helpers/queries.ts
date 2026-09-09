@@ -1,7 +1,7 @@
 import type { Cancha } from "../interfaces/canchas";
 
 const urlCanchas = import.meta.env.VITE_ALQUILER_CANCHAS + "/canchas"
-const urlCategoriasCanchas = import.meta.env.VITE_ALQUILER_CANCHAS + "/categoriaCanchas"
+const urlReservas = import.meta.env.VITE_ALQUILER_CANCHAS + "/reservas"
 
 console.log("URL final:", urlCanchas);
 
@@ -70,3 +70,14 @@ export const borrarCanchaApi = async (id:string):Promise<Response> =>{
         throw error
     }
 };
+
+export const listarReservasApi = async ():Promise<Response> =>{
+    try{
+        const respuesta = await fetch(urlReservas)
+        return respuesta
+        
+    }catch(error){
+        console.error("error al conectar con la api de turnos ",error)
+        return null;
+    }
+}; 

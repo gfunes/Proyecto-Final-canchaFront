@@ -44,7 +44,7 @@ export default function CalendarioReservas({ cancha, onVolver }:CalendarioReserv
         setTurnoSeleccionado(null);
 
         // Usamos el ID de la cancha que vino por props
-        const datos = await obtenerDisponibilidad(cancha.id, fechaISO, controlador.signal);
+        const datos = await obtenerDisponibilidad(cancha._id, fechaISO, controlador.signal);
         console.log(datos)
         setTurnos(datos.turnos || []);
       } catch (errorConsulta) {
@@ -103,8 +103,8 @@ export default function CalendarioReservas({ cancha, onVolver }:CalendarioReserv
         {/* Panel Izquierdo: Resumen de cancha y Calendario */}
         <div className="lg:col-span-4 bg-slate-400 p-6 rounded-2xl shadow-sm border border-emerald-100 h-fit">
           <div className="mb-6 pb-6 border-b border-slate-100">
-            <h2 className="text-5xl font-bold text-slate-800">{cancha.nombre}</h2>
-            <p className="text-slate-500 text-xl">{cancha.tipo}</p>
+            <h2 className="text-5xl font-bold text-slate-800">{cancha.nombreCancha}</h2>
+            <p className="text-slate-500 text-xl">{cancha.categoria.nombre}</p>
           </div>
 
           <label className="block mb-4 font-bold text-slate-700">Segundo Pase: Elegí la fecha</label>
