@@ -45,11 +45,11 @@ const usuarioSessionStorage = JSON.parse(
             <Route path="/administrador" element={<ProtectorRutas />}>
               <Route index element={<Administrador />} />
              <Route path="/administrador/crear" element={<Formulario titulo={'Crear Producto'}></Formulario>}/>
-              <Route path="/administrador/editar/:id" element={<Formulario titulo={'Editar Producto'}></Formulario>}/> */}
+              <Route path="/administrador/editar/:id" element={<Formulario titulo={'Editar Producto'}></Formulario>}/> 
               <Route path="/administrador/reservas" element={<AdmReservas></AdmReservas>}/>
             <Route path="/administrador/canchas" element={<AdmCanchas></AdmCanchas>}/>
             <Route path="/administrador/canchas/crear" element={<FormCancha titulo={'Crear cancha'}></FormCancha>}/>
-            <Route path="/administrador/canchas/editar/:id" element={<FormCancha titulo={'Editar cancha'}></FormCancha>}/> */}
+            <Route path="/administrador/canchas/editar/:id" element={<FormCancha titulo={'Editar cancha'}></FormCancha>}/> 
                    </Route>    
             <Route path="*" element={<Error404></Error404>}/>
             <Route path="/quienessomos" element={<QuienesSomos></QuienesSomos>}/>

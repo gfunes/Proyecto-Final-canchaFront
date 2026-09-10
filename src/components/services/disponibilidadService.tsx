@@ -1,75 +1,89 @@
-import { listarReservasApi } from "../../helpers/queries"; // Ajusta esta ruta según tus carpetas
+import { listarReservasApi } from "../../helpers/queries";
 
-export async function obtenerDisponibilidad(canchaId: string, fecha: string, signal?: AbortSignal) {
+export async function obtenerDisponibilidad(
+  canchaId: string,
+  fecha: string,
+  signal?: AbortSignal
+) {
   try {
-    // 1. Llamamos a tu API de reservas
-    const respuesta = await listarReservasApi();
-    
-    if (!respuesta.ok) {
+    const respuesta = await listarReservasApi(canchaId, fecha, signal);
+
+    if (!respuesta || !respuesta.ok) {
       throw new Error("No se pudieron cargar las reservas de la base de datos.");
     }
-    
-    const reservasBD = await respuesta.json();
 
-    // 2. Verificamos si el usuario cambió de pestaña/fecha rápidamente y abortó la petición
+    const data = await respuesta.json();
+    console.log("Respuesta de la API:", data);
+
+    // 1. Extraemos el objeto de la cancha dentro del array 'canchas'
+    const datosCancha = Array.isArray(data?.canchas)
+      ? data.canchas[0] || {}
+      : Array.isArray(data)
+      ? data[0] || {}
+      : data || {};
+
+    // 2. Extraemos los turnos disponibles y ocupados
+    const disponibles: string[] =
+      datosCancha.turnosDisponibles ||
+      data.turnosDisponibles ||
+      [];
+
+    const ocupados: string[] =
+      datosCancha.turnosOcupados ||
+      data.turnosOcupados ||
+      [];
+
+    const pendientes: string[] =
+      datosCancha.turnosPendientes ||
+      data.turnosPendientes ||
+      [];
+
     if (signal?.aborted) {
       throw new DOMException("Aborted", "AbortError");
     }
 
-    // 3. Filtramos las reservas para quedarnos solo con las de esta cancha y fecha
-    // Usamos String() y startsWith() para evitar errores por tipos de datos (ej. ObjectId de Mongo) o fechas ISO.
-    const reservasDelDia = reservasBD.filter((reserva: any) => 
-      String(reserva.canchaId) === String(canchaId) && 
-      String(reserva.fecha).startsWith(fecha)
-    );
-
-    // 4. Generamos la grilla base de horarios (ajusta estos horarios a la realidad de tu complejo)
-    const horariosFijos = [
-      { horaInicio: "17:00", horaFin: "18:00", precio: 20000 },
-      { horaInicio: "18:00", horaFin: "19:00", precio: 25000 },
-      { horaInicio: "19:00", horaFin: "20:00", precio: 25000 },
-      { horaInicio: "20:00", horaFin: "21:00", precio: 28000 },
-      { horaInicio: "21:00", horaFin: "22:00", precio: 28000 }
+    // 3. Generamos la grilla completa de 08:00 a 00:00
+    const horasDelDia: string[] = [
+      "05:00", "09:00", "10:00", "11:00", "12:00", "13:00",
+      "14:00", "15:00", "16:00", "17:00", "18:00", "19:00",
+      "20:00", "21:00", "22:00", "23:00", "00:00"
     ];
 
-    // 5. Cruzamos los horarios fijos con las reservas traídas de la API
-    const turnosCompletos = horariosFijos.map((horario, index) => {
-      
-      // Buscamos si existe alguna reserva en la BD para esta hora de inicio específica
-      const reservaEncontrada = reservasDelDia.find(
-        (reserva: any) => reserva.horaInicio === horario.horaInicio
-      );
+    const calcularHoraFin = (hora: string) => {
+      const [h, m] = hora.split(":");
+      const siguiente = (parseInt(h, 10) + 1) % 24;
+      return `${String(siguiente).padStart(2, "0")}:${m || "00"}`;
+    };
 
-      if (reservaEncontrada) {
-        // Si el turno existe en la base de datos, lo retornamos como "reservado" o "pendiente"
-        return {
-          id: reservaEncontrada._id || reservaEncontrada.id, // Usa el ID real de la base de datos
-          horaInicio: horario.horaInicio,
-          horaFin: horario.horaFin,
-          estado: reservaEncontrada.estado || "reservado", 
-          precio: reservaEncontrada.precio || horario.precio
-        };
+    // 4. Mapeamos cada hora asignándole su estado y color
+    const turnosCompletos = horasDelDia.map((hora, index) => {
+      let estado = "disponible";
+
+      if (ocupados.includes(hora)) {
+        estado = "reservado";
+      } else if (pendientes.includes(hora)) {
+        estado = "pendiente";
+      } else if (disponibles.length > 0 && !disponibles.includes(hora)) {
+        estado = "reservado";
       }
 
-      // Si el turno no está en la base de datos, está libre para el usuario
       return {
-        id: `disponible-${index}`, // Generamos un ID temporal para React
-        horaInicio: horario.horaInicio,
-        horaFin: horario.horaFin,
-        estado: "disponible",
-        precio: horario.precio
+        id: `turno-${hora.replace(":", "")}-${index}`,
+        horaInicio: hora,
+        horaFin: calcularHoraFin(hora),
+        estado,
+        precio: Number(datosCancha.precio || data.precio) || 20000,
       };
     });
 
     return {
       canchaId,
       fecha,
-      turnos: turnosCompletos
+      turnos: turnosCompletos,
     };
-
-  } catch (error) {
-    if (signal?.aborted) {
-      throw new DOMException("Aborted", "AbortError");
+  } catch (error: any) {
+    if (error.name === "AbortError" || signal?.aborted) {
+      throw error;
     }
     console.error("Error al cruzar disponibilidad con la base de datos:", error);
     throw error;
