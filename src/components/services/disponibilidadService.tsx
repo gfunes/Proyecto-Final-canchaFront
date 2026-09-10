@@ -43,12 +43,13 @@ export async function obtenerDisponibilidad(
     }
 
     // 3. Generamos la grilla completa de 08:00 a 00:00
-    const horasDelDia: string[] = [
-      "05:00", "09:00", "10:00", "11:00", "12:00", "13:00",
-      "14:00", "15:00", "16:00", "17:00", "18:00", "19:00",
-      "20:00", "21:00", "22:00", "23:00", "00:00"
-    ];
-
+    //  const horasDelDia: string[] = [
+    //   "03:00", "05:00", "10:00", "11:00", "12:00", "13:00",
+    //   "14:00", "15:00", "16:00", "17:00", "18:00", "19:00",
+    //   "20:00", "21:00", "22:00", "23:00", "00:00"
+    // ];
+  const horasDelDia = data.canchas[0].turnosLibres 
+  console.log(horasDelDia)
     const calcularHoraFin = (hora: string) => {
       const [h, m] = hora.split(":");
       const siguiente = (parseInt(h, 10) + 1) % 24;
