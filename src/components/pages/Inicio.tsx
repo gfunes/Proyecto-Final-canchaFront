@@ -1,5 +1,5 @@
-import CardProducto from "../services/CardProducto";
-import Carousel from "../services/Carousel";
+//import CardProducto from "../services/CardCancha";
+import SistemaReservas from "./SistemaReservas";
 
 const Inicio = () => {
   return (
@@ -23,8 +23,9 @@ const Inicio = () => {
           <CardProducto />
           <CardProducto />
         </div>
-      </section>
-    </>
+      </div>
+       <SistemaReservas />
+    </section>
   );
 };
 

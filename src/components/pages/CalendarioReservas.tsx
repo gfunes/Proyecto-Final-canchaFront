@@ -1,14 +1,9 @@
 import { useEffect, useState } from "react";
 import Calendar from "react-calendar";
-import "react-calendar/dist/Calendar.css"; // Mantenemos el CSS base del calendario
-import { obtenerDisponibilidad } from "../services/disponibilidadService.tsx";
+import "react-calendar/dist/Calendar.css";
+import { obtenerDisponibilidad } from "../services/disponibilidadService";
 
-const CANCHAS = [
-  { id: 1, nombre: "Cancha 1 - Fútbol 5 (Sintético)" },
-  { id: 2, nombre: "Cancha 2 - Fútbol 7 (Techada)" },
-  { id: 3, nombre: "Cancha 3 - Fútbol 11 (Césped)" },
-];
-
+// Funciones auxiliares (mantén las que tenías)
 function convertirFechaAISO(fecha) {
   const anio = fecha.getFullYear();
   const mes = String(fecha.getMonth() + 1).padStart(2, "0");
@@ -17,16 +12,13 @@ function convertirFechaAISO(fecha) {
 }
 
 function formatearPrecio(precio) {
-  return new Intl.NumberFormat("es-AR", {
-    style: "currency",
-    currency: "ARS",
-    maximumFractionDigits: 0,
-  }).format(precio);
+  return new Intl.NumberFormat("es-AR", { style: "currency", currency: "ARS", maximumFractionDigits: 0 }).format(precio);
 }
 
-export default function CalendarioReservas() {
+// Nota: Recibimos 'cancha' y 'onVolver' como props
+export default function CalendarioReservas({ cancha, onVolver }) {
+
   const [fechaSeleccionada, setFechaSeleccionada] = useState(new Date());
-  const [canchaId, setCanchaId] = useState(1);
   const [turnos, setTurnos] = useState([]);
   const [turnoSeleccionado, setTurnoSeleccionado] = useState(null);
   const [cargando, setCargando] = useState(false);
@@ -44,41 +36,39 @@ export default function CalendarioReservas() {
         setTurnos([]);
         setTurnoSeleccionado(null);
 
-        const datos = await obtenerDisponibilidad(canchaId, fechaISO, controlador.signal);
+        // Usamos el ID de la cancha que vino por props
+        const datos = await obtenerDisponibilidad(cancha.id, fechaISO, controlador.signal);
+        console.log(datos)
         setTurnos(datos.turnos || []);
       } catch (errorConsulta) {
-        if (errorConsulta.name !== "AbortError") {
-          setError(errorConsulta.message);
-        }
+        if (errorConsulta.name !== "AbortError") setError(errorConsulta.message);
+        
       } finally {
-        if (!controlador.signal.aborted) {
-          setCargando(false);
-        }
+        if (!controlador.signal.aborted) setCargando(false);
       }
     }
 
     cargarDisponibilidad();
-
     return () => controlador.abort();
-  }, [canchaId, fechaISO]);
+  }, [cancha.id, fechaISO]);
 
   function seleccionarTurno(turno) {
     if (turno.estado !== "disponible") return;
     setTurnoSeleccionado(turno);
   }
-
   function continuarReserva() {
     if (!turnoSeleccionado) return;
     console.log("Reserva seleccionada:", {
-      canchaId,
+      canchaID:cancha.id,
       fecha: fechaISO,
       turnoId: turnoSeleccionado.id,
       precio: turnoSeleccionado.precio,
     });
   }
 
-  // Función para determinar las clases dinámicas de cada botón de turno
-  const getEstilosTurno = (turno, isSelected) => {
+  // Estilos de los botones (mantén la función que te pasé antes)
+ // const getEstilosTurno = (turno, isSelected) => { /* ... código anterior ... */ };
+ const getEstilosTurno = (turno, isSelected) => {
     const base = "flex flex-col gap-1 p-4 rounded-xl border-2 text-left transition-all duration-200";
     
     if (isSelected) {
@@ -92,43 +82,25 @@ export default function CalendarioReservas() {
     }
     return `${base} bg-amber-50 border-transparent text-amber-900 cursor-not-allowed opacity-70`;
   };
-
   return (
-    <section className="min-h-screen bg-slate-50 p-6 md:p-10 font-sans text-slate-800">
-      {/* Encabezado */}
-      <header className="max-w-6xl mx-auto mb-10">
-        <span className="text-emerald-600 font-bold tracking-wider text-sm uppercase flex items-center gap-2">
-          <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2a10 10 0 100 20 10 10 0 000-20zm0 18a8 8 0 110-16 8 8 0 010 16z"/></svg>
-          Reserva tu cancha
-        </span>
-        <h1 className="text-3xl md:text-5xl font-extrabold text-slate-900 mt-2 tracking-tight">
-          Sistema de Turnos F5
-        </h1>
-        <p className="text-slate-500 mt-2 text-lg">Seleccioná la fecha y asegurá tu partido.</p>
-      </header>
+    <div className="max-w-6xl mx-auto">
+      {/* Botón para volver al selector */}
+      <button 
+        onClick={onVolver}
+        className="mb-6 flex items-center gap-2 text-slate-500 hover:text-emerald-600 font-bold transition-colors"
+      >
+        <span>←</span> Volver a selección de canchas
+      </button>
 
-      {/* Contenedor Principal (Grid) */}
-      <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8">
-        
-        {/* Panel Lateral: Selección de Cancha y Calendario */}
-        <div className="lg:col-span-4 bg-white p-6 rounded-2xl shadow-sm border border-emerald-100 h-fit">
-          <label htmlFor="cancha" className="block mb-2 font-bold text-slate-700">
-            Selecciona la cancha
-          </label>
-          <select
-            id="cancha"
-            value={canchaId}
-            onChange={(e) => setCanchaId(Number(e.target.value))}
-            className="w-full mb-8 p-3 border-2 border-emerald-100 rounded-xl bg-slate-50 text-slate-800 font-medium focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition-all"
-          >
-            {CANCHAS.map((cancha) => (
-              <option key={cancha.id} value={cancha.id}>
-                {cancha.nombre}
-              </option>
-            ))}
-          </select>
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+        {/* Panel Izquierdo: Resumen de cancha y Calendario */}
+        <div className="lg:col-span-4 bg-slate-400 p-6 rounded-2xl shadow-sm border border-emerald-100 h-fit">
+          <div className="mb-6 pb-6 border-b border-slate-100">
+            <h2 className="text-5xl font-bold text-slate-800">{cancha.nombre}</h2>
+            <p className="text-slate-500 text-xl">{cancha.tipo}</p>
+          </div>
 
-          {/* Envolvemos el calendario para aislar un poco sus estilos por defecto */}
+          <label className="block mb-4 font-bold text-slate-700">Segundo Pase: Elegí la fecha</label>
           <div className="calendar-wrapper overflow-hidden rounded-xl border border-slate-200">
             <Calendar
               onChange={setFechaSeleccionada}
@@ -140,15 +112,13 @@ export default function CalendarioReservas() {
           </div>
         </div>
 
-        {/* Panel Principal: Grilla de Turnos */}
-        <div className="lg:col-span-8 bg-white p-6 md:p-8 rounded-2xl shadow-sm border border-emerald-100">
+        {/* Panel Derecho: Grilla de turnos (El código aquí es el mismo del paso anterior) */}
+        <div className="lg:col-span-8 bg-slate-400 p-6 md:p-8 rounded-2xl shadow-sm border border-emerald-100">
           <h2 className="text-2xl font-bold text-slate-800 mb-6 capitalize border-b-2 border-emerald-100 pb-4">
-            Turnos del{" "}
-            <span className="text-emerald-600">
-              {fechaSeleccionada.toLocaleDateString("es-AR", { weekday: "long", day: "numeric", month: "long" })}
-            </span>
+            Turnos del <span className="text-emerald-600">{fechaSeleccionada.toLocaleDateString("es-AR", { weekday: "long", day: "numeric", month: "long" })}</span>
           </h2>
-
+          
+          {/* ... Resto del código de la grilla de turnos, estados de carga y ticket de resumen ... */}
           {/* Leyenda de colores */}
           <div className="flex flex-wrap gap-6 mb-8 text-sm font-medium text-slate-600">
             <span className="flex items-center gap-2">
@@ -214,7 +184,7 @@ export default function CalendarioReservas() {
 
           {/* Resumen / "Marcador" de Checkout */}
           {turnoSeleccionado && (
-            <div className="mt-10 bg-slate-900 text-white p-6 rounded-2xl flex flex-col md:flex-row justify-between items-center gap-6 shadow-xl border-t-4 border-emerald-500">
+            <div className="mt-10 bg-slate-700 text-white p-6 rounded-2xl flex flex-col md:flex-row justify-between items-center gap-6 shadow-xl border-t-4 border-emerald-500">
               <div className="flex gap-8 w-full md:w-auto">
                 <div>
                   <span className="block text-slate-400 text-xs uppercase tracking-wider font-bold mb-1">Tu Horario</span>
@@ -241,6 +211,6 @@ export default function CalendarioReservas() {
           )}
         </div>
       </div>
-    </section>
-  );
+      </div>
+    );
 }
