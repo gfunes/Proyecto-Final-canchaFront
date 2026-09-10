@@ -15,6 +15,7 @@ import AdmReservas from "./components/pages/AdmReservas"
 import AdmCanchas from "./components/pages/AdmCanchas"
 import { useEffect, useState } from "react";
 import { AppContext } from "./context/AppContext";
+import CatalogoProductos from "./components/pages/CatalogoProductos"
 
 
 function App() {
@@ -50,7 +51,8 @@ const usuarioSessionStorage = JSON.parse(
             <Route path="/administrador/canchas" element={<AdmCanchas></AdmCanchas>}/>
             <Route path="/administrador/canchas/crear" element={<FormCancha titulo={'Crear cancha'}></FormCancha>}/>
             <Route path="/administrador/canchas/editar/:id" element={<FormCancha titulo={'Editar cancha'}></FormCancha>}/> */}
-                   </Route>    
+            </Route>
+            <Route path="/productos" element={<CatalogoProductos></CatalogoProductos>}/>
             <Route path="*" element={<Error404></Error404>}/>
             <Route path="/quienessomos" element={<QuienesSomos></QuienesSomos>}/>
             <Route path="/contacto" element={<Contacto></Contacto>}/>
