@@ -1,9 +1,6 @@
 import { useForm } from "react-hook-form";
-interface FormularioProps {
-  titulo: string;
-}
 
-const Formulario = ({ titulo }: FormularioProps) => {
+const Formulario = () => {
   const {
     register,
     handleSubmit,
@@ -27,8 +24,8 @@ const Formulario = ({ titulo }: FormularioProps) => {
     <section className="max-w-4xl mx-auto animate-fadeIn">
       <div className="bg-slate-900 p-8 rounded-2xl border border-slate-900 shadow-xl my-3">
         <h1 className="text-3xl text-right font-bold text-white mb-8 border-b border-slate-500 pb-4">
-  {titulo}
-</h1>
+          Formulario Productos
+        </h1>
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="md:col-span-2">
@@ -46,7 +43,7 @@ const Formulario = ({ titulo }: FormularioProps) => {
                 })}
               />
               <p className="text-red-500 text-xs mt-1 italic">
-                {errors.nombreProducto?.message as string}
+                {errors.nombreProducto?.message}
               </p>
             </div>
             <div>
@@ -64,7 +61,7 @@ const Formulario = ({ titulo }: FormularioProps) => {
                 })}
               />
               <p className="text-red-500 text-xs mt-1 italic">
-                {errors.precio?.message as string }
+                {errors.precio?.message}
               </p>
             </div>
             <div>
@@ -88,7 +85,7 @@ const Formulario = ({ titulo }: FormularioProps) => {
                 </option>
               </select>
               <p className="text-red-500 text-xs mt-1 italic">
-                {errors.categoria?.message as string }
+                {errors.categoria?.message}
               </p>
             </div>
             <div className="md:col-span-2">
@@ -109,7 +106,7 @@ const Formulario = ({ titulo }: FormularioProps) => {
                 })}
               />
               <p className="text-red-500 text-xs mt-1 italic">
-                {errors.imagen?.message as string}
+                {errors.imagen?.message}
               </p>
             </div>
 
@@ -128,7 +125,7 @@ const Formulario = ({ titulo }: FormularioProps) => {
                 })}
               />
               <p className="text-red-500 text-xs mt-1 italic">
-                {errors.descripcion?.message as string}
+                {errors.descripcion?.message}
               </p>
             </div>
           </div>
