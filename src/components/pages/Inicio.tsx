@@ -1,5 +1,5 @@
-//import CardProducto from "../services/CardCancha";
 import SistemaReservas from "./SistemaReservas";
+import Carousel from "../services/Carousel"
 
 const Inicio = () => {
   return (
@@ -16,16 +16,13 @@ const Inicio = () => {
               compra
             </p>
           </div>
-          <span className="bg-green-500 hover:bg-green-600 transition text-l py-2 px-3 rounded-2xl font-bold cursor-pointer">Reserva tu cancha⚽</span>
+          <span className="bg-green-500 hover:bg-green-600 transition text-l py-2 px-3 rounded-2xl font-bold cursor-pointer">
+            Reserva tu cancha⚽
+          </span>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
-          <CardProducto />
-          <CardProducto />
-          <CardProducto />
-        </div>
-      </div>
-       <SistemaReservas />
-    </section>
+        <SistemaReservas />
+      </section>
+    </>
   );
 };
 
