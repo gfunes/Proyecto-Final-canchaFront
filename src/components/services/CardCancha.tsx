@@ -27,11 +27,10 @@ const CardCancha = ({ cancha, onVerTurnos }) => {
 
       {/* Contenedor Inferior: Textos y Acciones */}
       <div className="p-5 flex flex-col grow">
-        
         <h3 className="text-2xl font-black text-slate-800 uppercase italic tracking-tight mb-2">
           {nombre}
         </h3>
-        
+
         <p className="text-slate-600 text-sm mb-6 line-clamp-3">
           {descripcion}
         </p>
@@ -45,7 +44,6 @@ const CardCancha = ({ cancha, onVerTurnos }) => {
             className="bg-slate-900 hover:bg-green-600 text-white font-bold py-2.5 px-3 rounded-xl shadow-md transition-colors duration-300 transform active:scale-95 uppercase text-[10px] tracking-wider text-center max-w-32.5 cursor-pointer"
           >Ver turnos disponibles
           </button>
-          
         </div>
       </div>
     </div>
