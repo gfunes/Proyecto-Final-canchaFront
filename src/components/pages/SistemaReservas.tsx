@@ -1,18 +1,14 @@
 import { useState } from "react";
 import SelectorCancha from "./SelectorCancha"
 import CalendarioReservas from "./CalendarioReservas"
-import type { Cancha } from "../../interfaces/canchas";
 
 
 
-interface SistemaReservasProps{
-  canchas : Cancha[]
-  
- }
 
-export default function SistemaReservas({canchas}:SistemaReservasProps) {
+
+export default function SistemaReservas() {
   // Estado para guardar la cancha que el usuario seleccionó
-  const [canchaSeleccionada, setCanchaSeleccionada] = useState<Cancha | null>(null);
+  const [canchaSeleccionada, setCanchaSeleccionada] = useState(null);
 
   return (
   
@@ -21,11 +17,14 @@ export default function SistemaReservas({canchas}:SistemaReservasProps) {
         <h1 className="text-emerald-600  text-3xl font-bold tracking-wider  uppercase flex items-center justify-center md:justify-start gap-2">
           ⚽ Reserva tu partido
          </h1>
-          </header>
+        {/* <h1 className="text-3xl md:text-5xl font-extrabold text-slate-900 mt-2 tracking-tight">
+          Sistema de Turnos F5
+        </h1> */}
+      </header>
 
       {/* Renderizado Condicional: Si no hay cancha, muestra el selector. Si hay, muestra el calendario */}
       {!canchaSeleccionada ? (
-        <SelectorCancha  canchas={canchas} onSeleccionarCancha={setCanchaSeleccionada} />
+        <SelectorCancha onSeleccionarCancha={setCanchaSeleccionada} />
       ) : (
         <CalendarioReservas 
           cancha={canchaSeleccionada} 
