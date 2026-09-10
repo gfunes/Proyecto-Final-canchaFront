@@ -1,12 +1,12 @@
 import SistemaReservas from "./SistemaReservas";
-import Carousel from "../services/Carousel"
+import CardProducto from "../services/CardProducto";
+
 import {NavLink} from "react-router";
 
 const Inicio = () => {
   return (
     <>
-      <Carousel />
-      <section className="space-y-8 animate-fadeIn px-10 mb-5">
+      <section className="space-y-8 animate-fadeIn px-10 my-5">
         <div className="flex flex-col md:flex-row md:items-center justify-between border-b border-zinc-800 pb-5 gap-4">
           <div>
             <h1 className="text-3xl font-bold text-white tracking-tight">
@@ -17,11 +17,15 @@ const Inicio = () => {
               compra
             </p>
           </div>
-          <NavLink to="/productos" className={"bg-green-500 hover:bg-green-600 transition text-l py-2 px-3 rounded-2xl font-bold cursor-pointer"}>
-            Compra tus productos 🥤🌭
+          <NavLink to="/" className={"bg-green-500 hover:bg-green-600 transition text-l py-2 px-3 rounded-2xl font-bold cursor-pointer"}>
+            Volver al juego ⚽
           </NavLink>
         </div>
-        <SistemaReservas />
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <CardProducto/>
+        <CardProducto/>
+        <CardProducto/>
+        </div>
       </section>
     </>
   );
