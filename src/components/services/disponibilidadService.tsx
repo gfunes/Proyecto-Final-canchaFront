@@ -49,7 +49,8 @@ export async function obtenerDisponibilidad(
     //   "20:00", "21:00", "22:00", "23:00", "00:00"
     // ];
   const horasDelDia = data.canchas[0].turnosLibres 
-  console.log(horasDelDia)
+
+  
     const calcularHoraFin = (hora: string) => {
       const [h, m] = hora.split(":");
       const siguiente = (parseInt(h, 10) + 1) % 24;
