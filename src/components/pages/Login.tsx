@@ -1,14 +1,50 @@
 import { useForm } from "react-hook-form";
+import { useAppContext } from "../../context/AppContext";
+import { useNavigate } from "react-router";
+import Swal from "sweetalert2";
+
+interface LoginFormInputs {
+  email: string;
+  password: string;
+}
 
 const Login = () => {
+   const {setUsuarioLogueado} = useAppContext()
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm();
+  } = useForm<LoginFormInputs>();
+  const navegacion = useNavigate()
 
-  const onSubmit = (data: any) => {
+  const onSubmit = (data: LoginFormInputs) => {
     console.log(data);
+  if (
+      data.email === import.meta.env.VITE_EMAIL &&
+      data.password === import.meta.env.VITE_PASSWORD
+    ) {
+      setUsuarioLogueado(true);
+      Swal.fire({
+        title: "Bienvenido Administrador",
+        text: "Ingresando al sistema",
+        icon: "success",
+        background: "#18181b",
+        color: "#f4f4f5",
+        confirmButtonColor: "#3b82f6",
+      });
+      //redirecciono al admin
+      navegacion('/administrador');
+    } else {
+      Swal.fire({
+        title: "Ocurrió un error",
+        text: "Credenciales incorrectas",
+        icon: "error",
+        background: "#18181b",
+        color: "#f4f4f5",
+        confirmButtonColor: "#ef4444",
+      });
+    }
+   
   };
 
   return (
@@ -19,7 +55,7 @@ const Login = () => {
             Iniciar Sesión
           </h2>
           <p className="mt-2 text-center text-sm text-zinc-400">
-            Accede al panel de control de{" "}
+            Accede al panel de {" "}
             <span className="text-green-500 font-semibold">RollingClub</span>
           </p>
         </div>
@@ -95,7 +131,16 @@ const Login = () => {
             >
               Ingresar al sistema
             </button>
-          </div>
+            </div>
+            <p className="text-center text-sm text-[#64748B] mt-6">
+          ¿No tienes cuenta?{" "}
+          <a
+            href="/registrate"
+            className="text-green-500 hover:text-green-600 font-semibold"
+          >
+            Click Aqui
+          </a>
+          </p>
         </form>
       </div>
     </section>
