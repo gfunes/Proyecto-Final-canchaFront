@@ -1,6 +1,12 @@
 import { useForm } from "react-hook-form";
 
-const FormCancha = () => {
+// 1. Declaración de la interface para recibir la prop
+interface FormCanchaProps {
+  titulo: string;
+}
+
+// 2. Recepción y tipado de la prop titulo
+const FormCancha = ({ titulo }: FormCanchaProps) => {
   const {
     register,
     handleSubmit,
@@ -9,9 +15,7 @@ const FormCancha = () => {
     // setValue,
   } = useForm();
 
-  const onSubmit = () => {
-    
-  };
+  const onSubmit = () => {};
 
   // Clase utilitaria para inputs
   const inputClass = (hasError: boolean) => `
@@ -23,8 +27,9 @@ const FormCancha = () => {
   return (
     <section className="max-w-4xl mx-auto animate-fadeIn">
       <div className="bg-slate-700 p-8 rounded-2xl border border-slate-900 shadow-xl my-3">
+        {/* 3. Renderizado de la prop dinámica en lugar del texto estático */}
         <h1 className="text-3xl text-right font-bold text-white mb-8 border-b border-slate-500 pb-4">
-          Formulario Canchas
+          {titulo}
         </h1>
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -43,7 +48,7 @@ const FormCancha = () => {
                 })}
               />
               <p className="text-red-500 text-xs mt-1 italic">
-                {errors.nombreCancha?.message}
+                {errors.nombreCancha?.message as string}
               </p>
             </div>
             <div>
@@ -61,7 +66,7 @@ const FormCancha = () => {
                 })}
               />
               <p className="text-red-500 text-xs mt-1 italic">
-                {errors.precio?.message}
+                {errors.precio?.message as string}
               </p>
             </div>
             <div>
@@ -81,11 +86,11 @@ const FormCancha = () => {
                   Cancha techada
                 </option>
                 <option value="Cancha Aire Libre" className="bg-zinc-900">
-                 Cancha aire libre
+                  Cancha aire libre
                 </option>
               </select>
               <p className="text-red-500 text-xs mt-1 italic">
-                {errors.categoria?.message}
+                {errors.categoria?.message as string}
               </p>
             </div>
             <div className="md:col-span-2">
@@ -106,7 +111,7 @@ const FormCancha = () => {
                 })}
               />
               <p className="text-red-500 text-xs mt-1 italic">
-                {errors.imagen?.message}
+                {errors.imagen?.message as string}
               </p>
             </div>
 
@@ -125,11 +130,11 @@ const FormCancha = () => {
                 })}
               />
               <p className="text-red-500 text-xs mt-1 italic">
-                {errors.descripcion?.message}
+                {errors.descripcion?.message as string}
               </p>
             </div>
           </div>
-          
+
           <div className="pt-4">
             <button
               type="submit"
