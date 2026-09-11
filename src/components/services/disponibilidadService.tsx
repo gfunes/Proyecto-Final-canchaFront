@@ -1,6 +1,4 @@
-export async function obtenerDisponibilidad(canchaId, fecha, signal) {
-  // Simulamos un tiempo de carga (ej. 800 milisegundos)
-  await new Promise((resolve) => setTimeout(resolve, 800));
+import { listarReservasApi } from "../../helpers/queries";
 
 export async function obtenerDisponibilidad(
   canchaId: string,
@@ -44,12 +42,7 @@ export async function obtenerDisponibilidad(
       throw new DOMException("Aborted", "AbortError");
     }
 
-    // 3. Generamos la grilla completa de 08:00 a 00:00
-    //  const horasDelDia: string[] = [
-    //   "03:00", "05:00", "10:00", "11:00", "12:00", "13:00",
-    //   "14:00", "15:00", "16:00", "17:00", "18:00", "19:00",
-    //   "20:00", "21:00", "22:00", "23:00", "00:00"
-    // ];
+    
   const horasDelDia = data.canchas[0].turnosLibres 
 
   
@@ -92,17 +85,4 @@ export async function obtenerDisponibilidad(
     console.error("Error al cruzar disponibilidad con la base de datos:", error);
     throw error;
   }
-
-  // Devolvemos datos falsos (Mock Data)
-  return {
-    canchaId,
-    fecha,
-    turnos: [
-      { id: 101, horaInicio: "17:00", horaFin: "18:00", estado: "disponible", precio: 20000 },
-      { id: 102, horaInicio: "18:00", horaFin: "19:00", estado: "reservado", precio: 25000 },
-      { id: 103, horaInicio: "19:00", horaFin: "20:00", estado: "disponible", precio: 25000 },
-      { id: 104, horaInicio: "20:00", horaFin: "21:00", estado: "pendiente", precio: 28000 },
-      { id: 105, horaInicio: "21:00", horaFin: "22:00", estado: "disponible", precio: 28000 }
-    ]
-  };
 }
