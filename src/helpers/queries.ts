@@ -2,6 +2,7 @@ import type { Cancha } from "../interfaces/canchas";
 
 const urlCanchas = `${import.meta.env.VITE_ALQUILER_CANCHAS}/canchas`;
 const urlReservas = `${import.meta.env.VITE_ALQUILER_CANCHAS}/reservas/disponibles`;
+const urlCategorias = `${import.meta.env.VITE_ALQUILER_CANCHAS}/categoriaCanchas`;
 
 export const listarCanchasApi = async (): Promise<Response> => {
   try {
@@ -29,6 +30,7 @@ export const crearCanchaApi = async (cancha: Cancha): Promise<Response> => {
     const token = sessionStorage.getItem("token") || localStorage.getItem("token");
     const respuesta = await fetch(urlCanchas, {
       method: "POST",
+      credentials: "include",
       headers: {
         "Content-Type": "application/json",
          "Authorization": `Bearer ${token}`,
@@ -49,6 +51,7 @@ export const editarCanchaApi = async (
   try {
     const respuesta = await fetch(`${urlCanchas}/${id}`, {
       method: "PUT",
+      credentials: "include",
       headers: {
         "Content-Type": "application/json",
       },
@@ -65,8 +68,13 @@ export const borrarCanchaApi = async (id: string): Promise<Response> => {
   try {
     const respuesta = await fetch(`${urlCanchas}/${id}`, {
       method: "DELETE",
+     credentials: "include",
+     headers: {
+        "Content-Type": "application/json",
+      },
     });
     return respuesta;
+    console.log("Token enviado al borrar:", token);
   } catch (error) {
     console.error(`Error al borrar la cancha con id ${id}:`, error);
     throw error;
@@ -91,5 +99,18 @@ export const listarReservasApi = async (
     }
     console.error("Error al conectar con la API de reservas/turnos:", error);
     throw error;
+  }
+};
+export const listarCategoriasApi = async (): Promise<any[]> => {
+  try {
+    const respuesta = await fetch(urlCategorias);
+    if (!respuesta.ok) {
+      throw new Error(`Error HTTP: ${respuesta.status}`);
+    }
+    const datos = await respuesta.json();
+    return datos;
+  } catch (error) {
+    console.error("Error al listar categorías:", error);
+    return [];
   }
 };

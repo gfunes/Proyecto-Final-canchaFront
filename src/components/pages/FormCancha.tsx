@@ -1,16 +1,78 @@
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router";
+import Swal from "sweetalert2";
+import { crearCanchaApi, listarCategoriasApi } from "../../helpers/queries";
+import { useEffect, useState } from "react";
+
+interface Categoria {
+  _id: string;
+  nombre: string;
+}
 
 const FormCancha = () => {
+  const [categorias, setCategorias] = useState<Categoria[]>([]);
   const {
     register,
     handleSubmit,
     formState: { errors },
-    // reset,
+    reset,
     // setValue,
   } = useForm();
 
-  const onSubmit = () => {
-    
+  const navegacion = useNavigate();
+
+  useEffect(() => {
+    const obtenerCategorias = async () => {
+      try {
+        const respuesta = await listarCategoriasApi();
+        if (Array.isArray(respuesta)) {
+          setCategorias(respuesta);
+        }
+      } catch (error) {
+        console.error("Error al cargar categorías:", error);
+      }
+    };
+
+    obtenerCategorias();
+  }, []);
+
+  const onSubmit = async (datosCancha: any) => {
+    try {
+      const respuesta = await crearCanchaApi(datosCancha);
+
+      if (respuesta.status === 201) {
+        Swal.fire({
+          title: "Cancha creada",
+          text: `La cancha "${datosCancha.nombreCancha}" fue creada exitosamente`,
+          icon: "success",
+          background: "#18181b",
+          color: "#f4f4f5",
+          confirmButtonColor: "#22c55e",
+        });
+        reset();
+        navegacion("/administrador");
+      } else {
+        const errorData = await respuesta.json();
+        Swal.fire({
+          title: "Ocurrió un error",
+          text: errorData.mensaje || "No se pudo crear la cancha",
+          icon: "error",
+          background: "#18181b",
+          color: "#f4f4f5",
+          confirmButtonColor: "#ef4444",
+        });
+      }
+    } catch (error) {
+      console.error(error);
+      Swal.fire({
+        title: "Error de conexión",
+        text: "No se pudo contactar con el servidor",
+        icon: "error",
+        background: "#18181b",
+        color: "#f4f4f5",
+        confirmButtonColor: "#ef4444",
+      });
+    }
   };
 
   // Clase utilitaria para inputs
@@ -65,7 +127,7 @@ const FormCancha = () => {
               </p>
             </div>
             <div>
-              <label className="block text-sm font-medium text-slate-500 mb-2">
+              <label className="block text-sm font-medium text-slate-300 mb-2">
                 Tipo Cancha*
               </label>
               <select
@@ -77,17 +139,17 @@ const FormCancha = () => {
                 <option value="" className="bg-zinc-900">
                   Seleccione una opción
                 </option>
-                <option value="Cancha Techada" className="bg-zinc-900">
-                  Cancha techada
-                </option>
-                <option value="Cancha Aire Libre" className="bg-zinc-900">
-                 Cancha aire libre
-                </option>
+                {categorias.map((cat) => (
+                  <option key={cat._id} value={cat._id} className="bg-zinc-900">
+                    {cat.nombre}
+                  </option>
+                ))}
               </select>
               <p className="text-red-500 text-xs mt-1 italic">
-                {errors.categoria?.message}
+                {errors.categoria?.message as string}
               </p>
             </div>
+
             <div className="md:col-span-2">
               <label className="block text-sm font-medium text-slate-500 mb-2">
                 URL de Imagen*
@@ -129,13 +191,13 @@ const FormCancha = () => {
               </p>
             </div>
           </div>
-          
+
           <div className="pt-4">
             <button
               type="submit"
               className="w-full md:w-auto px-8 py-3 bg-green-500 hover:bg-green-600 text-white font-bold rounded-lg transition-all active:scale-95 shadow-lg shadow-blue-900/20"
             >
-              Guardar Cancha
+              Crear Cancha
             </button>
           </div>
         </form>

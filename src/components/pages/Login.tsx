@@ -17,12 +17,28 @@ const Login = () => {
   } = useForm<LoginFormInputs>();
   const navegacion = useNavigate()
 
-  const onSubmit = (data: LoginFormInputs) => {
-    console.log(data);
-  if (
-      data.email === import.meta.env.VITE_EMAIL &&
-      data.password === import.meta.env.VITE_PASSWORD
-    ) {
+  const onSubmit = async (data: LoginFormInputs) => {
+    //console.log(data);
+    try {
+      // 1. Llamar al backend real en Render
+      const respuesta = await fetch(
+        "https://alquiler-cancha-proyecto-final-backend.onrender.com/api/usuarios/login", // O la variable de entorno que uses para la URL base
+        {
+          method: "POST",
+          credentials: "include", // <-- OBLIGATORIO: guarda la cookie enviada por Render
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        }
+      );
+
+      const resultado = await respuesta.json();
+  //if (
+      // data.email === import.meta.env.VITE_EMAIL &&
+      // data.password === import.meta.env.VITE_PASSWORD
+    //) {
+    if (respuesta.status === 200) {
       setUsuarioLogueado(true);
       Swal.fire({
         title: "Bienvenido Administrador",
@@ -45,6 +61,17 @@ const Login = () => {
       });
     }
    
+  } catch (error) {
+      console.error(error);
+      Swal.fire({
+        title: "Error de conexión",
+        text: "No se pudo conectar con el servidor",
+        icon: "error",
+        background: "#18181b",
+        color: "#f4f4f5",
+        confirmButtonColor: "#ef4444",
+      });
+    }
   };
 
   return (
@@ -80,15 +107,15 @@ const Login = () => {
                   required: "El email es obligatorio",
                   pattern: {
                     value:
-                      /^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/,
+                           /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
                     message: "Email no válido",
                   },
                 })}
               />
               {errors.email && (
-                <span className="text-red-500 text-xs mt-1 italic">
-                  {errors.email.message}
-                </span>
+                <p className="text-red-500 text-xs mt-1 italic">
+                  {String(errors.email?.message || "")}
+                </p>
               )}
             </div>
 
@@ -117,9 +144,9 @@ const Login = () => {
                 })}
               />
               {errors.password && (
-                <span className="text-red-500 text-xs mt-1 italic">
-                  {errors.password.message}
-                </span>
+                <p className="text-red-500 text-xs mt-1 italic">
+                  {String(errors.password?.message || "")}
+                </p>
               )}
             </div>
           </div>
