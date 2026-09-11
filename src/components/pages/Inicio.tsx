@@ -1,12 +1,31 @@
 import SistemaReservas from "../pages/SistemaReservas";
 import { useEffect, useState } from "react";
 import type { Cancha } from "../../interfaces/canchas";
-import { listarCanchasApi } from "../../helpers/queries";
+import { listarCanchasApi } from "../../";
 import Swal from "sweetalert2";
 import Carousel from "../services/Carousel"
 import {NavLink} from "react-router";
 
 const Inicio = () => {
+  const [canchas, setCanchas] = useState<Cancha[]>([]);
+  useEffect(() => {
+    cargarCanchas();
+  }, []);
+
+  const cargarCanchas = async () => 
+    const respuestaCancha = await listarCanchasApi()
+    if (respuestaCancha && respuestaCancha.status === 200) {
+      const data = await respuestaCancha.json();
+
+      setCanchas(data.canchas);
+    } else {
+      Swal.fire({
+        title: "Ocurrio un error",
+        text: `No se puede mostrar las canchas en este momento`,
+        icon: "success",
+      });
+    }
+  };
   return (
 
     <section className="space-y-8 animate-fadeIn">
