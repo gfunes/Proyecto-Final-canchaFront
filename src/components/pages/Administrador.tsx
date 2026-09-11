@@ -67,7 +67,7 @@ const cargarCanchas=async()=>{
           className="bg-green-600 hover:bg-blue-500 text-white px-5 py-2.5 rounded-xl font-bold transition-all shadow-lg shadow-blue-900/20 active:scale-95 text-center  flex
            items-center gap-1"
         >
-          <LuCirclePlus />
+                    <LuCirclePlus />
           Agregar Cancha
         </Link>
             </tr>
@@ -92,7 +92,7 @@ const cargarCanchas=async()=>{
                 </td>
               </tr>
             )}
-            <ItemTablaCanchas />
+            
           </tbody>
         </table>
       </div>
