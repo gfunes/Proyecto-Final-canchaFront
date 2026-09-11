@@ -66,7 +66,9 @@ export const borrarCanchaApi = async (id: string): Promise<Response> => {
     const respuesta = await fetch(`${urlCanchas}/${id}`, {
       method: "DELETE",
     });
+    
     return respuesta;
+    console.log("Token enviado al borrar:", token);
   } catch (error) {
     console.error(`Error al borrar la cancha con id ${id}:`, error);
     throw error;
