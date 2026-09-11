@@ -1,16 +1,57 @@
 import { useForm } from "react-hook-form";
+import { useNavigate} from "react-router";
+import Swal from "sweetalert2";
+import { crearCanchaApi } from "../../helpers/queries";
 
 const FormCancha = () => {
   const {
     register,
     handleSubmit,
     formState: { errors },
-    // reset,
+    reset,
     // setValue,
   } = useForm();
 
-  const onSubmit = () => {
-    
+   const navegacion = useNavigate();
+   
+  const onSubmit = async (datosCancha:any) => {
+    try {
+      const respuesta = await crearCanchaApi(datosCancha);
+
+      if (respuesta.status === 201) {
+        Swal.fire({
+          title: "Cancha creada",
+          text: `La cancha "${datosCancha.nombreCancha}" fue creada exitosamente`,
+          icon: "success",
+          background: "#18181b",
+          color: "#f4f4f5",
+          confirmButtonColor: "#22c55e",
+        });
+        reset();
+        navegacion("/administrador");
+      } else {
+        const errorData = await respuesta.json();
+        Swal.fire({
+          title: "Ocurrió un error",
+          text: errorData.mensaje || "No se pudo crear la cancha",
+          icon: "error",
+          background: "#18181b",
+          color: "#f4f4f5",
+          confirmButtonColor: "#ef4444",
+        });
+      }
+    } catch (error) {
+      console.error(error);
+      Swal.fire({
+        title: "Error de conexión",
+        text: "No se pudo contactar con el servidor",
+        icon: "error",
+        background: "#18181b",
+        color: "#f4f4f5",
+        confirmButtonColor: "#ef4444",
+      });
+    }
+  };
   };
 
   // Clase utilitaria para inputs

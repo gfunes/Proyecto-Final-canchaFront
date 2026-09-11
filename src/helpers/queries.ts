@@ -29,6 +29,7 @@ export const crearCanchaApi = async (cancha: Cancha): Promise<Response> => {
     const token = sessionStorage.getItem("token") || localStorage.getItem("token");
     const respuesta = await fetch(urlCanchas, {
       method: "POST",
+      credentials: "include",
       headers: {
         "Content-Type": "application/json",
          "Authorization": `Bearer ${token}`,
@@ -49,6 +50,7 @@ export const editarCanchaApi = async (
   try {
     const respuesta = await fetch(`${urlCanchas}/${id}`, {
       method: "PUT",
+      credentials: "include",
       headers: {
         "Content-Type": "application/json",
       },
@@ -65,8 +67,11 @@ export const borrarCanchaApi = async (id: string): Promise<Response> => {
   try {
     const respuesta = await fetch(`${urlCanchas}/${id}`, {
       method: "DELETE",
+     credentials: "include",
+     headers: {
+        "Content-Type": "application/json",
+      },
     });
-    
     return respuesta;
     console.log("Token enviado al borrar:", token);
   } catch (error) {
