@@ -74,7 +74,7 @@ export const borrarCanchaApi = async (id: string): Promise<Response> => {
       },
     });
     return respuesta;
-    console.log("Token enviado al borrar:", token);
+    //console.log("Token enviado al borrar:", token);
   } catch (error) {
     console.error(`Error al borrar la cancha con id ${id}:`, error);
     throw error;
@@ -112,5 +112,21 @@ export const listarCategoriasApi = async (): Promise<any[]> => {
   } catch (error) {
     console.error("Error al listar categorías:", error);
     return [];
+  }
+};
+export const loginBackendApi = async (usuario: any): Promise<Response> => {
+  try {
+    const respuesta = await fetch(`${urlUsuarios}/login`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include", // <-- OBLIGATORIO para aceptar y enviar cookies
+      body: JSON.stringify(usuario),
+    });
+    return respuesta;
+  } catch (error) {
+    console.error("Error en loginBackendApi:", error);
+    throw error;
   }
 };
