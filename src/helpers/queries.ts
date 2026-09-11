@@ -2,6 +2,7 @@ import type { Cancha } from "../interfaces/canchas";
 
 const urlCanchas = `${import.meta.env.VITE_ALQUILER_CANCHAS}/canchas`;
 const urlReservas = `${import.meta.env.VITE_ALQUILER_CANCHAS}/reservas/disponibles`;
+const urlCategorias = `${import.meta.env.VITE_ALQUILER_CANCHAS}/categoriaCanchas`;
 
 export const listarCanchasApi = async (): Promise<Response> => {
   try {
@@ -98,5 +99,18 @@ export const listarReservasApi = async (
     }
     console.error("Error al conectar con la API de reservas/turnos:", error);
     throw error;
+  }
+};
+export const listarCategoriasApi = async (): Promise<any[]> => {
+  try {
+    const respuesta = await fetch(urlCategorias);
+    if (!respuesta.ok) {
+      throw new Error(`Error HTTP: ${respuesta.status}`);
+    }
+    const datos = await respuesta.json();
+    return datos;
+  } catch (error) {
+    console.error("Error al listar categorías:", error);
+    return [];
   }
 };

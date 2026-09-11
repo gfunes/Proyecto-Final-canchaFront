@@ -52,8 +52,7 @@ const FormCancha = () => {
       });
     }
   };
-  };
-
+  
   // Clase utilitaria para inputs
   const inputClass = (hasError: boolean) => `
     w-full px-4 py-2.5 bg-zinc-950 border rounded-lg text-zinc-100 
@@ -176,7 +175,7 @@ const FormCancha = () => {
               type="submit"
               className="w-full md:w-auto px-8 py-3 bg-green-500 hover:bg-green-600 text-white font-bold rounded-lg transition-all active:scale-95 shadow-lg shadow-blue-900/20"
             >
-              Guardar Cancha
+              Crear Cancha
             </button>
           </div>
         </form>
