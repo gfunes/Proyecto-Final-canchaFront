@@ -1,9 +1,16 @@
 import { useForm } from "react-hook-form";
-import { useNavigate} from "react-router";
+import { useNavigate } from "react-router";
 import Swal from "sweetalert2";
-import { crearCanchaApi } from "../../helpers/queries";
+import { crearCanchaApi, listarCanchasApi } from "../../helpers/queries";
+import { useEffect, useState } from "react";
+
+interface Categoria {
+  _id: string;
+  nombre: string;
+}
 
 const FormCancha = () => {
+  const [categorias, setCategorias] = useState<Categoria[]>([]);
   const {
     register,
     handleSubmit,
@@ -12,9 +19,24 @@ const FormCancha = () => {
     // setValue,
   } = useForm();
 
-   const navegacion = useNavigate();
-   
-  const onSubmit = async (datosCancha:any) => {
+  const navegacion = useNavigate();
+
+  useEffect(() => {
+    const obtenerCategorias = async () => {
+      try {
+        const respuesta = await listarCanchasApi();
+        if (Array.isArray(respuesta)) {
+          setCategorias(respuesta);
+        }
+      } catch (error) {
+        console.error("Error al cargar categorías:", error);
+      }
+    };
+
+    obtenerCategorias();
+  }, []);
+
+  const onSubmit = async (datosCancha: any) => {
     try {
       const respuesta = await crearCanchaApi(datosCancha);
 
@@ -52,7 +74,7 @@ const FormCancha = () => {
       });
     }
   };
-  
+
   // Clase utilitaria para inputs
   const inputClass = (hasError: boolean) => `
     w-full px-4 py-2.5 bg-zinc-950 border rounded-lg text-zinc-100 
@@ -114,15 +136,34 @@ const FormCancha = () => {
                   required: "Seleccione una categoría",
                 })}
               >
-                <option value="" className="bg-zinc-900">
-                  Seleccione una opción
-                </option>
-                <option value="Cancha Techada" className="bg-zinc-900">
-                  Cancha techada
-                </option>
-                <option value="Cancha Aire Libre" className="bg-zinc-900">
-                 Cancha aire libre
-                </option>
+                <div>
+                  <label className="block text-sm font-medium text-slate-500 mb-2">
+                    Tipo Cancha*
+                  </label>
+                  <select
+                    className={inputClass(!!errors.categoria)}
+                    {...register("categoria", {
+                      required: "Seleccione una categoría",
+                    })}
+                  >
+                    <option value="" className="bg-zinc-900">
+                      Seleccione una opción
+                    </option>
+                    {/* Al leer 'categorias' aquí, el subrayado amarillo desaparecerá */}
+                    {categorias.map((cat) => (
+                      <option
+                        key={cat._id}
+                        value={cat._id}
+                        className="bg-zinc-900"
+                      >
+                        {cat.nombre}
+                      </option>
+                    ))}
+                  </select>
+                  <p className="text-red-500 text-xs mt-1 italic">
+                    {errors.categoria?.message as string}
+                  </p>
+                </div>
               </select>
               <p className="text-red-500 text-xs mt-1 italic">
                 {errors.categoria?.message}
@@ -169,7 +210,7 @@ const FormCancha = () => {
               </p>
             </div>
           </div>
-          
+
           <div className="pt-4">
             <button
               type="submit"
