@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router";
 import Swal from "sweetalert2";
-import { crearCanchaApi, listarCanchasApi } from "../../helpers/queries";
+import { crearCanchaApi, listarCategoriasApi } from "../../helpers/queries";
 import { useEffect, useState } from "react";
 
 interface Categoria {
@@ -24,7 +24,7 @@ const FormCancha = () => {
   useEffect(() => {
     const obtenerCategorias = async () => {
       try {
-        const respuesta = await listarCanchasApi();
+        const respuesta = await listarCategoriasApi();
         if (Array.isArray(respuesta)) {
           setCategorias(respuesta);
         }
@@ -127,7 +127,7 @@ const FormCancha = () => {
               </p>
             </div>
             <div>
-              <label className="block text-sm font-medium text-slate-500 mb-2">
+              <label className="block text-sm font-medium text-slate-300 mb-2">
                 Tipo Cancha*
               </label>
               <select
@@ -136,39 +136,20 @@ const FormCancha = () => {
                   required: "Seleccione una categoría",
                 })}
               >
-                <div>
-                  <label className="block text-sm font-medium text-slate-500 mb-2">
-                    Tipo Cancha*
-                  </label>
-                  <select
-                    className={inputClass(!!errors.categoria)}
-                    {...register("categoria", {
-                      required: "Seleccione una categoría",
-                    })}
-                  >
-                    <option value="" className="bg-zinc-900">
-                      Seleccione una opción
-                    </option>
-                    {/* Al leer 'categorias' aquí, el subrayado amarillo desaparecerá */}
-                    {categorias.map((cat) => (
-                      <option
-                        key={cat._id}
-                        value={cat._id}
-                        className="bg-zinc-900"
-                      >
-                        {cat.nombre}
-                      </option>
-                    ))}
-                  </select>
-                  <p className="text-red-500 text-xs mt-1 italic">
-                    {errors.categoria?.message as string}
-                  </p>
-                </div>
+                <option value="" className="bg-zinc-900">
+                  Seleccione una opción
+                </option>
+                {categorias.map((cat) => (
+                  <option key={cat._id} value={cat._id} className="bg-zinc-900">
+                    {cat.nombre}
+                  </option>
+                ))}
               </select>
               <p className="text-red-500 text-xs mt-1 italic">
-                {errors.categoria?.message}
+                {errors.categoria?.message as string}
               </p>
             </div>
+
             <div className="md:col-span-2">
               <label className="block text-sm font-medium text-slate-500 mb-2">
                 URL de Imagen*
