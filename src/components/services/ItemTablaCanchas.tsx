@@ -13,6 +13,8 @@ interface ItemTablaCanchasProps {
 
 const ItemTablaCanchas = ({cancha, fila, setCanchas}:ItemTablaCanchasProps) => {
  
+
+
  const eliminarCancha = () => {
     Swal.fire({
       title: "¿Estás seguro?",
@@ -28,6 +30,7 @@ const ItemTablaCanchas = ({cancha, fila, setCanchas}:ItemTablaCanchasProps) => {
     }).then(async (result) => {
       if (result.isConfirmed) {
         const respuesta = await borrarCanchaApi(cancha._id);
+        console.log("respuesta borrar", respuesta)
         if (respuesta && respuesta.status === 200) {
           // actualizar la tabla de servicios
           setCanchas((prevCanchas)=>prevCanchas.filter((item)=>item._id !== cancha._id))
@@ -73,10 +76,10 @@ const ItemTablaCanchas = ({cancha, fila, setCanchas}:ItemTablaCanchasProps) => {
         <div className="flex gap-3">
           
           <Link
-            to={`/administrador/editar/${cancha._id}`}
+            to={`/administrador/canchas/editar/${cancha._id}`}
             className="text-amber-500 hover:text-amber-400 transition-colors flex items-center gap-1"
           >
-            <LuPencil /> Editar
+            Editar <LuPencil /> 
           </Link>
           <button
             className="text-red-500 hover:text-red-400 transition-colors flex items-center gap-1"
