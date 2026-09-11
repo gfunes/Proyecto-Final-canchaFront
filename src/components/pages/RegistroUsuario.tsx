@@ -26,32 +26,34 @@ const RegistroUsuario = () => {
   };
 
   // Función auxiliar para mantener limpios los inputs
-  const getInputClass = (hasError:boolean | any) => `  //***********************
-        w-full px-4 py-3 bg-zinc-900 border rounded-lg text-zinc-100 
+  // const getInputClass = (hasError:boolean | any) => `  //***********************
+  //       w-full px-4 py-3 bg-zinc-900 border rounded-lg text-zinc-100 
+  
+  const getInputClass = (hasError) => `
+        w-full px-4 py-3 bg-slate-400 border rounded-lg text-zinc-100 
         focus:outline-none focus:ring-2 focus:ring-green-500 transition-all
         ${hasError ? "border-red-500" : "border-zinc-700"}
     `;
 
   return (
     <section className="flex justify-center">
-      <div className="bg-slate-800 w-full max-w-lg rounded-2xl shadow-xl p-8">
+      <div className="bg-slate-600 w-full max-w-lg rounded-2xl shadow-xl p-8">
         <div className="text-center mb-8">
           <h2 className="text-3xl font-bold text-white">Únete al Club</h2>
           <p className="text-[#64748B] mt-2">
             Crea tu cuenta para reservar canchas
           </p>
         </div>
-
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+          <div className="grid grid-cols-1 md:grid-cols-1 gap-5">
             {/* Nombre */}
             <div>
               <label className="block text-sm font-medium text-slate-500 mb-2">
-                Nombre(*)
+                Nombre y Apellido(*)
               </label>
               <input
                 type="text"
-                placeholder="Juan"
+                placeholder="Juan Perez"
                 className={getInputClass(errors.nombre)}
                 {...register("nombre", {
                   required: "El nombre es obligatorio",
@@ -65,30 +67,7 @@ const RegistroUsuario = () => {
                 </span>
               )}
             </div>
-
-            {/* Apellido */}
-            <div>
-              <label className="block text-sm font-medium text-slate-500 mb-2">
-                Apellido(*)
-              </label>
-              <input
-                type="text"
-                placeholder="Perez"
-                className={getInputClass(errors.apellido)}
-                {...register("apellido", {
-                  required: "El apellido es obligatorio",
-                  minLength: { value: 3, message: "Mínimo 3 caracteres" },
-                  maxLength: { value: 50, message: "Máximo 50 caracteres" },
-                })}
-              />
-              {errors.apellido && (
-                <span className="text-red-500 text-xs mt-1 italic">
-                  {errors.apellido.message}
-                </span>
-              )}
-            </div>
           </div>
-
           {/* Email Field */}
           <div>
             <label
@@ -176,6 +155,24 @@ const RegistroUsuario = () => {
               </span>
             )}
           </div>
+          {/* Campo de Confirmar Contraseña */}
+          <div>
+            <label
+            htmlFor="password"
+              className="block text-sm font-medium text-[#64748B] mb-1"
+            >Confirmar Contraseña</label>
+            <input
+              type="password"
+              className="w-full px-4 py-3 bg-slate-400 border rounded-lg text-zinc-100 
+        focus:outline-none focus:ring-2 focus:ring-green-500 transition-all"
+              {...register("confirmPassword", {
+                required: "Por favor, confirma tu contraseña",
+                validate: (value) =>
+                  value === password || "Las contraseñas no coinciden"
+              })}
+            />
+            {errors.confirmPassword && <p style={{ color: 'red', margin: 0 }}>{errors.confirmPassword.message}</p>}
+          </div>
 
           <button
             type="submit"
@@ -185,15 +182,7 @@ const RegistroUsuario = () => {
           </button>
         </form>
 
-        <p className="text-center text-sm text-[#64748B] mt-6">
-          ¿Ya tienes cuenta?{" "}
-          <a
-            href="/login"
-            className="text-green-500 hover:text-green-600 font-semibold"
-          >
-            Inicia sesión
-          </a>
-        </p>
+
       </div>
     </section>
   );
