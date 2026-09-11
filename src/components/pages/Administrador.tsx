@@ -2,8 +2,32 @@ import { Link } from "react-router";
 import ItemTablaCanchas from "../services/ItemTablaCanchas";
 import ItemTabla from "../services/ItemTablaProducto";
 import { LuCirclePlus } from "react-icons/lu";
+import { listarCanchasApi } from "../../helpers/queries";
+import type { Cancha } from "../../interfaces/canchas";
+import { useEffect, useState } from "react";
+import Swal from "sweetalert2";
 
 const Administrador = () => {
+  const [canchas,setCanchas]= useState<Cancha[]>([])
+
+ useEffect(()=>{
+  cargarCanchas()
+ }, [])
+const cargarCanchas=async()=>{
+  const respuestaCancha= await listarCanchasApi()
+   if(respuestaCancha && respuestaCancha.status===200){
+    const data= await respuestaCancha.json()
+   
+    setCanchas(data.canchas)
+    console.log("consulta datos :",data.canchas)
+  }else{
+    Swal.fire({
+            title: "Ocurrio un error",
+            text: `no se puede mostrar las canchas en este momento`,
+            icon: "success",
+            });
+  }
+ }
   return (
     <section className="animate-fadeIn space-y-6">
       {/* Header de la sección */}
@@ -49,6 +73,25 @@ const Administrador = () => {
             </tr>
           </thead>
           <tbody className="divide-y divide-zinc-800/50">
+           {canchas.length > 0 ? (
+              canchas.map((cancha, indice) => (
+                <ItemTablaCanchas
+                  key={cancha._id}
+                  cancha={cancha}
+                  fila={indice + 1}
+                  setCanchas={setCanchas}
+                />
+              ))
+            ) : (
+              <tr>
+                <td
+                  colSpan={4}
+                  className="px-6 py-12 text-center text-zinc-500 italic"
+                >
+                  No hay servicios registrados para administrar.
+                </td>
+              </tr>
+            )}
             <ItemTablaCanchas />
           </tbody>
         </table>
