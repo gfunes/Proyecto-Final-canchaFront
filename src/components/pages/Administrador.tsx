@@ -7,26 +7,26 @@ import { useEffect, useState } from "react";
 import Swal from "sweetalert2";
 
 const Administrador = () => {
-  const [canchas,setCanchas]= useState<Cancha[]>([])
+  const [canchas, setCanchas] = useState<Cancha[]>([])
 
- useEffect(()=>{
-  cargarCanchas()
- }, [])
-const cargarCanchas=async()=>{
-  const respuestaCancha= await listarCanchasApi()
-   if(respuestaCancha && respuestaCancha.status===200){
-    const data= await respuestaCancha.json()
-   
-    setCanchas(data.canchas)
-    console.log("consulta datos :",data.canchas)
-  }else{
-    Swal.fire({
-            title: "Ocurrio un error",
-            text: `no se puede mostrar las canchas en este momento`,
-            icon: "success",
-            });
+  useEffect(() => {
+    cargarCanchas()
+  }, [])
+  const cargarCanchas = async () => {
+    const respuestaCancha = await listarCanchasApi()
+    if (respuestaCancha && respuestaCancha.status === 200) {
+      const data = await respuestaCancha.json()
+
+      setCanchas(data.canchas)
+      console.log("consulta datos :", data.canchas)
+    } else {
+      Swal.fire({
+        title: "Ocurrio un error",
+        text: `no se puede mostrar las canchas en este momento`,
+        icon: "success",
+      });
+    }
   }
- }
   return (
     <section className="animate-fadeIn space-y-6">
       {/* Header de la sección */}
@@ -37,8 +37,13 @@ const cargarCanchas=async()=>{
           </h1>
           <p className="text-zinc-500 text-sm">By RollingClub</p>
         </div>
-        
-        
+        <Link
+          to={"/administrador/canchas/crear"}
+          className="bg-green-600 hover:bg-blue-500 text-white px-5 py-2.5 rounded-xl font-bold transition-all shadow-lg shadow-blue-900/20 active:scale-95 text-center  flex
+           items-center gap-1">
+          <LuCirclePlus />
+          Agregar Cancha
+        </Link>
       </div>
 
       {/* Contenedor de la Tabla con Scroll Horizontal para móviles */}
@@ -58,21 +63,14 @@ const cargarCanchas=async()=>{
               <th className="px-6 py-4 text-xs uppercase tracking-wider text-zinc-500 font-bold text-center">
                 Precio
               </th>
-<th className="px-6 py-4 text-xs uppercase tracking-wider text-zinc-500 font-bold text-center">
+              <th className="px-6 py-4 text-xs uppercase tracking-wider text-zinc-500 font-bold text-center">
                 Acciones
               </th>
-              <Link
-          to={"/administrador/canchas/crear"}
-          className="bg-green-600 hover:bg-blue-500 text-white px-5 py-2.5 rounded-xl font-bold transition-all shadow-lg shadow-blue-900/20 active:scale-95 text-center  flex
-           items-center gap-1"
-        >
-                    <LuCirclePlus />
-          Agregar Cancha
-        </Link>
+
             </tr>
           </thead>
           <tbody className="divide-y divide-zinc-800/50">
-           {canchas.length > 0 ? (
+            {canchas.length > 0 ? (
               canchas.map((cancha, indice) => (
                 <ItemTablaCanchas
                   key={cancha._id}
@@ -91,11 +89,11 @@ const cargarCanchas=async()=>{
                 </td>
               </tr>
             )}
-            
+
           </tbody>
         </table>
       </div>
-     
+
     </section>
   );
 };

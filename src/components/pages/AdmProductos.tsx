@@ -14,7 +14,7 @@ const AdmProductos = () => {
           <p className="text-zinc-500 text-sm">By RollingClub</p>
         </div>
          <a href="#" className="inline-flex items-center gap-2 bg-green-500 hover:bg-green-600 text-white px-6 py-2.5 rounded-xl font-bold transition-all shadow-lg shadow-blue-900/20 active:scale-95">
-  Alta Producto
+  Agregar Producto
   <LuCirclePlus className="text-xl" />
   
 </a>
