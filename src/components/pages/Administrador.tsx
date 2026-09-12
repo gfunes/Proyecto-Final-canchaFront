@@ -88,7 +88,7 @@ const cargarCanchas=async()=>{
                   colSpan={4}
                   className="px-6 py-12 text-center text-zinc-500 italic"
                 >
-                  No hay servicios registrados para administrar.
+                  No hay canchas registradas para administrar.
                 </td>
               </tr>
             )}

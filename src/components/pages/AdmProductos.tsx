@@ -1,4 +1,6 @@
 import ItemTablaProducto from "../services/ItemTablaProducto";
+import { LuCirclePlus } from "react-icons/lu";
+import Swal from "sweetalert2";
 
 const AdmProductos = () => {
   return (
@@ -11,10 +13,10 @@ const AdmProductos = () => {
           </h1>
           <p className="text-zinc-300 text-sm">RollingClub</p>
         </div>
-        {/* <a className="bg-green-500 hover:bg-green-600 text-white px-3 py-2.5 rounded-xl font-bold transition-all shadow-lg shadow-blue-900/20 active:scale-95 gap-2 text-center">
+         <a className="bg-green-500 hover:bg-green-600 text-white px-3 py-2.5 rounded-xl font-bold transition-all shadow-lg shadow-blue-900/20 active:scale-95 gap-2 text-center">
           <i className="bi bi-plus-lg"></i>
-          Alta Producto
-        </a> */}
+         <LuCirclePlus /> Alta Producto 
+        </a> 
       </div>
 
       {/* Contenedor de la Tabla con Scroll Horizontal para móviles */}
@@ -33,6 +35,9 @@ const AdmProductos = () => {
               </th>
               <th className="px-6 py-4 text-xs uppercase tracking-wider text-zinc-500 font-bold text-center">
                precio
+              </th>
+              <th className="px-6 py-4 text-xs uppercase tracking-wider text-zinc-500 font-bold text-center">
+                Acciones 
               </th>
             </tr>
           </thead>
