@@ -1,20 +1,23 @@
-import ItemTabla from "../services/itemTablaReservas";
+import ItemTablaProducto from "../services/ItemTablaProducto";
+import { LuCirclePlus } from "react-icons/lu";
+import Swal from "sweetalert2";
 
-const AdmReservas = () => {
+const AdmProductos = () => {
   return (
     <section className="animate-fadeIn space-y-6">
       {/* Header de la sección */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-slate-400/40 p-6 rounded-2xl border border-slate-300">
         <div>
           <h1 className="text-2xl font-bold text-white">
-            Administración Reservas 
+            Administración Productos
           </h1>
           <p className="text-zinc-500 text-sm">By RollingClub</p>
         </div>
-        {/* <a className="bg-green-500 hover:bg-green-600 text-white px-3 py-2.5 rounded-xl font-bold transition-all shadow-lg shadow-blue-900/20 active:scale-95 gap-2 text-center">
-          <i className="bi bi-plus-lg"></i>
-          Alta Producto
-        </a> */}
+         <a href="#" className="inline-flex items-center gap-2 bg-green-500 hover:bg-green-600 text-white px-6 py-2.5 rounded-xl font-bold transition-all shadow-lg shadow-blue-900/20 active:scale-95">
+  Agregar Producto
+  <LuCirclePlus className="text-xl" />
+  
+</a>
       </div>
 
       {/* Contenedor de la Tabla con Scroll Horizontal para móviles */}
@@ -23,21 +26,24 @@ const AdmReservas = () => {
           <thead>
             <tr className="bg-zinc-900/60 border-b border-slate-400">
               <th className="px-6 py-4 text-xs uppercase tracking-wider text-zinc-500 font-bold">
-                Codigo Reserva
+                fila
               </th>
               <th className="px-6 py-4 text-xs uppercase tracking-wider text-zinc-500 font-bold">
-                Fecha
+                 nombreProducto
               </th>
               <th className="px-6 py-4 text-xs uppercase tracking-wider text-zinc-500 font-bold">
-                Hora Inicio
+                 DescripcionProducto
               </th>
               <th className="px-6 py-4 text-xs uppercase tracking-wider text-zinc-500 font-bold text-center">
-                Cliente
+               precio
+              </th>
+              <th className="px-6 py-4 text-xs uppercase tracking-wider text-zinc-500 font-bold text-center">
+                Acciones 
               </th>
             </tr>
           </thead>
           <tbody className="divide-y divide-slate-400">
-            <ItemTabla />
+            <ItemTablaProducto />
           </tbody>
         </table>
       </div>
@@ -45,4 +51,4 @@ const AdmReservas = () => {
   );
 };
 
-export default AdmReservas;
+export default AdmProductos;

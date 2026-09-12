@@ -55,6 +55,10 @@ const logout = () => {
                 Administrador
               </NavLink>
 
+              <NavLink to="/administrador/productos" className={navLinkStyles}>
+                Productos
+              </NavLink>
+
               <NavLink to="/administrador/reservas" className={navLinkStyles}>
             Reservas
           </NavLink>
@@ -91,13 +95,21 @@ const logout = () => {
           >
             Inicio
           </NavLink>
-
+{usuarioLogueado ?(
+<>
           <NavLink
             to="/administrador"
             className={navLinkStyles}
             onClick={() => setIsMenuOpen(false)}
           >
             Administrador
+          </NavLink>
+          <NavLink
+            to="/administrador/productos"
+            className={navLinkStyles}
+            onClick={() => setIsMenuOpen(false)}
+          >
+            Productos
           </NavLink>
            <NavLink
             to="/reservas"
@@ -106,7 +118,8 @@ const logout = () => {
           >
             Reservas
           </NavLink>
-          
+          </>
+                ):(
           <NavLink
             to="/login"
             className={navLinkStyles}
@@ -114,6 +127,7 @@ const logout = () => {
           >
             login
           </NavLink>
+          )}
         </div>
       </div>
     </nav>
