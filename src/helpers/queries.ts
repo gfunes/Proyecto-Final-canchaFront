@@ -114,3 +114,25 @@ export const listarCategoriasApi = async (): Promise<any[]> => {
     return [];
   }
 };
+export const loginBackendApi = async (usuario: any): Promise<Response> => {
+  try {
+    const respuesta = await fetch(`${urlUsuarios}/login`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include", // <-- OBLIGATORIO para aceptar y enviar cookies
+      body: JSON.stringify(usuario),
+    });
+    return respuesta;
+  } catch (error) {
+    console.error("Error en loginBackendApi:", error);
+    throw error;
+  }
+};
+export const logoutBackendApi = async (): Promise<Response> => {
+  return fetch(`${urlUsuarios}/logout`, {
+    method: "POST",
+    credentials: "include",
+  });
+};
