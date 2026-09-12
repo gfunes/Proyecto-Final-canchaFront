@@ -13,10 +13,11 @@ const AdmProductos = () => {
           </h1>
           <p className="text-zinc-500 text-sm">By RollingClub</p>
         </div>
-         <a className="bg-green-500 hover:bg-green-600 text-white px-3 py-2.5 rounded-xl font-bold transition-all shadow-lg shadow-blue-900/20 active:scale-95 gap-2 text-center">
-          <i className="bi bi-plus-lg"></i>
-         <LuCirclePlus /> Alta Producto 
-        </a> 
+         <a href="#" className="inline-flex items-center gap-2 bg-green-500 hover:bg-green-600 text-white px-6 py-2.5 rounded-xl font-bold transition-all shadow-lg shadow-blue-900/20 active:scale-95">
+  Alta Producto
+  <LuCirclePlus className="text-xl" />
+  
+</a>
       </div>
 
       {/* Contenedor de la Tabla con Scroll Horizontal para móviles */}
