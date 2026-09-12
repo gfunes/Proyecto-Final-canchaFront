@@ -3,8 +3,8 @@ import { useForm } from "react-hook-form";
 // 1. Define los campos del formulario de registro
 
 interface RegistroFormInputs {
-  nombre: string;
-  apellido?: string;
+  // nombre: string;
+  // apellido?: string;
   nombreUsuario: string;
   email: string;
   password: string;
@@ -86,7 +86,7 @@ const RegistroUsuario = () => {
                 required: "El email es obligatorio",
                 pattern: {
                   value:
-                    /^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/,
+                    /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
                   message: "Email no válido",
                 },
               })}
