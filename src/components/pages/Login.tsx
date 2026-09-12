@@ -52,7 +52,7 @@ const Login = () => {
    setUsuarioLogueado(datosSesion);
 
   // 2. Personalizar mensaje y redirección según el rol
-  if (resultado.rol?.toLowerCase() === "Admin") {
+  if (resultado.rol?.toLowerCase() === "admin") {
     Swal.fire({
       title: `Bienvenido Administrador`,
       text: `Hola ${resultado.nombre}, ingresando al panel de control`,
