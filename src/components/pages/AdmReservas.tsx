@@ -9,7 +9,7 @@ const AdmReservas = () => {
           <h1 className="text-2xl font-bold text-white">
             Administración Reservas 
           </h1>
-          <p className="text-zinc-300 text-sm">RollingClub</p>
+          <p className="text-zinc-500 text-sm">By RollingClub</p>
         </div>
         {/* <a className="bg-green-500 hover:bg-green-600 text-white px-3 py-2.5 rounded-xl font-bold transition-all shadow-lg shadow-blue-900/20 active:scale-95 gap-2 text-center">
           <i className="bi bi-plus-lg"></i>

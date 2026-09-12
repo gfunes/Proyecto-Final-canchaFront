@@ -1,6 +1,5 @@
 import { Link } from "react-router";
 import ItemTablaCanchas from "../services/ItemTablaCanchas";
-import ItemTabla from "../services/ItemTablaProducto";
 import { LuCirclePlus } from "react-icons/lu";
 import { listarCanchasApi } from "../../helpers/queries";
 import type { Cancha } from "../../interfaces/canchas";
@@ -31,12 +30,12 @@ const cargarCanchas=async()=>{
   return (
     <section className="animate-fadeIn space-y-6">
       {/* Header de la sección */}
-      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-zinc-900/40 p-6 rounded-2xl border border-zinc-800">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-slate-400/40 p-6 rounded-2xl border border-slate-300">
         <div>
           <h1 className="text-2xl font-bold text-white">
-            Panel de Administración General
+            Administración Canchas
           </h1>
-          <p className="text-zinc-500 text-sm">Gestion Catálogo RollingClub</p>
+          <p className="text-zinc-500 text-sm">By RollingClub</p>
         </div>
         
         
