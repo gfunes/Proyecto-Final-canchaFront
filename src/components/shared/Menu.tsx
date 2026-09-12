@@ -95,7 +95,8 @@ const logout = () => {
           >
             Inicio
           </NavLink>
-
+{usuarioLogueado ?(
+<>
           <NavLink
             to="/administrador"
             className={navLinkStyles}
@@ -117,7 +118,8 @@ const logout = () => {
           >
             Reservas
           </NavLink>
-          
+          </>
+                ):(
           <NavLink
             to="/login"
             className={navLinkStyles}
@@ -125,6 +127,7 @@ const logout = () => {
           >
             login
           </NavLink>
+          )}
         </div>
       </div>
     </nav>
