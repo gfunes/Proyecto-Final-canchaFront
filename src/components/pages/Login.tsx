@@ -39,19 +39,49 @@ const Login = () => {
       // data.password === import.meta.env.VITE_PASSWORD
     //) {
     if (respuesta.status === 200) {
+// 1. Guardar el objeto con nombre y rol en el context (y en sessionStorage si lo usas)
+  const datosSesion = {
+    nombre: resultado.nombre,
+    rol: resultado.rol, // "admin" o "cliente"
+  };
 
-      
-      setUsuarioLogueado(true);
-      Swal.fire({
-        title: "Bienvenido Administrador",
-        text: "Ingresando al sistema",
-        icon: "success",
-        background: "#18181b",
-        color: "#f4f4f5",
-        confirmButtonColor: "#3b82f6",
-      });
+   sessionStorage.setItem("usuarioLogueado", JSON.stringify(datosSesion));
+   setUsuarioLogueado(datosSesion);
+
+// 2. Personalizar mensaje y redirección según el rol
+  if (resultado.rol?.toLowerCase() === "admin") {
+    Swal.fire({
+      title: `Bienvenido Administrador`,
+      text: `Hola ${resultado.nombre}, ingresando al panel de control`,
+      icon: "success",
+      background: "#18181b",
+      color: "#f4f4f5",
+      confirmButtonColor: "#3b82f6",
+    });
+    navegacion("/administrador");
+  } else {
+    Swal.fire({
+      title: `Bienvenido/a`,
+      text: `Hola ${resultado.nombre}, ingresando al sistema`,
+      icon: "success",
+      background: "#18181b",
+      color: "#f4f4f5",
+      confirmButtonColor: "#3b82f6",
+    });
+    navegacion("/"); 
+  }
+     
+      // setUsuarioLogueado(true);
+      // Swal.fire({
+      //   title: "Bienvenido Administrador",
+      //   text: "Ingresando al sistema",
+      //   icon: "success",
+      //   background: "#18181b",
+      //   color: "#f4f4f5",
+      //   confirmButtonColor: "#3b82f6",
+      // });
       //redirecciono al admin
-      navegacion('/administrador');
+      //navegacion('/administrador');
     } else {
       Swal.fire({
         title: "Ocurrió un error",
