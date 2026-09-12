@@ -55,7 +55,7 @@ const logout = () => {
                 Administrador
               </NavLink>
 
-              <NavLink to="/productos" className={navLinkStyles}>
+              <NavLink to="/administrador/productos" className={navLinkStyles}>
                 Productos
               </NavLink>
 
@@ -104,7 +104,7 @@ const logout = () => {
             Administrador
           </NavLink>
           <NavLink
-            to="/productos"
+            to="/administrador/productos"
             className={navLinkStyles}
             onClick={() => setIsMenuOpen(false)}
           >
