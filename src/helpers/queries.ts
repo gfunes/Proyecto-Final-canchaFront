@@ -3,6 +3,8 @@ import type { Cancha } from "../interfaces/canchas";
 const urlCanchas = `${import.meta.env.VITE_ALQUILER_CANCHAS}/canchas`;
 const urlReservas = `${import.meta.env.VITE_ALQUILER_CANCHAS}/reservas/disponibles`;
 const urlCategorias = `${import.meta.env.VITE_ALQUILER_CANCHAS}/categoriaCanchas`;
+const urlUsuarios = `${import.meta.env.VITE_ALQUILER_CANCHAS}/usuarios`;
+
 
 export const listarCanchasApi = async (): Promise<Response> => {
   try {
