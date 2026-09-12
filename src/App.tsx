@@ -42,7 +42,7 @@ const usuarioSessionStorage = JSON.parse(
           <Routes>
             <Route path="/" element={<Inicio></Inicio>}/>
             <Route path="/login" element={<Login></Login>}/>
-            <Route path="/registrate" element={<RegistroUsuario/>} />
+            <Route path="/registro" element={<RegistroUsuario/>} />
             <Route path="/administrador" element={<ProtectorRutas />}>
               <Route index element={<Administrador />} />
              <Route path="/administrador/crear" element={<Formulario titulo={'Crear Producto'}></Formulario>}/>

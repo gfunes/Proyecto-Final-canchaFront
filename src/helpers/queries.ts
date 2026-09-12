@@ -3,6 +3,7 @@ import type { Cancha } from "../interfaces/canchas";
 const urlCanchas = `${import.meta.env.VITE_ALQUILER_CANCHAS}/canchas`;
 const urlReservas = `${import.meta.env.VITE_ALQUILER_CANCHAS}/reservas/disponibles`;
 const urlCategorias = `${import.meta.env.VITE_ALQUILER_CANCHAS}/categoriaCanchas`;
+const urlUsuarios = `${import.meta.env.VITE_ALQUILER_CANCHAS}/Usuarios`;
 
 export const listarCanchasApi = async (): Promise<Response> => {
   try {
@@ -129,4 +130,10 @@ export const loginBackendApi = async (usuario: any): Promise<Response> => {
     console.error("Error en loginBackendApi:", error);
     throw error;
   }
+};
+export const logoutBackendApi = async (): Promise<Response> => {
+  return fetch(`${urlUsuarios}/logout`, {
+    method: "POST",
+    credentials: "include",
+  });
 };

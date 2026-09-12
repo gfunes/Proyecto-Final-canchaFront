@@ -18,7 +18,7 @@ const Login = () => {
   const navegacion = useNavigate()
 
   const onSubmit = async (data: LoginFormInputs) => {
-    //console.log(data);
+    
     try {
       // 1. Llamar al backend real en Render
       const respuesta = await fetch(
@@ -32,24 +32,48 @@ const Login = () => {
           body: JSON.stringify(data),
         }
       );
+          
+    
 
       const resultado = await respuesta.json();
+      console.log("Datos que llegan del backend:", resultado);
   //if (
       // data.email === import.meta.env.VITE_EMAIL &&
       // data.password === import.meta.env.VITE_PASSWORD
     //) {
     if (respuesta.status === 200) {
-      setUsuarioLogueado(true);
-      Swal.fire({
-        title: "Bienvenido Administrador",
-        text: "Ingresando al sistema",
-        icon: "success",
-        background: "#18181b",
-        color: "#f4f4f5",
-        confirmButtonColor: "#3b82f6",
-      });
-      //redirecciono al admin
-      navegacion('/administrador');
+  // 1. Guardar el objeto con nombre y rol en el context (y en sessionStorage si lo usas)
+  const datosSesion = {
+    nombre: resultado.nombre,
+    rol: resultado.rol, // "admin" o "cliente"
+  };
+
+   sessionStorage.setItem("usuarioLogueado", JSON.stringify(datosSesion));
+   setUsuarioLogueado(datosSesion);
+
+  // 2. Personalizar mensaje y redirección según el rol
+  if (resultado.rol?.toLowerCase() === "Admin") {
+    Swal.fire({
+      title: `Bienvenido Administrador`,
+      text: `Hola ${resultado.nombre}, ingresando al panel de control`,
+      icon: "success",
+      background: "#18181b",
+      color: "#f4f4f5",
+      confirmButtonColor: "#3b82f6",
+    });
+    navegacion("/administrador");
+  } else {
+    Swal.fire({
+      title: `Bienvenido/a`,
+      text: `Hola ${resultado.nombre}, ingresando al sistema`,
+      icon: "success",
+      background: "#18181b",
+      color: "#f4f4f5",
+      confirmButtonColor: "#3b82f6",
+    });
+    navegacion("/"); 
+  }
+
     } else {
       Swal.fire({
         title: "Ocurrió un error",
@@ -60,7 +84,7 @@ const Login = () => {
         confirmButtonColor: "#ef4444",
       });
     }
-   
+  
   } catch (error) {
       console.error(error);
       Swal.fire({
@@ -162,7 +186,7 @@ const Login = () => {
             <p className="text-center text-sm text-[#64748B] mt-6">
           ¿No tienes cuenta?{" "}
           <a
-            href="/registrate"
+            href="/registro"
             className="text-green-500 hover:text-green-600 font-semibold"
           >
             Click Aqui
