@@ -1,4 +1,5 @@
 import type { Cancha } from "../interfaces/canchas";
+import type { Producto, ProductoFormData } from "../interfaces/productos";
 
 const urlCanchas = `${import.meta.env.VITE_ALQUILER_CANCHAS}/canchas`;
 const urlReservas = `${import.meta.env.VITE_ALQUILER_CANCHAS}/reservas/disponibles`;
@@ -125,7 +126,73 @@ export const listarProductosApi = async (): Promise<Response> => {
     throw error;
   }
 };
+export const crearProductoApi = async (
+  producto: ProductoFormData,
+): Promise<Response> => {
+  try {
+    const respuesta = await fetch(urlProductos, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(producto),
+      credentials:'include',
+    });
+    return respuesta;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
 
+export const borrarProductoApi = async (
+  id: string | number,
+): Promise<Response> => {
+  try {
+    const respuesta = await fetch(`${urlProductos}/${id}`, {
+      method: "DELETE",
+      credentials:'include',
+    });
+    return respuesta;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
+
+export const buscarProductoApi = async (
+  id: string | number,
+): Promise<Response> => {
+  try {
+    const respuesta = await fetch(`${urlProductos}/${id}`);
+    return respuesta;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
+
+// En el PUT, usamos Partial<Servicio> si solo envías los campos modificados,
+// o directamente 'Servicio' si mandas el objeto completo.
+export const editarProductoApi = async (
+  id: string | number,
+  producto: Partial<Producto>,
+): Promise<Response> => {
+  try {
+    const respuesta = await fetch(`${urlProductos}/${id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(producto),
+      credentials:'include',
+    });
+    return respuesta;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
 
 
 

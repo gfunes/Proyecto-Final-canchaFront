@@ -1,4 +1,15 @@
-import { useForm } from "react-hook-form";
+import { useForm, type SubmitHandler} from "react-hook-form";
+import type { CategoriaProducto, ProductoFormData } from "../../interfaces/productos";
+// import { useAppContext } from "../../context/AppContext";
+import Swal from "sweetalert2";
+import { useNavigate, useParams } from "react-router";
+import { useEffect, useState } from "react";
+import {
+  buscarProductoApi,
+  crearProductoApi,
+  editarProductoApi,
+  listarCategoriasApi,
+} from "../../helpers/queries";
 
 // 1. Tipado de los datos del formulario para TypeScript
 interface ProductoInputs {
