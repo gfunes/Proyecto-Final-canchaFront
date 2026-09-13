@@ -10,7 +10,7 @@ import {
   listarCategoriasProductosApi,
 } from "../../helpers/queries";
 
-interface ProductoInputs {
+interface ProductoImputs {
   nombreProducto: string;
   precio: number;
   categoria: string;
@@ -35,21 +35,34 @@ const Formulario = ({ titulo }: FormularioProps) => {
   const [categorias, setCategorias] = useState<Producto[]>([]);
 
   useEffect(() => {
-    cargarCategorias(); 
+    const obtenerCategorias = async () => {
+          try {
+            const respuesta = await listarCategoriasProductosApi();
+            if (Array.isArray(respuesta)) {
+              setCategorias(respuesta);
+            }
+          } catch (error) {
+            console.error("Error al cargar categorías:", error);
+          }
+        };
+    obtenerCategorias();
+      //  cargarCategorias(); 
     cargarDatos();
   }, []);
  
-  const cargarCategorias = async () => {
-     try {
-       const respuestaCategorias = await listarCategoriasProductosApi();
-       if (respuestaCategorias.ok) {
-         const listaCategorias = await respuestaCategorias.json();
-         setCategorias(listaCategorias);
-       }
-     } catch (error) {
-       console.error("Error cargando categorías:", error);
-     }
-   };
+  // const cargarCategorias = async () => {
+  //    try {
+  //      const respuestaCategorias = await listarCategoriasProductosApi();
+  //      console.log("respuesta categorias",respuestaCategorias.status)
+  //      if (respuestaCategorias.ok || respuestaCategorias.status === 200) {
+  //     const dataCategorias = await respuestaCategorias.json();
+  //        setCategorias(dataCategorias);
+  //        console.log("categorias en json", dataCategorias);
+  //      }
+  //    } catch (error) {
+  //      console.error("Error cargando categorías:", error);
+  //    }
+  //  };
 
   const cargarDatos = async () => {
     if (titulo.includes("Editar") && id && buscarProductoApi) {
@@ -186,7 +199,7 @@ const Formulario = ({ titulo }: FormularioProps) => {
                     value={categoria._id}
                     className="bg-zinc-900"
                   >
-                    {categoria.nombre}
+                    {categoria.descripcion}
                   </option>
                 ))}
               </select>
