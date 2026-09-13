@@ -21,7 +21,7 @@ import AdmProductos from "./components/pages/AdmProductos"
 
 function App() {
 const usuarioSessionStorage = JSON.parse(
-    sessionStorage.getItem("usuarioKey") || "false",
+    sessionStorage.getItem("usuarioLogueado") || "false",
   );
   const [usuarioLogueado, setUsuarioLogueado] = useState<boolean>(usuarioSessionStorage);
 

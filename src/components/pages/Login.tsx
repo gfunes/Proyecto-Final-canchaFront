@@ -39,8 +39,11 @@ const Login = () => {
       // data.password === import.meta.env.VITE_PASSWORD
     //) {
     if (respuesta.status === 200) {
+    
 // 1. Guardar el objeto con nombre y rol en el context (y en sessionStorage si lo usas)
   const datosSesion = {
+    _id: resultado._id,
+    email: resultado.email,
     nombre: resultado.nombre,
     rol: resultado.rol, // "admin" o "cliente"
   };

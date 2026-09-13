@@ -1,12 +1,14 @@
 import { useState } from "react";
 import { LuMenu, LuX, LuCodeXml, LuLogOut } from "react-icons/lu";
-import { Link, NavLink , useNavigate} from "react-router";
+import { Link, NavLink, useNavigate } from "react-router";
 import { useAppContext } from "../../context/AppContext";
 
 const Menu = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-const { usuarioLogueado, setUsuarioLogueado } = useAppContext();
+  const { usuarioLogueado, setUsuarioLogueado } = useAppContext();
   const navegacion = useNavigate();
+
+  const isAdmin = usuarioLogueado?.rol === "admin";
 
   const navLinkStyles = ({ isActive }: { isActive: boolean }) =>
     `block py-2 px-3 transition-colors duration-200 md:p-0 ${
@@ -14,8 +16,11 @@ const { usuarioLogueado, setUsuarioLogueado } = useAppContext();
         ? "text-green-500 font-semibold"
         : "text-zinc-300 hover:text-gren-600"
     }`;
-const logout = () => {
-    setUsuarioLogueado(false);
+  const logout = () => {
+    sessionStorage.removeItem("usuarioLogueado");
+    sessionStorage.removeItem("usuarioKey");
+    setUsuarioLogueado(null);
+    setIsMenuOpen(false);
     navegacion("/");
   };
   return (
@@ -49,20 +54,28 @@ const logout = () => {
               <NavLink to="/" className={navLinkStyles}>
                 Inicio
               </NavLink>
-{usuarioLogueado ?(
-<>
-              <NavLink to="/administrador" className={navLinkStyles}>
-                Administrador
-              </NavLink>
+              {usuarioLogueado ? (
+                <>
+                {isAdmin && (
+                    <NavLink to="/administrador" className={navLinkStyles}>
+                      Administrador
+                    </NavLink>
+                )}
+                  <NavLink
+                    to="/administrador/productos"
+                    className={navLinkStyles}
+                  >
+                    Productos
+                  </NavLink>
 
-              <NavLink to="/administrador/productos" className={navLinkStyles}>
-                Productos
-              </NavLink>
-
-              <NavLink to="/administrador/reservas" className={navLinkStyles}>
-            Reservas
-          </NavLink>
-             <button
+                  <NavLink
+                    to="/administrador/reservas"
+                    className={navLinkStyles}
+                  >
+                    Reservas
+                  </NavLink>
+                
+                  <button
                     onClick={logout}
                     className="flex items-center gap-2 bg-zinc-800 hover:bg-red-900/40 text-red-400 px-4 py-2 rounded-md text-sm font-medium transition-all border border-zinc-700 hover:border-red-500/50"
                   >
@@ -70,10 +83,10 @@ const logout = () => {
                     Logout
                   </button>
                 </>
-                ):(
-              <NavLink to="/login" className={navLinkStyles}>
-                Login
-              </NavLink>
+              ) : (
+                <NavLink to="/login" className={navLinkStyles}>
+                  Login
+                </NavLink>
               )}
             </div>
           </div>
@@ -94,40 +107,54 @@ const logout = () => {
             onClick={() => setIsMenuOpen(false)}
           >
             Inicio
-          </NavLink>
-{usuarioLogueado ?(
-<>
-          <NavLink
-            to="/administrador"
-            className={navLinkStyles}
-            onClick={() => setIsMenuOpen(false)}
-          >
-            Administrador
-          </NavLink>
-          <NavLink
-            to="/administrador/productos"
-            className={navLinkStyles}
-            onClick={() => setIsMenuOpen(false)}
-          >
-            Productos
-          </NavLink>
-           <NavLink
-            to="/reservas"
-            className={navLinkStyles}
-            onClick={() => setIsMenuOpen(false)}
-          >
-            Reservas
-          </NavLink>
+        </NavLink>
+
+        {usuarioLogueado ? (
+          <>
+          {isAdmin && (
+                    
+              <NavLink
+                to="/administrador"
+                className={navLinkStyles}
+                onClick={() => setIsMenuOpen(false)}
+              >
+                Administrador
+              </NavLink>
+            )}
+
+            {/* Enlace general de productos para clientes y admins */}
+            <NavLink
+              to="/productos"
+              className={navLinkStyles}
+              onClick={() => setIsMenuOpen(false)}
+            >
+              Productos
+            </NavLink>
+
+            <NavLink
+              to="/reservas"
+              className={navLinkStyles}
+              onClick={() => setIsMenuOpen(false)}
+            >
+              Reservas
+            </NavLink>
+                 <button
+                onClick={logout}
+                className="w-full flex items-center justify-center gap-2 bg-zinc-800 hover:bg-red-900/40 text-red-400 px-4 py-2 rounded-md text-sm font-medium transition-all border border-zinc-700 hover:border-red-500/50 mt-2"
+              >
+                <LuLogOut />
+                Logout
+              </button>
           </>
-                ):(
+        ) : (
           <NavLink
             to="/login"
             className={navLinkStyles}
             onClick={() => setIsMenuOpen(false)}
           >
-            login
+            Login
           </NavLink>
-          )}
+        )}
         </div>
       </div>
     </nav>
