@@ -44,6 +44,7 @@ export default function CalendarioReservas() {
   const [cargando, setCargando] = useState(false);
   const [error, setError] = useState("");
 
+  const [mostrarModal, setMostrarModal] = useState(false);
   const fechaISO = convertirFechaAISO(fechaSeleccionada);
 
   useEffect(() => {
@@ -81,14 +82,19 @@ export default function CalendarioReservas() {
     setTurnoSeleccionado(turno);
   }
 
-  function continuarReserva() {
+ function continuarReserva() {
     if (!turnoSeleccionado) return;
-    console.log("Reserva seleccionada:", {
-      canchaId,
+    setMostrarModal(true);
+  }
+
+  function procesarPago() {
+    console.log("Procesando pago de reserva:", {
+      cancha: canchaId,
       fecha: fechaISO,
-      turnoId: turnoSeleccionado.id,
-      precio: turnoSeleccionado.precio,
+      turno: turnoSeleccionado,
     });
+    alert("¡Redirigiendo a la pasarela de pago!");
+    setMostrarModal(false);
   }
 
   // Clases dinámicas según el estado (Verde: Disponible, Rojo: Reservado, Amarillo: Pendiente)
@@ -254,6 +260,73 @@ export default function CalendarioReservas() {
           )}
         </div>
       </div>
+          {/* 3. MODAL COMPROBANTE DE RESERVA / PAGO */}
+      {mostrarModal && turnoSeleccionado && (
+        <div className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+          <div className="bg-white rounded-3xl p-6 md:p-8 max-w-md w-full relative shadow-2xl border border-slate-100 space-y-6 animate-fadeIn">
+            
+            {/* Botón Cruz de Cierre */}
+            <button
+              type="button"
+              onClick={() => setMostrarModal(false)}
+              className="absolute top-4 right-4 text-slate-400 hover:text-slate-700 w-9 h-9 rounded-full flex items-center justify-center hover:bg-slate-100 transition-colors text-lg font-bold"
+              aria-label="Cerrar modal"
+            >
+              ✕
+            </button>
+
+            {/* Encabezado del Comprobante */}
+            <div className="text-center border-b border-slate-100 pb-4">
+              <div className="w-12 h-12 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto mb-3 text-2xl">
+                ⚽
+              </div>
+              <h3 className="text-2xl font-extrabold text-slate-900">Detalle de Reserva</h3>
+              <p className="text-slate-500 text-sm mt-1">Revisá los datos antes de realizar el pago</p>
+            </div>
+
+            {/* Datos de la Cancha y Turno */}
+            <div className="space-y-3 bg-slate-50 p-4 rounded-2xl border border-slate-200/60 text-sm">
+              <div className="flex justify-between items-center text-slate-600">
+                <span>Cancha:</span>
+                <strong className="text-slate-900 font-bold">{canchaId || "Cancha seleccionada"}</strong>
+              </div>
+              <div className="flex justify-between items-center text-slate-600">
+                <span>Fecha:</span>
+                <strong className="text-slate-900 font-bold capitalize">
+                  {fechaSeleccionada.toLocaleDateString("es-AR", {
+                    day: "numeric",
+                    month: "long",
+                    year: "numeric",
+                  })}
+                </strong>
+              </div>
+              <div className="flex justify-between items-center text-slate-600">
+                <span>Horario:</span>
+                <strong className="text-slate-900 font-bold">
+                  {turnoSeleccionado.horaInicio} - {turnoSeleccionado.horaFin} hs
+                </strong>
+              </div>
+              <hr className="border-slate-200 my-2" />
+              <div className="flex justify-between items-center text-base">
+                <span className="font-bold text-slate-800">Monto Total:</span>
+                <strong className="text-xl font-extrabold text-emerald-600">
+                  {formatearPrecio(turnoSeleccionado.precio)}
+                </strong>
+              </div>
+            </div>
+
+            {/* Botón Pagar */}
+            <button
+              type="button"
+              onClick={procesarPago}
+              className="w-full py-4 bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-extrabold rounded-xl transition-all shadow-lg shadow-emerald-500/30 active:scale-95 text-center text-base flex items-center justify-center gap-2"
+            >
+              💳 Pagar Reserva
+            </button>
+          </div>
+        </div>
+      )}
+
     </section>
   );
 }
