@@ -17,13 +17,18 @@ import { useEffect, useState } from "react";
 import { AppContext } from "./context/AppContext";
 import CatalogoProductos from "./components/pages/CatalogoProductos"
 import AdmProductos from "./components/pages/AdmProductos"
-
+import type { Usuario } from "./interfaces/usuarios"
 
 function App() {
-const usuarioSessionStorage = JSON.parse(
-    sessionStorage.getItem("usuarioKey") || "false",
-  );
-  const [usuarioLogueado, setUsuarioLogueado] = useState<boolean>(usuarioSessionStorage);
+
+  const [usuarioLogueado, setUsuarioLogueado] = useState<Usuario | null>(null);
+  const [loadingSession, setLoadingSession] = useState<boolean>(true);
+  
+  
+  // const usuarioSessionStorage = JSON.parse(
+  //   sessionStorage.getItem("usuarioLogueado") || "false",
+  // );
+  
 
    useEffect(() => {
     sessionStorage.setItem("usuarioKey", JSON.stringify(usuarioLogueado));
@@ -48,11 +53,11 @@ const usuarioSessionStorage = JSON.parse(
               <Route index element={<Administrador />} />
              <Route path="/administrador/productos" element={<AdmProductos></AdmProductos>}/>
              <Route path="/administrador/productos/crear" element={<Formulario titulo={'Crear Producto'}></Formulario>}/>
-              <Route path="/administrador/productos/editar/:id" element={<Formulario titulo={'Editar Producto'}></Formulario>}/> */}
+              <Route path="/administrador/productos/editar/:id" element={<Formulario titulo={'Editar Producto'}></Formulario>}/> 
               <Route path="/administrador/reservas" element={<AdmReservas></AdmReservas>}/>
             <Route path="/administrador/canchas" element={<AdmCanchas></AdmCanchas>}/>
             <Route path="/administrador/canchas/crear" element={<FormCancha titulo={'Crear cancha'}></FormCancha>}/>
-            <Route path="/administrador/canchas/editar/:id" element={<FormCancha titulo={'Editar cancha'}></FormCancha>}/> */}
+            <Route path="/administrador/canchas/editar/:id" element={<FormCancha titulo={'Editar cancha'}></FormCancha>}/> 
             </Route>
             <Route path="/productos" element={<CatalogoProductos></CatalogoProductos>}/>
             <Route path="*" element={<Error404></Error404>}/>
