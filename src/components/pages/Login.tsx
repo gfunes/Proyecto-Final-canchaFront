@@ -34,10 +34,7 @@ const Login = () => {
       );
 
       const resultado = await respuesta.json();
-  //if (
-      // data.email === import.meta.env.VITE_EMAIL &&
-      // data.password === import.meta.env.VITE_PASSWORD
-    //) {
+  
     if (respuesta.status === 200) {
     
 // 1. Guardar el objeto con nombre y rol en el context (y en sessionStorage si lo usas)
@@ -73,18 +70,7 @@ const Login = () => {
     });
     navegacion("/"); 
   }
-     
-      // setUsuarioLogueado(true);
-      // Swal.fire({
-      //   title: "Bienvenido Administrador",
-      //   text: "Ingresando al sistema",
-      //   icon: "success",
-      //   background: "#18181b",
-      //   color: "#f4f4f5",
-      //   confirmButtonColor: "#3b82f6",
-      // });
-      //redirecciono al admin
-      //navegacion('/administrador');
+    
     } else {
       Swal.fire({
         title: "Ocurrió un error",
