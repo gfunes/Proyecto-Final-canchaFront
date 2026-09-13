@@ -1,6 +1,5 @@
 import { useForm, type SubmitHandler} from "react-hook-form";
 import type { Producto, ProductoFormData } from "../../interfaces/productos";
-// import { useAppContext } from "../../context/AppContext";
 import Swal from "sweetalert2";
 import { useNavigate, useParams } from "react-router";
 import { useEffect, useState } from "react";
@@ -11,7 +10,6 @@ import {
   listarCategoriasProductosApi,
 } from "../../helpers/queries";
 
-// 1. Tipado de los datos del formulario para TypeScript
 interface ProductoInputs {
   nombreProducto: string;
   precio: number;
@@ -20,7 +18,6 @@ interface ProductoInputs {
   descripcion: string;
 }
 
-// 2. Interfaz de las props
 interface FormularioProps {
   titulo: string;
 }
@@ -29,6 +26,7 @@ const Formulario = ({ titulo }: FormularioProps) => {
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors },
   } = useForm<ProductoFormData>();
   
@@ -37,7 +35,7 @@ const Formulario = ({ titulo }: FormularioProps) => {
   const [categorias, setCategorias] = useState<Producto[]>([]);
 
   useEffect(() => {
-    cargarCategorias(); //nuevo cargo las categorias
+    cargarCategorias(); 
     cargarDatos();
   }, []);
  
@@ -52,15 +50,16 @@ const Formulario = ({ titulo }: FormularioProps) => {
        console.error("Error cargando categorías:", error);
      }
    };
+
   const cargarDatos = async () => {
     if (titulo.includes("Editar") && id && buscarProductoApi) {
       const respuestaProducto = await buscarProductoApi(id);
       if (respuestaProducto && respuestaProducto.status === 200) {
         const productoBuscado = await respuestaProducto.json();
-      //  console.log("productoBuscado",productoBuscado)
+        
         setValue("nombreProducto", productoBuscado.nombreProducto);
         setValue("precio", productoBuscado.precio);
-        const categoriaId = productoBuscado.categoria?._id ?? productoBuscado.categoria; //cargo el id de la categoria en el select del formulario
+        const categoriaId = productoBuscado.categoria?._id ?? productoBuscado.categoria; 
         setValue("categoria", categoriaId);
         setValue("descripcion", productoBuscado.descripcion);
         setValue("imagen", productoBuscado.imagen);
@@ -68,10 +67,13 @@ const Formulario = ({ titulo }: FormularioProps) => {
     }
   };
 
+  // ÚNICO onSubmit válido
   const onSubmit: SubmitHandler<ProductoFormData> = async (data , e) => {
-    console.log(data);
+    // Aquí verás en consola los datos exactos recopilados del formulario
+    console.log("Datos a enviar a la API:", data);
+
     if (titulo.includes("Crear") && crearProductoApi) {
-      crearProductoApi(data);
+      await crearProductoApi(data);
       Swal.fire({
         title: "Producto creado",
         text: `El producto '${data.nombreProducto}' fue creado correctamente`,
@@ -84,41 +86,35 @@ const Formulario = ({ titulo }: FormularioProps) => {
         (e.target as HTMLFormElement).reset();
       }
     } else if (id) {
-      const respuesta= await editarProductoApi(id, data);
-      console.log(respuesta.json)
-      if(respuesta.ok){
-      Swal.fire({
-        title: "Producto editado",
-        text: `El producto '${data.nombreProducto}' fue editado correctamente`,
-        icon: "success",
-        background: "#18181b",
-        color: "#f4f4f5",
-        confirmButtonColor: "#3b82f6",
-      });
-      navegacion("/administrador/productos");
-    }else
-    {
-      Swal.fire({
-        title: "Ocurrio un Error",
-        text: `El producto '${data.nombreProducto}' no pudo ser editado correctamente`,
-       //text:`El servicio '${respuesta.mensaje}' no pudo ser editado correctamente`, 
-       icon: "error",
-        background: "#18181b",
-        color: "#f4f4f5",
-        confirmButtonColor: "#3b82f6",
-      });
-    }
+      const respuesta = await editarProductoApi(id, data);
       
+      // Forma correcta de leer la respuesta JSON del servidor
+      const dataRespuesta = await respuesta.json();
+      console.log("Respuesta del servidor:", dataRespuesta);
+
+      if (respuesta.ok) {
+        Swal.fire({
+          title: "Producto editado",
+          text: `El producto '${data.nombreProducto}' fue editado correctamente`,
+          icon: "success",
+          background: "#18181b",
+          color: "#f4f4f5",
+          confirmButtonColor: "#3b82f6",
+        });
+        navegacion("/administrador/productos");
+      } else {
+        Swal.fire({
+          title: "Ocurrió un Error",
+          text: `El producto '${data.nombreProducto}' no pudo ser editado.`,
+          icon: "error",
+          background: "#18181b",
+          color: "#f4f4f5",
+          confirmButtonColor: "#3b82f6",
+        });
+      }
     }
   };
 
-  
-  
-  // const onSubmit = (data: ProductoInputs) => {
-  //   console.log("Datos enviados:", data);
-  // };
-
-  // Clase utilitaria para inputs
   const inputClass = (hasError: boolean) => `
     w-full px-4 py-2.5 bg-zinc-950 border rounded-lg text-zinc-100 
     focus:outline-none focus:ring focus:ring-green-400 transition-all
@@ -163,7 +159,7 @@ const Formulario = ({ titulo }: FormularioProps) => {
                 {...register("precio", {
                   required: "El precio es obligatorio",
                   min: { value: 50, message: "Mínimo $50" },
-                  valueAsNumber: true,
+                  valueAsNumber: true, // Esto convierte automáticamente el input a número
                 })}
               />
               <p className="text-red-500 text-xs mt-1 italic">
@@ -256,7 +252,3 @@ const Formulario = ({ titulo }: FormularioProps) => {
 };
 
 export default Formulario;
-
-function setValue(arg0: string, nombreProducto: any) {
-  throw new Error("Function not implemented.");
-}
