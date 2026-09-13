@@ -3,13 +3,13 @@ import Swal from "sweetalert2";
 import { useNavigate } from "react-router";
 
 interface RegistroFormInputs {
-  nombre: string;
-  apellido?: string;
+  //nombre: string;
+  //apellido?: string;
   nombreUsuario?: string;
   email: string;
   password: string;
   confirmPassword: string;
-  telefono?: string;
+  //telefono?: string;
 }
 
 const RegistroUsuario = () => {
@@ -25,8 +25,12 @@ const RegistroUsuario = () => {
   const passwordValor = watch("password");
 
   const onSubmit = async (data: RegistroFormInputs) => {
-    // Excluimos confirmPassword para no enviarlo al backend
-    const { confirmPassword, ...datosParaBackend } = data;
+        const datosParaBackend = {
+      nombreUsuario: data.nombreUsuario,
+      email: data.email,
+      password: data.password,
+      rol: "cliente", // Enviamos el rol tal cual lo espera Postman
+    };
 
     try {
       const respuesta = await fetch(
@@ -99,16 +103,16 @@ const RegistroUsuario = () => {
             <input
               type="text"
               placeholder="Juan Perez"
-              className={getInputClass(errors.nombre)}
-              {...register("nombre", {
+              className={getInputClass(errors.nombreUsuario)}
+              {...register("nombreUsuario", {
                 required: "El nombre es obligatorio",
                 minLength: { value: 3, message: "Mínimo 3 caracteres" },
                 maxLength: { value: 50, message: "Máximo 50 caracteres" },
               })}
             />
-            {errors.nombre && (
+            {errors.nombreUsuario && (
               <span className="text-red-500 text-xs mt-1 italic block">
-                {errors.nombre.message}
+                {errors.nombreUsuario.message}
               </span>
             )}
           </div>
@@ -143,7 +147,7 @@ const RegistroUsuario = () => {
           </div>
 
           {/* Teléfono */}
-          <div>
+          {/* <div>
             <label
               htmlFor="telefono"
               className="block text-sm font-medium text-zinc-300 mb-1"
@@ -167,7 +171,7 @@ const RegistroUsuario = () => {
                 {errors.telefono.message}
               </span>
             )}
-          </div>
+          </div> */}
 
           {/* Password Field */}
           <div>
