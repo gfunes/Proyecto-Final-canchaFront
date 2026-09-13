@@ -1,7 +1,16 @@
-import { useForm } from "react-hook-form";
+import { useForm, type SubmitHandler} from "react-hook-form";
+import type { Producto, ProductoFormData } from "../../interfaces/productos";
+import Swal from "sweetalert2";
+import { useNavigate, useParams } from "react-router";
+import { useEffect, useState } from "react";
+import {
+  buscarProductoApi,
+  crearProductoApi,
+  editarProductoApi,
+  listarCategoriasProductosApi,
+} from "../../helpers/queries";
 
-// 1. Tipado de los datos del formulario para TypeScript
-interface ProductoInputs {
+interface ProductoImputs {
   nombreProducto: string;
   precio: number;
   categoria: string;
@@ -9,7 +18,6 @@ interface ProductoInputs {
   descripcion: string;
 }
 
-// 2. Interfaz de las props
 interface FormularioProps {
   titulo: string;
 }
@@ -18,14 +26,108 @@ const Formulario = ({ titulo }: FormularioProps) => {
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors },
-  } = useForm<ProductoInputs>();
+  } = useForm<ProductoFormData>();
+  
+  const { id } = useParams<{ id: string }>();
+  const navegacion = useNavigate();
+  const [categorias, setCategorias] = useState<Producto[]>([]);
 
-  const onSubmit = (data: ProductoInputs) => {
-    console.log("Datos enviados:", data);
+  useEffect(() => {
+    const obtenerCategorias = async () => {
+          try {
+            const respuesta = await listarCategoriasProductosApi();
+            if (Array.isArray(respuesta)) {
+              setCategorias(respuesta);
+            }
+          } catch (error) {
+            console.error("Error al cargar categorías:", error);
+          }
+        };
+    obtenerCategorias();
+      //  cargarCategorias(); 
+    cargarDatos();
+  }, []);
+ 
+  // const cargarCategorias = async () => {
+  //    try {
+  //      const respuestaCategorias = await listarCategoriasProductosApi();
+  //      console.log("respuesta categorias",respuestaCategorias.status)
+  //      if (respuestaCategorias.ok || respuestaCategorias.status === 200) {
+  //     const dataCategorias = await respuestaCategorias.json();
+  //        setCategorias(dataCategorias);
+  //        console.log("categorias en json", dataCategorias);
+  //      }
+  //    } catch (error) {
+  //      console.error("Error cargando categorías:", error);
+  //    }
+  //  };
+
+  const cargarDatos = async () => {
+    if (titulo.includes("Editar") && id && buscarProductoApi) {
+      const respuestaProducto = await buscarProductoApi(id);
+      if (respuestaProducto && respuestaProducto.status === 200) {
+        const productoBuscado = await respuestaProducto.json();
+        
+        setValue("nombreProducto", productoBuscado.nombreProducto);
+        setValue("precio", productoBuscado.precio);
+        const categoriaId = productoBuscado.categoria?._id ?? productoBuscado.categoria; 
+        setValue("categoria", categoriaId);
+        setValue("descripcion", productoBuscado.descripcion);
+        setValue("imagen", productoBuscado.imagen);
+      }
+    }
   };
 
-  // Clase utilitaria para inputs
+  // ÚNICO onSubmit válido
+  const onSubmit: SubmitHandler<ProductoFormData> = async (data , e) => {
+    // Aquí verás en consola los datos exactos recopilados del formulario
+    console.log("Datos a enviar a la API:", data);
+
+    if (titulo.includes("Crear") && crearProductoApi) {
+      await crearProductoApi(data);
+      Swal.fire({
+        title: "Producto creado",
+        text: `El producto '${data.nombreProducto}' fue creado correctamente`,
+        icon: "success",
+        background: "#18181b",
+        color: "#f4f4f5",
+        confirmButtonColor: "#3b82f6",
+      });
+      if (e) {
+        (e.target as HTMLFormElement).reset();
+      }
+    } else if (id) {
+      const respuesta = await editarProductoApi(id, data);
+      
+      // Forma correcta de leer la respuesta JSON del servidor
+      const dataRespuesta = await respuesta.json();
+      console.log("Respuesta del servidor:", dataRespuesta);
+
+      if (respuesta.ok) {
+        Swal.fire({
+          title: "Producto editado",
+          text: `El producto '${data.nombreProducto}' fue editado correctamente`,
+          icon: "success",
+          background: "#18181b",
+          color: "#f4f4f5",
+          confirmButtonColor: "#3b82f6",
+        });
+        navegacion("/administrador/productos");
+      } else {
+        Swal.fire({
+          title: "Ocurrió un Error",
+          text: `El producto '${data.nombreProducto}' no pudo ser editado.`,
+          icon: "error",
+          background: "#18181b",
+          color: "#f4f4f5",
+          confirmButtonColor: "#3b82f6",
+        });
+      }
+    }
+  };
+
   const inputClass = (hasError: boolean) => `
     w-full px-4 py-2.5 bg-zinc-950 border rounded-lg text-zinc-100 
     focus:outline-none focus:ring focus:ring-green-400 transition-all
@@ -46,7 +148,7 @@ const Formulario = ({ titulo }: FormularioProps) => {
               </label>
               <input
                 type="text"
-                placeholder="Ej: Cancha techada 1"
+                placeholder="Guantes arquero"
                 className={inputClass(!!errors.nombreProducto)}
                 {...register("nombreProducto", {
                   required: "El nombre es obligatorio",
@@ -70,7 +172,7 @@ const Formulario = ({ titulo }: FormularioProps) => {
                 {...register("precio", {
                   required: "El precio es obligatorio",
                   min: { value: 50, message: "Mínimo $50" },
-                  valueAsNumber: true,
+                  valueAsNumber: true, // Esto convierte automáticamente el input a número
                 })}
               />
               <p className="text-red-500 text-xs mt-1 italic">
@@ -91,12 +193,15 @@ const Formulario = ({ titulo }: FormularioProps) => {
                 <option value="" className="bg-zinc-900">
                   Seleccione una opción
                 </option>
-                <option value="Desarrollo Web" className="bg-zinc-900">
-                  Cancha
-                </option>
-                <option value="Backend & API" className="bg-zinc-900">
-                  Producto
-                </option>
+                {categorias.map((categoria) => (
+                  <option
+                    key={categoria._id}
+                    value={categoria._id}
+                    className="bg-zinc-900"
+                  >
+                    {categoria.descripcion}
+                  </option>
+                ))}
               </select>
               <p className="text-red-500 text-xs mt-1 italic">
                 {errors.categoria?.message}
