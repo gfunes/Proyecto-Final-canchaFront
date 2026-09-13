@@ -10,7 +10,7 @@ export interface Producto {
   nombreProducto: string;
   precio: number;
   imagen: string;
-  categoria: CategoriaProducto | string;
+  categoria: CategoriaProducto ;
   descripcion: string;
 }
 
