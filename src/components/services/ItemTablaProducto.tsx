@@ -2,9 +2,7 @@ import { Link } from "react-router";
 import { LuTrash2, LuPencil } from "react-icons/lu";
 import type { Producto } from "../../interfaces/productos";
 import Swal from "sweetalert2";
-//import { useAppContext } from "../../context/AppContext";
-
-//import { borrarServicioApi } from "../../helpers/queries";
+import { borrarProductoApi } from "../../helpers/queries";
 
 interface ItemProductoProps {
   producto: Producto;

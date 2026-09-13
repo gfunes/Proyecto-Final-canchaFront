@@ -5,6 +5,7 @@ const urlCanchas = `${import.meta.env.VITE_ALQUILER_CANCHAS}/canchas`;
 const urlReservas = `${import.meta.env.VITE_ALQUILER_CANCHAS}/reservas/disponibles`;
 const urlCategorias = `${import.meta.env.VITE_ALQUILER_CANCHAS}/categoriaCanchas`;
 const urlProductos = `${import.meta.env.VITE_ALQUILER_CANCHAS}/productos`;
+const urlCategoriasProductos = `${import.meta.env.VITE_ALQUILER_CANCHAS}/categoriaProductos`;
 
 export const listarCanchasApi = async (): Promise<Response> => {
   try {
@@ -126,6 +127,19 @@ export const listarProductosApi = async (): Promise<Response> => {
     throw error;
   }
 };
+export const listarCategoriasProductosApi = async (): Promise<any[]> => {
+  try {
+    const respuesta = await fetch(urlCategoriasProductos);
+    if (!respuesta.ok) {
+      throw new Error(`Error HTTP: ${respuesta.status}`);
+    }
+    const datos = await respuesta.json();
+    return datos;
+  } catch (error) {
+    console.error("Error al listar categorías:", error);
+    return [];
+  }
+};
 export const crearProductoApi = async (
   producto: ProductoFormData,
 ): Promise<Response> => {
@@ -193,9 +207,6 @@ export const editarProductoApi = async (
     throw error;
   }
 };
-
-
-
 
 export const loginBackendApi = async (usuario: any): Promise<Response> => {
   try {

@@ -1,5 +1,5 @@
 import { useForm, type SubmitHandler} from "react-hook-form";
-import type { CategoriaProducto, ProductoFormData } from "../../interfaces/productos";
+import type { Producto, ProductoFormData } from "../../interfaces/productos";
 // import { useAppContext } from "../../context/AppContext";
 import Swal from "sweetalert2";
 import { useNavigate, useParams } from "react-router";
@@ -8,7 +8,7 @@ import {
   buscarProductoApi,
   crearProductoApi,
   editarProductoApi,
-  listarCategoriasApi,
+  listarCategoriasProductosApi,
 } from "../../helpers/queries";
 
 // 1. Tipado de los datos del formulario para TypeScript
@@ -30,11 +30,93 @@ const Formulario = ({ titulo }: FormularioProps) => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<ProductoInputs>();
+  } = useForm<ProductoFormData>();
+  
+  const { id } = useParams<{ id: string }>();
+  const navegacion = useNavigate();
+  const [categorias, setCategorias] = useState<Producto[]>([]);
 
-  const onSubmit = (data: ProductoInputs) => {
-    console.log("Datos enviados:", data);
+  useEffect(() => {
+    cargarCategorias(); //nuevo cargo las categorias
+    cargarDatos();
+  }, []);
+ 
+  const cargarCategorias = async () => {
+     try {
+       const respuestaCategorias = await listarCategoriasProductosApi();
+       if (respuestaCategorias.ok) {
+         const listaCategorias = await respuestaCategorias.json();
+         setCategorias(listaCategorias);
+       }
+     } catch (error) {
+       console.error("Error cargando categorías:", error);
+     }
+   };
+  const cargarDatos = async () => {
+    if (titulo.includes("Editar") && id && buscarProductoApi) {
+      const respuestaProducto = await buscarProductoApi(id);
+      if (respuestaProducto && respuestaProducto.status === 200) {
+        const productoBuscado = await respuestaProducto.json();
+      //  console.log("productoBuscado",productoBuscado)
+        setValue("nombreProducto", productoBuscado.nombreProducto);
+        setValue("precio", productoBuscado.precio);
+        const categoriaId = productoBuscado.categoria?._id ?? productoBuscado.categoria; //cargo el id de la categoria en el select del formulario
+        setValue("categoria", categoriaId);
+        setValue("descripcion", productoBuscado.descripcion);
+        setValue("imagen", productoBuscado.imagen);
+      }
+    }
   };
+
+  const onSubmit: SubmitHandler<ProductoFormData> = async (data , e) => {
+    console.log(data);
+    if (titulo.includes("Crear") && crearProductoApi) {
+      crearProductoApi(data);
+      Swal.fire({
+        title: "Producto creado",
+        text: `El producto '${data.nombreProducto}' fue creado correctamente`,
+        icon: "success",
+        background: "#18181b",
+        color: "#f4f4f5",
+        confirmButtonColor: "#3b82f6",
+      });
+      if (e) {
+        (e.target as HTMLFormElement).reset();
+      }
+    } else if (id) {
+      const respuesta= await editarProductoApi(id, data);
+      console.log(respuesta.json)
+      if(respuesta.ok){
+      Swal.fire({
+        title: "Producto editado",
+        text: `El producto '${data.nombreProducto}' fue editado correctamente`,
+        icon: "success",
+        background: "#18181b",
+        color: "#f4f4f5",
+        confirmButtonColor: "#3b82f6",
+      });
+      navegacion("/administrador/productos");
+    }else
+    {
+      Swal.fire({
+        title: "Ocurrio un Error",
+        text: `El producto '${data.nombreProducto}' no pudo ser editado correctamente`,
+       //text:`El servicio '${respuesta.mensaje}' no pudo ser editado correctamente`, 
+       icon: "error",
+        background: "#18181b",
+        color: "#f4f4f5",
+        confirmButtonColor: "#3b82f6",
+      });
+    }
+      
+    }
+  };
+
+  
+  
+  // const onSubmit = (data: ProductoInputs) => {
+  //   console.log("Datos enviados:", data);
+  // };
 
   // Clase utilitaria para inputs
   const inputClass = (hasError: boolean) => `
@@ -57,7 +139,7 @@ const Formulario = ({ titulo }: FormularioProps) => {
               </label>
               <input
                 type="text"
-                placeholder="Ej: Cancha techada 1"
+                placeholder="Guantes arquero"
                 className={inputClass(!!errors.nombreProducto)}
                 {...register("nombreProducto", {
                   required: "El nombre es obligatorio",
@@ -102,12 +184,15 @@ const Formulario = ({ titulo }: FormularioProps) => {
                 <option value="" className="bg-zinc-900">
                   Seleccione una opción
                 </option>
-                <option value="Desarrollo Web" className="bg-zinc-900">
-                  Cancha
-                </option>
-                <option value="Backend & API" className="bg-zinc-900">
-                  Producto
-                </option>
+                {categorias.map((categoria) => (
+                  <option
+                    key={categoria._id}
+                    value={categoria._id}
+                    className="bg-zinc-900"
+                  >
+                    {categoria.nombre}
+                  </option>
+                ))}
               </select>
               <p className="text-red-500 text-xs mt-1 italic">
                 {errors.categoria?.message}
@@ -171,3 +256,7 @@ const Formulario = ({ titulo }: FormularioProps) => {
 };
 
 export default Formulario;
+
+function setValue(arg0: string, nombreProducto: any) {
+  throw new Error("Function not implemented.");
+}
