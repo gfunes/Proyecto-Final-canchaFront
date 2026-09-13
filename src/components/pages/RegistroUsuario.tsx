@@ -45,20 +45,75 @@ const RegistroUsuario = () => {
       const resultado = await respuesta.json();
 
       if (respuesta.status === 201 || respuesta.ok) {
-        Swal.fire({
-          title: "Registro exitoso",
-          text: "Te enviamos un código de verificación a tu correo.",
-          icon: "success",
-          background: "#18181b",
-          color: "#f4f4f5",
-          confirmButtonColor: "#22c55e",
-        }).then(() => {
+        const { value: codigoIngresado } = await Swal.fire({
+        title: "¡Código de Verificación!",
+        text: `Ingresa el código enviado a Mailtrap para ${data.email}:`,
+        input: "text",
+        inputPlaceholder: "Ej: 970689",
+        showCancelButton: true,
+        confirmButtonText: "Verificar Cuenta",
+        cancelButtonText: "Verificar más tarde",
+        background: "#1e293b",
+        color: "#f8fafc",
+        confirmButtonColor: "#22c55e",
+        cancelButtonColor: "#64748b",
+        inputValidator: (value) => {
+          if (!value) {
+            return "Debes ingresar el código recibido.";
+          }
+        },
+      });
+
+      // 2. Si el usuario ingresó el código, consumimos el endpoint de verificación
+      if (codigoIngresado) {
+        const respuestaVerif = await fetch(
+          "https://alquiler-cancha-proyecto-final-backend.onrender.com/api/usuarios/verificar-cuenta",
+          {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              email: data.email,
+              codigo: codigoIngresado.trim(),
+            }),
+          }
+        );
+
+        const dataVerif = await respuestaVerif.json();
+
+        if (respuestaVerif.ok) {
+            await Swal.fire({
+              title: "¡Cuenta Activada!",
+              text:
+                dataVerif.mensaje ||
+                "Tu cuenta fue verificada con éxito. Ya puedes iniciar sesión.",
+              icon: "success",
+              background: "#1e293b",
+              color: "#f8fafc",
+              confirmButtonColor: "#22c55e",
+            });
+            navegacion("/login");
+          } else {
+            // El código ingresado fue incorrecto o expiró
+            Swal.fire({
+              title: "Código incorrecto",
+              text:
+                dataVerif?.mensaje ||
+                "El código ingresado no es válido o ha expirado.",
+              icon: "error",
+              background: "#18181b",
+              color: "#f4f4f5",
+              confirmButtonColor: "#ef4444",
+            });
+          }
+        } else {
+          // El usuario canceló la carga del código
           navegacion("/login");
-        });
+        }
       } else {
+        // Falló la creación inicial del usuario (ej: correo repetido)
         Swal.fire({
           title: "Error al registrar",
-          text: resultado.mensaje || "No se pudo completar el registro",
+          text: resultado?.mensaje || "No se pudo completar el registro.",
           icon: "error",
           background: "#18181b",
           color: "#f4f4f5",
@@ -69,9 +124,9 @@ const RegistroUsuario = () => {
       console.error(error);
       Swal.fire({
         title: "Error de conexión",
-        text: "Hubo un problema al conectar con el servidor",
+        text: "Hubo un problema al conectar con el servidor.",
         icon: "error",
-        background: "#18181b",
+        background: "#1e293b",
         color: "#f4f4f5",
         confirmButtonColor: "#ef4444",
       });
@@ -145,41 +200,14 @@ const RegistroUsuario = () => {
               </span>
             )}
           </div>
-
-          {/* Teléfono */}
-          {/* <div>
-            <label
-              htmlFor="telefono"
-              className="block text-sm font-medium text-zinc-300 mb-1"
-            >
-              Teléfono (opcional)
-            </label>
-            <input
-              id="telefono"
-              type="tel"
-              placeholder="+54 381 4197764"
-              className={getInputClass(errors.telefono)}
-              {...register("telefono", {
-                pattern: {
-                  value: /^\+54[-\s]?\d{2,4}[-\s]?\d{6,8}$/,
-                  message: "Formato inválido. Ej: +54 381 4197764",
-                },
-              })}
-            />
-            {errors.telefono && (
-              <span className="text-red-500 text-xs mt-1 italic block">
-                {errors.telefono.message}
-              </span>
-            )}
-          </div> */}
-
-          {/* Password Field */}
-          <div>
+          {/* Contrase;a */}
+           <div>
             <label
               htmlFor="password"
               className="block text-sm font-medium text-zinc-300 mb-1"
             >
-              Contraseña (*)
+              Contraseña (*) 
+              
             </label>
             <input
               id="password"
