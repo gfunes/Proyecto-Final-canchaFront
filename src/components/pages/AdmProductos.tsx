@@ -72,7 +72,7 @@ const AdmProductos = () => {
               productos.map((Producto, indice) => (
             <ItemTablaProducto 
             key={Producto._id}
-                  producto={producto}
+                  producto={Producto}
                   fila={indice + 1}
                   setProductos={setProductos}
             />

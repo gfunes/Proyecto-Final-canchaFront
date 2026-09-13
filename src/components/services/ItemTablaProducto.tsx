@@ -1,27 +1,37 @@
 import { Link } from "react-router";
-import Swal from "sweetalert2";
 import { LuTrash2, LuPencil } from "react-icons/lu";
+import type { Producto } from "../../interfaces/productos";
+import Swal from "sweetalert2";
+//import { useAppContext } from "../../context/AppContext";
 
-const ItemTablaProducto = () => {
+//import { borrarServicioApi } from "../../helpers/queries";
+
+interface ItemProductoProps {
+  producto: Producto;
+  fila: number;
+  // TIPADO CORRECTO: El despachador de un estado tipo Servicio[]
+  setProductos: React.Dispatch<React.SetStateAction<Producto[]>>;
+}
+const ItemTablaProducto = ({producto, fila, setProductos }: ItemProductoProps) => {
   return (
     <tr className="border-b border-zinc-800 hover:bg-zinc-900/50 transition-colors">
       <td className="px-6 py-4 whitespace-nowrap text-sm text-zinc-500 font-mono">
-        1
+        {fila}
       </td>
       <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-zinc-200">
-        nombreProducto
+        {producto.nombreProducto}
       </td>
       <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-zinc-200">
-        DescripcionProducto
+        {producto.descripcion}
       </td>
       <td className="px-6 py-4 whitespace-nowrap text-sm text-zinc-400 font-mono">
-        $50
+        $ {producto.precio}
       </td>
       
       <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
         <div className="flex gap-3">
           <Link
-           // to={`/administrador/productos/editar/${producto._id}`}
+            to={`/administrador/productos/editar/${producto._id}`}
             className="text-amber-500 hover:text-amber-400 transition-colors flex items-center gap-1"
           >
             Editar <LuPencil /> 
