@@ -9,7 +9,7 @@ const respuesta = await listarCanchasApi();
 const canchasData = await respuesta.json();
 const lista = canchasData.canchas;
 
-const CANCHAS = lista.map((cancha: any) => ({
+const CANCHAS = lista.map((cancha:any) => ({
   id: cancha._id,
   nombre: cancha.nombreCancha // o cancha.nombreCancha / cancha.nombre?.cancha según tu backend
 }));
@@ -138,7 +138,7 @@ export default function CalendarioReservas() {
             onChange={(e) => setCanchaId(e.target.value)}
             className="w-full mb-8 p-3 border-2 border-emerald-100 rounded-xl bg-slate-50 text-slate-800 font-medium focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition-all"
           >
-            {CANCHAS.map((cancha) => (
+            {CANCHAS.map((cancha:any) => (
               <option key={cancha.id} value={cancha.id}>
                 {cancha.nombre}
               </option>
