@@ -68,7 +68,25 @@ const AdmProductos = () => {
             </tr>
           </thead>
           <tbody className="divide-y divide-slate-400">
-            <ItemTablaProducto />
+            {productos.length > 0 ? (
+              productos.map((Producto, indice) => (
+            <ItemTablaProducto 
+            key={Producto._id}
+                  producto={producto}
+                  fila={indice + 1}
+                  setProductos={setProductos}
+            />
+            ))
+            ) : (
+              <tr>
+                <td
+                  colSpan={4}
+                  className="px-6 py-12 text-center text-zinc-500 italic"
+                >
+                  No hay canchas registradas para administrar.
+                </td>
+              </tr>
+            )}
           </tbody>
         </table>
       </div>
