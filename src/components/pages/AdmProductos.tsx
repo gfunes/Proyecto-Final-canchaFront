@@ -38,11 +38,13 @@ const AdmProductos = () => {
           </h1>
           <p className="text-zinc-500 text-sm">By RollingClub</p>
         </div>
-         <a href="#" className="inline-flex items-center gap-2 bg-green-500 hover:bg-green-600 text-white px-6 py-2.5 rounded-xl font-bold transition-all shadow-lg shadow-blue-900/20 active:scale-95">
-  Agregar Producto
-  <LuCirclePlus className="text-xl" />
-  
-</a>
+        <Link
+          to={"/administrador/productos/crear"}
+          className="bg-green-600 hover:bg-blue-500 text-white px-5 py-2.5 rounded-xl font-bold transition-all shadow-lg shadow-blue-900/20 active:scale-95 text-center  flex
+           items-center gap-1">
+          <LuCirclePlus />
+          Agregar Producto
+        </Link>
       </div>
 
       {/* Contenedor de la Tabla con Scroll Horizontal para móviles */}
@@ -51,13 +53,13 @@ const AdmProductos = () => {
           <thead>
             <tr className="bg-zinc-900/60 border-b border-slate-400">
               <th className="px-6 py-4 text-xs uppercase tracking-wider text-zinc-500 font-bold">
-                fila
+                Item
               </th>
               <th className="px-6 py-4 text-xs uppercase tracking-wider text-zinc-500 font-bold">
-                 nombreProducto
+                 Producto
               </th>
               <th className="px-6 py-4 text-xs uppercase tracking-wider text-zinc-500 font-bold">
-                 DescripcionProducto
+                 Descripcion
               </th>
               <th className="px-6 py-4 text-xs uppercase tracking-wider text-zinc-500 font-bold text-center">
                precio
