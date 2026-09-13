@@ -1,8 +1,33 @@
 import ItemTablaProducto from "../services/ItemTablaProducto";
 import { LuCirclePlus } from "react-icons/lu";
+import { Link } from "react-router";
+import { listarProductosApi } from "../../helpers/queries";
+import type { Producto } from "../../interfaces/productos";
+import { useEffect, useState } from "react";
 import Swal from "sweetalert2";
 
 const AdmProductos = () => {
+  const [productos, setProductos] = useState<Producto[]>([])
+
+  useEffect(() => {
+    cargarProductos()
+  }, [])
+  const cargarProductos = async () => {
+    const respuestaProducto = await listarProductosApi()
+    if (respuestaProducto && respuestaProducto.status === 200) {
+      const data = await respuestaProducto.json()
+
+      setProductos(data.productos)
+      console.log("consulta datos :", data.productos)
+    } else {
+      Swal.fire({
+        title: "Ocurrio un error",
+        text: `no se puede mostrar las canchas en este momento`,
+        icon: "success",
+      });
+    }
+  }
+
   return (
     <section className="animate-fadeIn space-y-6">
       {/* Header de la sección */}

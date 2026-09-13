@@ -3,6 +3,7 @@ import type { Cancha } from "../interfaces/canchas";
 const urlCanchas = `${import.meta.env.VITE_ALQUILER_CANCHAS}/canchas`;
 const urlReservas = `${import.meta.env.VITE_ALQUILER_CANCHAS}/reservas/disponibles`;
 const urlCategorias = `${import.meta.env.VITE_ALQUILER_CANCHAS}/categoriaCanchas`;
+const urlProductos = `${import.meta.env.VITE_ALQUILER_CANCHAS}/productos`;
 
 export const listarCanchasApi = async (): Promise<Response> => {
   try {
@@ -114,6 +115,21 @@ export const listarCategoriasApi = async (): Promise<any[]> => {
     return [];
   }
 };
+export const listarProductosApi = async (): Promise<Response> => {
+  try {
+
+    const respuesta = await fetch(urlProductos);
+    return respuesta;
+  } catch (error) {
+    console.error("Error al listar productos:", error);
+    throw error;
+  }
+};
+
+
+
+
+
 export const loginBackendApi = async (usuario: any): Promise<Response> => {
   try {
     const respuesta = await fetch(`${urlUsuarios}/login`, {
