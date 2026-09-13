@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
+import { useNavigate } from "react-router";
 import { obtenerDisponibilidad } from "../services/disponibilidadService";
 import { listarCanchasApi} from "../../helpers/queries";
+import Swal from "sweetalert2";
 
 
 const respuesta = await listarCanchasApi();
@@ -46,7 +48,7 @@ export default function CalendarioReservas() {
 
   const [mostrarModal, setMostrarModal] = useState(false);
   const fechaISO = convertirFechaAISO(fechaSeleccionada);
-
+   const navegacion = useNavigate();
   useEffect(() => {
     const controlador = new AbortController();
 
@@ -83,10 +85,44 @@ export default function CalendarioReservas() {
   }
 
  function continuarReserva() {
-    if (!turnoSeleccionado) return;
-    setMostrarModal(true);
+  if (!turnoSeleccionado) return;
+
+  // Verificamos si existe el usuario en localStorage
+  const usuarioLogueado = sessionStorage.getItem("usuarioLogueado");
+
+  if (!usuarioLogueado) {
+    // Si no está logueado, mostramos advertencia y cortamos la ejecución
+    Swal.fire({
+      title: "¡Inicia sesión para continuar!",
+      text: "Debes estar registrado e iniciar sesión para poder reservar un turno.",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#10b981",
+      cancelButtonColor: "#64748b",
+      confirmButtonText: "Ir a Login",
+      cancelButtonText: "Cancelar",
+      background: "#ffffff",
+      color: "#0f172a",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        navegacion("/login");
+      }
+    });
+
+    return; // Sale de la función
   }
 
+  // Si está logueado, continua con la apertura del modal
+  setMostrarModal(true);
+}
+
+  // Si está logueado, abre el comprobante / proceso de pago
+
+ 
+
+
+    // 3. Si SÍ está logueado, abrimos el comprobante de reserva
+  
   function procesarPago() {
     console.log("Procesando pago de reserva:", {
       cancha: canchaId,
