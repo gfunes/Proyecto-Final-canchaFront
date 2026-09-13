@@ -52,10 +52,10 @@ const Administrador = () => {
           <thead>
             <tr className="bg-zinc-900/60 border-b border-zinc-800">
               <th className="px-6 py-4 text-xs uppercase tracking-wider text-zinc-500 font-bold">
-                #
+                Item
               </th>
               <th className="px-6 py-4 text-xs uppercase tracking-wider text-zinc-500 font-bold">
-                Nombre Cancha
+                Cancha
               </th>
               <th className="px-6 py-4 text-xs uppercase tracking-wider text-zinc-500 font-bold">
                 Tipo Cancha

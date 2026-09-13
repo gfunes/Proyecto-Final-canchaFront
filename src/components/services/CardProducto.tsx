@@ -1,36 +1,45 @@
 import { LuShoppingCart } from "react-icons/lu";
+import type { Producto } from "../../interfaces/productos";
 
-const CardProducto = ({
-  //id = 1,
-  categoria = "Bebida",
-  imagen = "https://www.casa-segal.com/wp-content/uploads/2020/03/coca-cola-500cc-almacen-gaseosas-casa-segal-mendoza.jpg",
-  nombre = "Coca cola 500ml",
-  descripcion = "Bebida gaseosa linea Coca-Cola de 500ml.",
-  precio = "2500",
-  // onVerTurnos // Función callback para manejar el click
-}) => {
+
+interface CardProductoProps {
+  producto: Producto;
+}
+
+const CardProducto = ({ producto }: CardProductoProps) => {
+  //const [cantidad, setCantidad] = useState<number>(1);
+  //const [loading, setLoading] = useState<boolean>(false);
+//const CardProducto = ({
+  // //id = 1,
+  // categoria = "Bebida",
+  // imagen = "https://www.casa-segal.com/wp-content/uploads/2020/03/coca-cola-500cc-almacen-gaseosas-casa-segal-mendoza.jpg",
+  // nombre = "Coca cola 500ml",
+  // descripcion = "Bebida gaseosa linea Coca-Cola de 500ml.",
+  // precio = "2500",
+  // // onVerTurnos // Función callback para manejar el click
+
   return (
     <div className="w-full max-w-sm bg-white rounded-2xl shadow-md overflow-hidden border-b-4 border-green-600 hover:shadow-2xl transition-shadow duration-300 relative flex flex-col">
       {/* Contenedor Superior: Imagen y Categoría */}
       <div className="relative h-52 w-full bg-white flex justify-center">
         <img
-          src={imagen}
-          alt={`Imagen de la cancha ${nombre}`}
+          src={producto.imagen}
+          alt={`Imagen de la cancha ${producto.nombreProducto}`}
           className="h-full"
         />
         <div className="absolute top-3 right-3 bg-linear-to-r from-green-500 to-green-700 text-white text-xs font-black px-4 py-1.5 rounded-full shadow-lg uppercase tracking-widest border border-white/20">
-          {categoria}
+          {producto.categoria.nombre}
         </div>
       </div>
 
       {/* Contenedor Inferior: Textos y Acciones */}
       <div className="p-5 flex flex-col grow">
         <h3 className="text-2xl font-black text-slate-800 uppercase italic tracking-tight mb-2">
-          {nombre}
+          {producto.nombreProducto}
         </h3>
 
         <p className="text-slate-600 text-sm mb-6 line-clamp-3">
-          {descripcion}
+          {producto.descripcion}
         </p>
 
         {/* Borde inferior (Precio y Botón) */}
@@ -41,7 +50,7 @@ const CardProducto = ({
             </span>
             <span className="text-2xl font-black text-green-600 flex items-start">
               <span className="text-lg mt-1 mr-1">$</span>
-              {precio}
+              {producto.precio}
             </span>
           </div>
 

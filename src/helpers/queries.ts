@@ -1,20 +1,37 @@
 import type { Cancha } from "../interfaces/canchas";
+import type { Producto, ProductoFormData } from "../interfaces/productos";
 
 const urlCanchas = `${import.meta.env.VITE_ALQUILER_CANCHAS}/canchas`;
 const urlReservas = `${import.meta.env.VITE_ALQUILER_CANCHAS}/reservas/disponibles`;
 const urlCategorias = `${import.meta.env.VITE_ALQUILER_CANCHAS}/categoriaCanchas`;
+const urlUsuarios = `${import.meta.env.VITE_ALQUILER_CANCHAS}/usuarios`;
 
-export const listarCanchasApi = async (): Promise<Response> => {
-  try {
+const urlProductos = `${import.meta.env.VITE_ALQUILER_CANCHAS}/productos`;
+const urlCategoriasProductos = `${import.meta.env.VITE_ALQUILER_CANCHAS}/categoriaProductos`;
+
+export interface ListarProductosParams {
+  // support both legacy frontend names and backend names
+  paginaNumero?: number;
+  cantProductos?: number;
+  pagina?: number;
+  limite?: number;
+  termino?: string;
+
+}
+
+export const listarCanchasApi = async (
+ 
+): Promise<Response> => {
+ try {
 
     const respuesta = await fetch(urlCanchas);
     return respuesta;
   } catch (error) {
-    console.error("Error al listar canchas:", error);
+    console.error("Error al listar productos:", error);
     throw error;
   }
 };
-
+  
 export const buscarCanchaApi = async (id: string): Promise<Response> => {
   try {
     const respuesta = await fetch(`${urlCanchas}/${id}`);
@@ -74,7 +91,7 @@ export const borrarCanchaApi = async (id: string): Promise<Response> => {
       },
     });
     return respuesta;
-    console.log("Token enviado al borrar:", token);
+    //console.log("Token enviado al borrar:", token);
   } catch (error) {
     console.error(`Error al borrar la cancha con id ${id}:`, error);
     throw error;
@@ -114,6 +131,109 @@ export const listarCategoriasApi = async (): Promise<any[]> => {
     return [];
   }
 };
+export const listarProductosApi = async (
+params: ListarProductosParams = {},
+): Promise<Response> => {
+  try {
+ const query = new URLSearchParams();
+    // Backend espera `pagina` y `limite`. el termino es optativo
+    const pagina = params.pagina ?? params.paginaNumero ?? 1;
+    const limite = params.limite ?? params.cantProductos ?? 8;
+    query.set("pagina", String(pagina));
+    query.set("limite", String(limite));
+    if (params.termino) {
+      query.set("termino", params.termino);
+    }
+    const respuesta = await fetch(`${urlProductos}?${query.toString()}`);
+    return respuesta;
+  } catch (error) {
+    console.error("Error al listar productos:", error);
+    throw error;
+  }
+};
+
+    
+export const listarCategoriasProductosApi = async (): Promise<any[]> => {
+  try {
+    const respuesta = await fetch(urlCategoriasProductos);
+    if (!respuesta.ok) {
+      throw new Error(`Error HTTP: ${respuesta.status}`);
+    }
+    const datos = await respuesta.json();
+    return datos;
+  } catch (error) {
+    console.error("Error al listar categorías:", error);
+    return [];
+  }
+};
+export const crearProductoApi = async (
+  producto: ProductoFormData,
+): Promise<Response> => {
+  try {
+    const respuesta = await fetch(urlProductos, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(producto),
+      credentials:'include',
+    });
+    return respuesta;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
+
+export const borrarProductoApi = async (
+  id: string | number,
+): Promise<Response> => {
+  try {
+    const respuesta = await fetch(`${urlProductos}/${id}`, {
+      method: "DELETE",
+      credentials:'include',
+    });
+    return respuesta;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
+
+export const buscarProductoApi = async (
+  id: string | number,
+): Promise<Response> => {
+  try {
+    const respuesta = await fetch(`${urlProductos}/${id}`);
+    return respuesta;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
+
+// En el PUT, usamos Partial<Servicio> si solo envías los campos modificados,
+// o directamente 'Servicio' si mandas el objeto completo.
+export const editarProductoApi = async (
+  id: string | number,
+  producto: Partial<Producto>,
+): Promise<Response> => {
+  try {
+    const respuesta = await fetch(`${urlProductos}/${id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(producto),
+      credentials:'include',
+    });
+    return respuesta;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
+
 export const loginBackendApi = async (usuario: any): Promise<Response> => {
   try {
     const respuesta = await fetch(`${urlUsuarios}/login`, {
