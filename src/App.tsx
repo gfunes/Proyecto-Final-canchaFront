@@ -17,13 +17,18 @@ import { useEffect, useState } from "react";
 import { AppContext } from "./context/AppContext";
 import CatalogoProductos from "./components/pages/CatalogoProductos"
 import AdmProductos from "./components/pages/AdmProductos"
+import DetalleProducto from "./components/pages/DetalleProducto"
+import Carrito from "./components/pages/Carrito" 
 import type { Usuario } from "./interfaces/usuarios"
 
 function App() {
 
-  const [usuarioLogueado, setUsuarioLogueado] = useState<Usuario | null>(null);
-  const [loadingSession, setLoadingSession] = useState<boolean>(true);
-  
+  const [usuarioLogueado, setUsuarioLogueado] = useState<Usuario | null>(() => {
+    const sesion = sessionStorage.getItem("usuarioKey");
+    return sesion ? JSON.parse(sesion) : null;
+  });  
+  //const [loadingSession, setLoadingSession] = useState<boolean>(true);
+     
   
   // const usuarioSessionStorage = JSON.parse(
   //   sessionStorage.getItem("usuarioLogueado") || "false",
@@ -50,6 +55,7 @@ function App() {
             <Route path="/login" element={<Login></Login>}/>
             <Route path="/registrate" element={<RegistroUsuario/>} />
             <Route path="/administrador" element={<ProtectorRutas />}>
+
               <Route index element={<Administrador />} />
              <Route path="/administrador/productos" element={<AdmProductos></AdmProductos>}/>
              <Route path="/administrador/productos/crear" element={<Formulario titulo={'Crear Producto'}></Formulario>}/>
@@ -60,9 +66,11 @@ function App() {
             <Route path="/administrador/canchas/editar/:id" element={<FormCancha titulo={'Editar cancha'}></FormCancha>}/> 
             </Route>
             <Route path="/productos" element={<CatalogoProductos></CatalogoProductos>}/>
+            <Route path="/productos/detalle/:id" element={<DetalleProducto />} />
             <Route path="*" element={<Error404></Error404>}/>
             <Route path="/quienessomos" element={<QuienesSomos></QuienesSomos>}/>
             <Route path="/contacto" element={<Contacto></Contacto>}/>
+            <Route path="/carrito" element={<Carrito />} />
           </Routes>
         </main>
         <Footer />

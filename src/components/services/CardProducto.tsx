@@ -1,22 +1,40 @@
-import { LuShoppingCart } from "react-icons/lu";
+import { GiShoppingCart } from "react-icons/gi";
 import type { Producto } from "../../interfaces/productos";
-
+import { useState } from "react";
+import { Link } from "react-router";
+import Swal from "sweetalert2";
+import { useAppContext } from "../../context/AppContext";
 
 interface CardProductoProps {
   producto: Producto;
 }
 
 const CardProducto = ({ producto }: CardProductoProps) => {
-  //const [cantidad, setCantidad] = useState<number>(1);
-  //const [loading, setLoading] = useState<boolean>(false);
-//const CardProducto = ({
-  // //id = 1,
-  // categoria = "Bebida",
-  // imagen = "https://www.casa-segal.com/wp-content/uploads/2020/03/coca-cola-500cc-almacen-gaseosas-casa-segal-mendoza.jpg",
-  // nombre = "Coca cola 500ml",
-  // descripcion = "Bebida gaseosa linea Coca-Cola de 500ml.",
-  // precio = "2500",
-  // // onVerTurnos // Función callback para manejar el click
+  const { usuarioLogueado, refreshCarritoCount } = useAppContext();
+  const [cantidad, setCantidad] = useState<number>(1);
+  const { agregarAlCarrito } = useAppContext();
+
+  const handleAgregar = () => {
+    if (cantidad < 1) return;
+
+    if (agregarAlCarrito) {
+      agregarAlCarrito({
+        ...producto,
+        cantidad,
+      });
+    }
+
+    Swal.fire({
+      toast: true,
+      position: "top-end",
+      icon: "success",
+      title: `${cantidad}x ${producto.nombreProducto} agregado`,
+      showConfirmButton: false,
+      timer: 1500,
+      background: "#18181b",
+      color: "#f4f4f5",
+    });
+  };
 
   return (
     <div className="w-full max-w-sm bg-white rounded-2xl shadow-md overflow-hidden border-b-4 border-green-600 hover:shadow-2xl transition-shadow duration-300 relative flex flex-col">
@@ -25,13 +43,16 @@ const CardProducto = ({ producto }: CardProductoProps) => {
         <img
           src={producto.imagen}
           alt={`Imagen de la cancha ${producto.nombreProducto}`}
-          className="h-full"
+          className="h-full object-contain p-2"
+        onError={(e) => {
+            e.currentTarget.src =
+              "https://res.cloudinary.com/ddhyg9uee/image/upload/v1788274566/rollingclub_nohrp6.png";
+          }}
         />
         <div className="absolute top-3 right-3 bg-linear-to-r from-green-500 to-green-700 text-white text-xs font-black px-4 py-1.5 rounded-full shadow-lg uppercase tracking-widest border border-white/20">
           {producto.categoria.nombre}
         </div>
       </div>
-
       {/* Contenedor Inferior: Textos y Acciones */}
       <div className="p-5 flex flex-col grow">
         <h3 className="text-2xl font-black text-slate-800 uppercase italic tracking-tight mb-2">
@@ -43,20 +64,44 @@ const CardProducto = ({ producto }: CardProductoProps) => {
         </p>
 
         {/* Borde inferior (Precio y Botón) */}
-        <div className="flex justify-between items-end border-t-2 border-dashed border-green-200 pt-4 mt-auto">
+        <div className="border-t-2 border-dashed border-green-200 pt-4 mt-auto flex flex-col gap-3">
           <div>
-            <span className="block text-l font-bold text-slate-400 uppercase tracking-wider mb-1">
+            <span className="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">
               Precio
             </span>
             <span className="text-2xl font-black text-green-600 flex items-start">
-              <span className="text-lg mt-1 mr-1">$</span>
-              {producto.precio}
+              <span className="text-lg mt-0.5 mr-1">$</span>
+
+              {Number(producto.precio).toLocaleString("es-AR")}
             </span>
           </div>
+{/* Selector de Cantidad + Botón Agregar */}
+          <div className="flex gap-2 items-center">
+            <input
+              type="number"
+              min="1"
+              max="99"
+              value={cantidad}
+              onChange={(e) => setCantidad(Math.max(1, Number(e.target.value)))}
+              className="w-16 bg-slate-100 text-slate-900 font-bold text-center py-2.5 px-2 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-green-500"
+            />
 
-          <button className="bg-slate-900 hover:bg-green-600 text-white font-bold text-xl py-3 px-3 rounded-xl shadow-md transition-colors duration-300 transform active:scale-95 tracking-wider cursor-pointer ">
-            <LuShoppingCart />
-          </button>
+            <button
+              onClick={handleAgregar}
+              className="flex-1 bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2.5 px-4 rounded-xl flex items-center justify-center gap-2 shadow-md transition-all duration-200 active:scale-95 cursor-pointer"
+            >
+              <GiShoppingCart className="text-lg" />
+              <span>Agregar</span>
+            </button>
+          </div>
+
+          {/* Botón Ver Detalle (Azul ancho) */}
+          <Link
+            to={`/productos/detalle/${producto._id}`}
+            className="w-full block text-center bg-blue-600 hover:bg-blue-700 text-white font-bold py-2.5 px-4 rounded-xl shadow-md transition-all duration-200 active:scale-95 cursor-pointer"
+          >
+            Ver detalle
+          </Link>
         </div>
       </div>
     </div>
