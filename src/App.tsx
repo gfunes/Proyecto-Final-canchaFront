@@ -18,6 +18,7 @@ import { AppContext } from "./context/AppContext";
 import CatalogoProductos from "./components/pages/CatalogoProductos"
 import AdmProductos from "./components/pages/AdmProductos"
 import DetalleProducto from "./components/pages/DetalleProducto"
+import Carrito from "./components/pages/Carrito" 
 import type { Usuario } from "./interfaces/usuarios"
 
 function App() {
@@ -69,6 +70,7 @@ function App() {
             <Route path="*" element={<Error404></Error404>}/>
             <Route path="/quienessomos" element={<QuienesSomos></QuienesSomos>}/>
             <Route path="/contacto" element={<Contacto></Contacto>}/>
+            <Route path="/carrito" element={<Carrito />} />
           </Routes>
         </main>
         <Footer />

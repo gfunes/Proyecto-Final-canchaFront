@@ -83,7 +83,7 @@ const Menu = () => {
                     Reservas
                   </NavLink>
                 <Link
-                    to="/reservas"
+                    to="/carrito"
                     className="flex items-center gap-2 bg-zinc-800/80 hover:bg-zinc-800 text-green-400 px-3.5 py-1.5 rounded-lg border border-zinc-700/80 hover:border-green-500/50 transition-all text-sm font-semibold shadow-sm"
                     title="Ver mi carrito / reservas"
                   >
@@ -160,7 +160,7 @@ const Menu = () => {
             </NavLink>
 
             <Link
-                to="/reservas"
+                to="/carrito"
                 onClick={() => setIsMenuOpen(false)}
                 className="flex items-center gap-2 bg-zinc-800/80 text-green-400 px-3 py-2 rounded-lg border border-zinc-700/80 text-sm font-semibold my-1"
               >
