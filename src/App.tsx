@@ -20,6 +20,7 @@ import AdmProductos from "./components/pages/AdmProductos"
 import DetalleProducto from "./components/pages/DetalleProducto"
 import Carrito from "./components/pages/Carrito" 
 import type { Usuario } from "./interfaces/usuarios"
+import AdmReservasClientes from "./components/pages/AdmReservascliente"
 
 function App() {
 
@@ -53,7 +54,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Inicio></Inicio>}/>
             <Route path="/login" element={<Login></Login>}/>
-            <Route path="/registrate" element={<RegistroUsuario/>} />
+            <Route path="/reservas" element={<AdmReservasClientes/>} />           <Route path="/registrate" element={<RegistroUsuario/>} />
             <Route path="/administrador" element={<ProtectorRutas />}>
 
               <Route index element={<Administrador />} />

@@ -45,4 +45,4 @@ const AdmReservasClientes = () => {
   );
 };
 
-export default AdmReservas;
+export default AdmReservasClientes;
