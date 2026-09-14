@@ -8,10 +8,11 @@ import { crearCanchaApi,
   buscarCanchaApi} from "../../helpers/queries";
 import { useEffect, useState } from "react";
 
-interface Categoria {
-  _id: string;
-  nombre: string;
-}
+//  interface Categoria {
+//      _id: string;
+//    nombre: string;
+//    descripcion?: string;
+//  }
 interface FormularioCanchaProps {
   titulo: string;
 }
@@ -23,6 +24,7 @@ const FormCancha = ({ titulo }: FormularioCanchaProps) => {
       setValue,
       formState: { errors },
     } = useForm<CanchaFormData>();
+
   const { id } = useParams<{ id: string }>();
   const navegacion = useNavigate();
   const [categorias, setCategorias] = useState<Cancha[]>([]);
@@ -41,22 +43,54 @@ const FormCancha = ({ titulo }: FormularioCanchaProps) => {
         //  cargarCategorias(); 
       cargarDatos();
     }, []);
-  const cargarDatos = async () => {
-      if (titulo.includes("Editar") && id && buscarCanchaApi) {
-        const respuestaCancha = await buscarCanchaApi(id);
-        if (respuestaCancha && respuestaCancha.status === 200) {
-          const canchaBuscada = await respuestaCancha.json();
-          
-          setValue("nombreCancha", canchaBuscada.nombreCancha);
-          setValue("precio", canchaBuscada.precio);
-          const categoriaId = canchaBuscada.categoria?._id ?? canchaBuscada.categoria; 
+    
+   const cargarDatos = async () => {
+     console.log("1. ID capturado de la URL:", id);
+   console.log("2. Título de la vista:", titulo);
+       if (titulo.includes("Editar cancha") && id && buscarCanchaApi) {
+        try {
+            const respuestaCancha = await buscarCanchaApi(id);
+           console.log("3. Respuesta completa de la API:", respuestaCancha);
+     
+        if (respuestaCancha.ok){
+           const jsonRespuesta = await respuestaCancha.json();
+           console.log("4. JSON recibido del backend:", jsonRespuesta);
+           const canchaBuscada = jsonRespuesta.cancha || jsonRespuesta;
+           setValue("nombreCancha", canchaBuscada.nombreCancha);
+           setValue("precio", canchaBuscada.precio);
+           const categoriaId = canchaBuscada.categoria?._id ?? canchaBuscada.categoria; 
           setValue("categoria", categoriaId);
-          setValue("descripcion", canchaBuscada.descripcion);
-          setValue("imagen", canchaBuscada.imagen);
-        }
-      }
-    };
-   const onSubmit: SubmitHandler<Cancha> = async (data , e) => {
+           setValue("descripcion", canchaBuscada.descripcion);
+           setValue("imagen", canchaBuscada.imagen);
+           console.log("5. SetValue ejecutado correctamente");
+         }else{
+           console.error("Error en la respuesta de la API. Status:", respuestaCancha.status);
+         }
+       }catch (error) {
+       console.error("Error de red o al procesar la petición:", error);
+     }
+   }else {
+     console.log("No entró al If. ¿Falta el ID o el título no incluye 'Editar'?");
+   }
+   };
+  // const cargarDatos = async () => {
+      
+  //   if (titulo.includes("Editar canchas") && id && buscarCanchaApi) {
+  //       const respuestaCancha = await buscarCanchaApi(id);
+  //       if (respuestaCancha && respuestaCancha.status === 200) {
+  //         console.log("satatus respuesta",respuestaCancha.status)
+  //         const canchaBuscada = await respuestaCancha.json();
+  //          console.log("Respuesta completa de la API:",canchaBuscada );
+  //         setValue("nombreCancha", canchaBuscada.nombreCancha);
+  //         setValue("precio", canchaBuscada.precio);
+  //         const categoriaId = canchaBuscada.categoria?._id ?? canchaBuscada.categoria; 
+  //         setValue("categoria", categoriaId);
+  //         setValue("descripcion", canchaBuscada.descripcion);
+  //         setValue("imagen", canchaBuscada.imagen);
+  //       }
+  //     }
+  //   };
+   const onSubmit: SubmitHandler<CanchaFormData> = async (data , e) => {
        // Aquí verás en consola los datos exactos recopilados del formulario
        console.log("Datos a enviar a la API:", data);
    
@@ -70,6 +104,7 @@ const FormCancha = ({ titulo }: FormularioCanchaProps) => {
           color: "#f4f4f5",
           confirmButtonColor: "#3b82f6",
         });
+         navegacion("/administrador/");
         if (e) {
           (e.target as HTMLFormElement).reset();
         }
@@ -89,7 +124,7 @@ const FormCancha = ({ titulo }: FormularioCanchaProps) => {
             color: "#f4f4f5",
             confirmButtonColor: "#3b82f6",
           });
-          navegacion("/administrador/canchas");
+          navegacion("/administrador/");
         } else {
           Swal.fire({
             title: "Ocurrió un Error",
@@ -167,9 +202,9 @@ const FormCancha = ({ titulo }: FormularioCanchaProps) => {
                 <option value="" className="bg-zinc-900">
                   Seleccione una opción
                 </option>
-                {categorias.map((cat) => (
-                  <option key={cat._id} value={cat._id} className="bg-zinc-900">
-                    {cat.descripcion}
+                {categorias.map((categoria: any) => (
+                  <option key={categoria._id} value={categoria._id} className="bg-zinc-900">
+                    {categoria.descripcion}
                   </option>
                 ))}
               </select>
@@ -225,7 +260,8 @@ const FormCancha = ({ titulo }: FormularioCanchaProps) => {
               type="submit"
               className="w-full md:w-auto px-8 py-3 bg-green-500 hover:bg-green-600 text-white font-bold rounded-lg transition-all active:scale-95 shadow-lg shadow-blue-900/20"
             >
-              Crear Cancha
+              {titulo.includes("Editar") ? "Guardar Cambios" : "Crear Cancha"}
+              
             </button>
           </div>
         </form>

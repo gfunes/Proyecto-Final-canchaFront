@@ -1,4 +1,4 @@
-import type { Cancha } from "../interfaces/canchas";
+import type { Cancha, CanchaFormData } from "../interfaces/canchas";
 import type { Producto, ProductoFormData } from "../interfaces/productos";
 
 const urlCanchas = `${import.meta.env.VITE_ALQUILER_CANCHAS}/canchas`;
@@ -41,7 +41,7 @@ export const buscarCanchaApi = async (id: string): Promise<Response> => {
   }
 };
 
-export const crearCanchaApi = async (cancha: Cancha): Promise<Response> => {
+export const crearCanchaApi = async (cancha: CanchaFormData): Promise<Response> => {
   try {
     const token = sessionStorage.getItem("token") || localStorage.getItem("token");
     const respuesta = await fetch(urlCanchas, {
@@ -60,9 +60,29 @@ export const crearCanchaApi = async (cancha: Cancha): Promise<Response> => {
   }
 };
 
+
+// export const editarCanchaApi = async (
+//   id: string,
+//   cancha: CanchaFormData,
+// ): Promise<Response> => {
+//   try {
+//     const respuesta = await fetch(`${urlCanchas}/${id}`, {
+//       method: "PUT",
+//       credentials: "include",
+//       headers: {
+//         "Content-Type": "application/json",
+//       },
+//       body: JSON.stringify(cancha),
+//     });
+//     return respuesta;
+//   } catch (error) {
+//     console.error(`Error al editar la cancha con id ${id}:`, error);
+//     throw error;
+//   }
+// };
 export const editarCanchaApi = async (
   id: string,
-  cancha: Cancha,
+  cancha: CanchaFormData,
 ): Promise<Response> => {
   try {
     const respuesta = await fetch(`${urlCanchas}/${id}`, {

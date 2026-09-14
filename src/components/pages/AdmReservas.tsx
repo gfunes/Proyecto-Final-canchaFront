@@ -1,4 +1,5 @@
-import ItemTabla from "../services/itemTablaReservas";
+import ItemTablaReservas from "../services/itemTablaReservas";
+import { listarReservasApi } from "../../helpers/queries";
 
 const AdmReservas = () => {
   return (
@@ -37,7 +38,14 @@ const AdmReservas = () => {
             </tr>
           </thead>
           <tbody className="divide-y divide-slate-400">
-            <ItemTabla />
+            productos.map((Producto, indice) => (
+            <ItemTablaReservas 
+            key={Reserva._id}
+                 reserva={Reservas}
+                  fila={indice + 1}
+                  setReservas={setReservas}
+            />
+            {/* <ItemTablaReservas /> */}
           </tbody>
         </table>
       </div>

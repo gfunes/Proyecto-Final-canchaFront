@@ -4,14 +4,14 @@ import { LuTrash2, LuPencil } from "react-icons/lu";
 import { Link } from "react-router";
 import { borrarCanchaApi } from "../../helpers/queries";
 
-interface ItemTablaCanchasProps {
+interface ItemTablaCanchaProps {
   cancha: Cancha;
   fila: number;
   setCanchas: React.Dispatch<React.SetStateAction<Cancha[]>>
 }
 
 
-const ItemTablaCanchas = ({ cancha, fila, setCanchas }: ItemTablaCanchasProps) => {
+const ItemTablaCanchas = ({ cancha, fila, setCanchas }: ItemTablaCanchaProps) => {
 
 
 
