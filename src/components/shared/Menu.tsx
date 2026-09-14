@@ -70,14 +70,14 @@ const Menu = () => {
                     </NavLink>
                 )}
                   <NavLink
-                    to="/productos"
+                    to="/administrador/productos"
                     className={navLinkStyles}
                   >
                     Productos
                   </NavLink>
 
                   <NavLink
-                    to="/reservas"
+                    to="/administrador/reservas"
                     className={navLinkStyles}
                   >
                     Reservas
@@ -144,7 +144,7 @@ const Menu = () => {
 
             {/* Enlace general de productos para clientes y admins */}
             <NavLink
-              to="/productos"
+              to="/administrador/productos"
               className={navLinkStyles}
               onClick={() => setIsMenuOpen(false)}
             >
@@ -152,7 +152,7 @@ const Menu = () => {
             </NavLink>
 
             <NavLink
-              to="/reservas"
+              to="/administrador/reservas"
               className={navLinkStyles}
               onClick={() => setIsMenuOpen(false)}
             >
