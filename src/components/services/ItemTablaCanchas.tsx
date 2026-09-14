@@ -4,18 +4,18 @@ import { LuTrash2, LuPencil } from "react-icons/lu";
 import { Link } from "react-router";
 import { borrarCanchaApi } from "../../helpers/queries";
 
-interface ItemTablaCanchasProps {
+interface ItemTablaCanchaProps {
   cancha: Cancha;
   fila: number;
   setCanchas: React.Dispatch<React.SetStateAction<Cancha[]>>
 }
 
 
-const ItemTablaCanchas = ({cancha, fila, setCanchas}:ItemTablaCanchasProps) => {
- 
+const ItemTablaCanchas = ({ cancha, fila, setCanchas }: ItemTablaCanchaProps) => {
 
 
- const eliminarCancha = () => {
+
+  const eliminarCancha = () => {
     Swal.fire({
       title: "¿Estás seguro?",
       text: "No se puede revertir este proceso",
@@ -33,7 +33,7 @@ const ItemTablaCanchas = ({cancha, fila, setCanchas}:ItemTablaCanchasProps) => {
         console.log("respuesta borrar", respuesta)
         if (respuesta && respuesta.status === 200) {
           // actualizar la tabla de servicios
-          setCanchas((prevCanchas)=>prevCanchas.filter((item)=>item._id !== cancha._id))
+          setCanchas((prevCanchas) => prevCanchas.filter((item) => item._id !== cancha._id))
           Swal.fire({
             title: "Eliminado",
             text: `la cancha fue eliminada correctamente`,
@@ -62,32 +62,42 @@ const ItemTablaCanchas = ({cancha, fila, setCanchas}:ItemTablaCanchasProps) => {
       <td className="px-6 py-4 whitespace-nowrap text-sm text-zinc-500 font-mono">
         {fila}
       </td>
-      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-green-500">
-        {cancha.nombreCancha}
-      </td>
+      <div className="flex items-center gap-3">
+        <img
+          src={cancha.imagen}
+          alt={`${cancha.nombreCancha} avatar`}
+          className="w-9 h-9 rounded-full shrink-0"
+        />
+        <div className="flex flex-col">
+          <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-green-500">
+            {cancha.nombreCancha}
+          </td>
+
+        </div>
+      </div>
       <td className="px-6 py-4 whitespace-nowrap text-sm text-zinc-400 font-mono">
         {cancha.categoria.nombre}
       </td>
-      
+
       <td className="px-6 py-4 whitespace-nowrap text-sm text-zinc-400 font-mono">
         {cancha.precio}
       </td>
       <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
         <div className="flex gap-3">
-          
+
           <Link
             to={`/administrador/canchas/editar/${cancha._id}`}
             className="text-amber-500 hover:text-amber-400 transition-colors flex items-center gap-1"
           >
-            Editar <LuPencil /> 
+            Editar <LuPencil />
           </Link>
           <button
             className="text-red-500 hover:text-red-400 transition-colors flex items-center gap-1"
             onClick={eliminarCancha}
           >
-            Borrar <LuTrash2 /> 
+            Borrar <LuTrash2 />
           </button>
-          
+
         </div>
       </td>
     </tr>

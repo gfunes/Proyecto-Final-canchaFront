@@ -10,13 +10,13 @@ import {
   listarCategoriasProductosApi,
 } from "../../helpers/queries";
 
-interface ProductoImputs {
-  nombreProducto: string;
-  precio: number;
-  categoria: string;
-  imagen: string;
-  descripcion: string;
-}
+// interface ProductoImputs {
+//   nombreProducto: string;
+//   precio: number;
+//   categoria: string;
+//   imagen: string;
+//   descripcion: string;
+// }
 
 interface FormularioProps {
   titulo: string;
@@ -50,26 +50,12 @@ const Formulario = ({ titulo }: FormularioProps) => {
     cargarDatos();
   }, []);
  
-  // const cargarCategorias = async () => {
-  //    try {
-  //      const respuestaCategorias = await listarCategoriasProductosApi();
-  //      console.log("respuesta categorias",respuestaCategorias.status)
-  //      if (respuestaCategorias.ok || respuestaCategorias.status === 200) {
-  //     const dataCategorias = await respuestaCategorias.json();
-  //        setCategorias(dataCategorias);
-  //        console.log("categorias en json", dataCategorias);
-  //      }
-  //    } catch (error) {
-  //      console.error("Error cargando categorías:", error);
-  //    }
-  //  };
-
   const cargarDatos = async () => {
     if (titulo.includes("Editar") && id && buscarProductoApi) {
       const respuestaProducto = await buscarProductoApi(id);
       if (respuestaProducto && respuestaProducto.status === 200) {
         const productoBuscado = await respuestaProducto.json();
-        
+         console.log("3. Respuesta completa de la API:",productoBuscado );
         setValue("nombreProducto", productoBuscado.nombreProducto);
         setValue("precio", productoBuscado.precio);
         const categoriaId = productoBuscado.categoria?._id ?? productoBuscado.categoria; 
