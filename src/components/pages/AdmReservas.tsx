@@ -1,7 +1,7 @@
 import ItemTablaReserva from "../services/itemTablaReservas";
 import { LuCirclePlus } from "react-icons/lu";
 import { Link } from "react-router";
-import { listarReservasApi } from "../../helpers/queries";
+import { listarReservasApiAdm } from "../../helpers/queries";
 import type { Reserva } from "../../interfaces/reserva";
 
 import { useEffect, useState } from "react";
@@ -14,7 +14,7 @@ const AdmReservas = () => {
     cargarReservas();
   }, []);
   const cargarReservas = async () => {
-    const respuestaReserva = await listarReservasApi();
+    const respuestaReserva = await listarReservasApiAdm();
 
     if (respuestaReserva && respuestaReserva.status === 200) {
       const data = await respuestaReserva.json();
