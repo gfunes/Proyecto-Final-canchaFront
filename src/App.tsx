@@ -22,11 +22,12 @@ import type { Usuario } from "./interfaces/usuarios"
 
 function App() {
 
-  const [usuarioLogueado, setUsuarioLogueado] = useState<Usuario | null>(null);
-    const [loadingSession, setLoadingSession] = useState<boolean>(true);
+  const [usuarioLogueado, setUsuarioLogueado] = useState<Usuario | null>(() => {
     const sesion = sessionStorage.getItem("usuarioKey");
     return sesion ? JSON.parse(sesion) : null;
-  
+  });  
+  //const [loadingSession, setLoadingSession] = useState<boolean>(true);
+     
   
   // const usuarioSessionStorage = JSON.parse(
   //   sessionStorage.getItem("usuarioLogueado") || "false",

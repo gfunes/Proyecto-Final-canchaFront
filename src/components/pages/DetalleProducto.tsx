@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router";
 import Swal from "sweetalert2";
-import type { Producto } from "../interfaces/productos";
-import { buscarProductoApi } from "../helpers/queries";
+import type { Producto } from "../../interfaces/productos";
+import { buscarProductoApi } from "../../helpers/queries";
 
 const DetalleProducto = () => {
   const { id } = useParams<{ id: string }>();
