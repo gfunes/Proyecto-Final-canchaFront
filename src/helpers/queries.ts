@@ -9,6 +9,7 @@ const urlProductos = `${import.meta.env.VITE_ALQUILER_CANCHAS}/productos`;
 const urlCategoriasProductos = `${import.meta.env.VITE_ALQUILER_CANCHAS}/categoriaProductos`;
 const urlCarrito = `${import.meta.env.VITE_ALQUILER_CANCHAS}/carrito`;
 const urlPagoProducto = `${import.meta.env.VITE_ALQUILER_CANCHAS}/pagoProducto`;
+const urlPagoCancha = `${import.meta.env.VITE_ALQUILER_CANCHAS}/pagoCancha`;
 const urlMisReservas = `${import.meta.env.VITE_ALQUILER_CANCHAS}/reservas/mis-reservas`;
 
 export interface ListarProductosParams {
@@ -107,7 +108,7 @@ export const borrarCanchaApi = async (id: string): Promise<Response> => {
 
 
 
-export const listarReservasApi = async (
+export const listarReservasApiAdm = async (
   params: ListarReservasParams = {},
 ): Promise<Response> => {
   try {
@@ -127,25 +128,26 @@ export const listarReservasApi = async (
     throw error;
   }
 };
-//   canchaId: string,
-//   fecha: string,
-//   signal?: AbortSignal,
-// ): Promise<Response> => {
-//   try {
-//     const respuesta = await fetch(
-//       `${urlReservas}?canchaId=${encodeURIComponent(canchaId)}&fecha=${encodeURIComponent(fecha)}`,
-//       { signal },
-//     );
-//     return respuesta;
-//   } catch (error: any) {
-//     // Si fue cancelada intencionalmente por cambio de fecha o StrictMode, no lo imprimimos como error
-//     if (error.name === "AbortError") {
-//       throw error;
-//     }
-//     console.error("Error al conectar con la API de reservas/turnos:", error);
-//     throw error;
-//   }
-// };
+export const listarReservasApi = async (
+  canchaId: string,
+  fecha: string,
+  signal?: AbortSignal,
+): Promise<Response> => {
+  try {
+    const respuesta = await fetch(
+      `${urlReservas}?canchaId=${encodeURIComponent(canchaId)}&fecha=${encodeURIComponent(fecha)}`,
+      { signal },
+    );
+    return respuesta;
+  } catch (error: any) {
+    // Si fue cancelada intencionalmente por cambio de fecha o StrictMode, no lo imprimimos como error
+    if (error.name === "AbortError") {
+      throw error;
+    }
+    console.error("Error al conectar con la API de reservas/turnos:", error);
+    throw error;
+  }
+};
 export const borrarReservaApi = async (
   id: string | number,
 ): Promise<Response> => {
@@ -386,4 +388,19 @@ export const crearPreferenciaPagoApi = async (): Promise<Response> => {
     console.error(error);
     throw error;
   }
+};
+
+export const crearPreferenciaReservaApi = async (reservaId:any) => {
+  // Recuperamos el token/usuario guardado
+  const usuario = JSON.parse(sessionStorage.getItem("usuarioLogueado") || "{}");
+  const token = usuario?.token; // Ajusta según la clave donde guardes el token JWT
+
+  return await fetch(`${urlPagoCancha}/crear-preferencia`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`, // Necesario para req.user.id en tu backend
+    },
+    body: JSON.stringify({ reservaId }), // Enviamos el ID que espera req.body
+  });
 };
