@@ -8,7 +8,7 @@ const urlUsuarios = `${import.meta.env.VITE_ALQUILER_CANCHAS}/usuarios`;
 const urlProductos = `${import.meta.env.VITE_ALQUILER_CANCHAS}/productos`;
 const urlCategoriasProductos = `${import.meta.env.VITE_ALQUILER_CANCHAS}/categoriaProductos`;
 const urlCarrito = `${import.meta.env.VITE_ALQUILER_CANCHAS}/carrito`;
-const urlPago = `${import.meta.env.VITE_ALQUILER_CANCHAS}/pago`;
+const urlPagoProducto = `${import.meta.env.VITE_ALQUILER_CANCHAS}/pagoProducto`;
 
 export interface ListarProductosParams {
   // support both legacy frontend names and backend names
@@ -96,6 +96,8 @@ export const borrarCanchaApi = async (id: string): Promise<Response> => {
     throw error;
   }
 };
+
+
 
 export const listarReservasApi = async (
   canchaId: string,
@@ -334,7 +336,7 @@ export const obtenerCarritoApi = async (): Promise<any> => {
 //🆕 crear preferencia de pago (MercadoPago) - backend crea la preferencia y devuelve init_point
 export const crearPreferenciaPagoApi = async (): Promise<Response> => {
   try {
-    const respuesta = await fetch(`${urlPago}/crear-preferencia`, {
+    const respuesta = await fetch(`${urlPagoProducto}/crear-preferencia`, {
       method: 'POST',
       credentials: 'include',
     });
