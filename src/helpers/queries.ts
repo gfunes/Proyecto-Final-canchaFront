@@ -210,8 +210,8 @@ export const buscarProductoApi = async (
   }
 };
 
-// En el PUT, usamos Partial<Servicio> si solo envías los campos modificados,
-// o directamente 'Servicio' si mandas el objeto completo.
+// En el PUT, usamos Partial<Producto> si solo envías los campos modificados,
+// o directamente 'Producto' si mandas el objeto completo.
 export const editarProductoApi = async (
   id: string | number,
   producto: Partial<Producto>,
@@ -254,13 +254,13 @@ export const logoutBackendApi = async (): Promise<Response> => {
     credentials: "include",
   });
 };
-export const agregarAlCarritoApi = async (servicioId: string, cantidad = 1): Promise<Response> => {
+export const agregarAlCarritoApi = async (productoId: string, cantidad = 1): Promise<Response> => {
   try {
     const respuesta = await fetch('http://localhost:3000/api/carrito', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       credentials: 'include',
-      body: JSON.stringify({ servicioId, cantidad }),
+      body: JSON.stringify({ productoId, cantidad }),
     });
     return respuesta;
   } catch (error) {
@@ -269,16 +269,16 @@ export const agregarAlCarritoApi = async (servicioId: string, cantidad = 1): Pro
   }
 };
 
-export const restarDelCarritoApi = async (servicioId: string): Promise<Response> => {
-  const respuesta = await fetch(`http://localhost:3000/api/carrito/restar/${servicioId}`, {
+export const restarDelCarritoApi = async (productoId: string): Promise<Response> => {
+  const respuesta = await fetch(`http://localhost:3000/api/carrito/restar/${productoId}`, {
     method: 'PATCH',
     credentials: 'include',
   });
   return respuesta;
 };
 
-export const eliminarServicioDelCarritoApi = async (servicioId: string): Promise<Response> => {
-  const respuesta = await fetch(`http://localhost:3000/api/carrito/servicio/${servicioId}`, {
+export const eliminarProductoDelCarritoApi = async (productoId: string): Promise<Response> => {
+  const respuesta = await fetch(`http://localhost:3000/api/carrito/producto/${productoId}`, {
     method: 'DELETE',
     credentials: 'include',
   });
