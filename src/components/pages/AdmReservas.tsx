@@ -1,5 +1,3 @@
-import ItemTablaReservas from "../services/itemTablaReservas";
-import { listarReservasApi } from "../../helpers/queries";
 import ItemTablaReserva from "../services/itemTablaReservas";
 import { LuCirclePlus } from "react-icons/lu";
 import { Link } from "react-router";
@@ -17,7 +15,7 @@ const AdmReservas = () => {
   }, []);
   const cargarReservas = async () => {
     const respuestaReserva = await listarReservasApiAdm();
-
+console.log("respuesta reserva",respuestaReserva)
     if (respuestaReserva && respuestaReserva.status === 200) {
       const data = await respuestaReserva.json();
 
@@ -26,7 +24,7 @@ const AdmReservas = () => {
     } else {
       Swal.fire({
         title: "Ocurrio un error",
-        text: `no se puede mostrar las canchas en este momento`,
+        text: `no se puede mostrar las reservas en este momento`,
         icon: "success",
       });
     }

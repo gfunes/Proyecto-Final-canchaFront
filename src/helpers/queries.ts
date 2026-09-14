@@ -11,6 +11,7 @@ const urlCarrito = `${import.meta.env.VITE_ALQUILER_CANCHAS}/carrito`;
 const urlPagoProducto = `${import.meta.env.VITE_ALQUILER_CANCHAS}/pagoProducto`;
 const urlPagoCancha = `${import.meta.env.VITE_ALQUILER_CANCHAS}/pagoCancha`;
 const urlMisReservas = `${import.meta.env.VITE_ALQUILER_CANCHAS}/reservas/mis-reservas`;
+const urlReservasTotales = `${import.meta.env.VITE_ALQUILER_CANCHAS}/reservas`;
 
 export interface ListarProductosParams {
   // support both legacy frontend names and backend names
@@ -141,7 +142,7 @@ export const listarReservasApiAdm = async (
     if (params.termino) {
       query.set("termino", params.termino);
     }
-    const respuesta = await fetch(`${urlMisReservas}?${query.toString()}`);
+    const respuesta = await fetch(`${urlReservasTotales}?${query.toString()}`);
     return respuesta;
   } catch (error) {
     console.error("Error al listar Reservas:", error);
