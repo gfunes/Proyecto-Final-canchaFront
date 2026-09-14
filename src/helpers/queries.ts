@@ -38,7 +38,6 @@ export const listarCanchasApi = async (): Promise<Response> => {
     throw error;
   }
 };
-  
 export const buscarCanchaApi = async (id: string): Promise<Response> => {
   try {
     const respuesta = await fetch(`${urlCanchas}/${id}`);
@@ -48,7 +47,6 @@ export const buscarCanchaApi = async (id: string): Promise<Response> => {
     throw error;
   }
 };
-
 export const crearCanchaApi = async (cancha: Cancha): Promise<Response> => {
   try {
     const token = sessionStorage.getItem("token") || localStorage.getItem("token");
@@ -67,7 +65,6 @@ export const crearCanchaApi = async (cancha: Cancha): Promise<Response> => {
     throw error;
   }
 };
-
 export const editarCanchaApi = async (
   id: string,
   cancha: Cancha,
@@ -87,7 +84,6 @@ export const editarCanchaApi = async (
     throw error;
   }
 };
-
 export const borrarCanchaApi = async (id: string): Promise<Response> => {
   try {
     const respuesta = await fetch(`${urlCanchas}/${id}`, {
@@ -104,9 +100,6 @@ export const borrarCanchaApi = async (id: string): Promise<Response> => {
     throw error;
   }
 };
-
-
-
 export const listarReservasApi = async (
   params: ListarReservasParams = {},
 ): Promise<Response> => {
@@ -193,8 +186,6 @@ params: ListarProductosParams = {},
     throw error;
   }
 };
-
-    
 export const listarCategoriasProductosApi = async (): Promise<any[]> => {
   try {
     const respuesta = await fetch(urlCategoriasProductos);
@@ -226,7 +217,6 @@ export const crearProductoApi = async (
     throw error;
   }
 };
-
 export const borrarProductoApi = async (
   id: string | number,
 ): Promise<Response> => {
@@ -241,7 +231,6 @@ export const borrarProductoApi = async (
     throw error;
   }
 };
-
 export const buscarProductoApi = async (
   id: string | number,
 ): Promise<Response> => {
@@ -253,9 +242,6 @@ export const buscarProductoApi = async (
     throw error;
   }
 };
-
-// En el PUT, usamos Partial<Producto> si solo envías los campos modificados,
-// o directamente 'Producto' si mandas el objeto completo.
 export const editarProductoApi = async (
   id: string | number,
   producto: Partial<Producto>,
@@ -275,7 +261,6 @@ export const editarProductoApi = async (
     throw error;
   }
 };
-
 export const loginBackendApi = async (usuario: any): Promise<Response> => {
   try {
     const respuesta = await fetch(`${urlUsuarios}/login`, {
@@ -315,7 +300,6 @@ export const agregarAlCarritoApi = async (
     throw error;
   }
 };
-
 export const restarDelCarritoApi = async (productoId: string): Promise<Response> => {
   const respuesta = await fetch(`${urlCarrito}/restar/${productoId}`, {
     method: 'PATCH',
@@ -323,7 +307,6 @@ export const restarDelCarritoApi = async (productoId: string): Promise<Response>
   });
   return respuesta;
 };
-
 export const eliminarProductoDelCarritoApi = async (productoId: string): Promise<Response> => {
   const respuesta = await fetch(`${urlCarrito}/producto/${productoId}`, {
     method: 'DELETE',
@@ -331,7 +314,6 @@ export const eliminarProductoDelCarritoApi = async (productoId: string): Promise
   });
   return respuesta;
 };
-
 export const obtenerCantidadCarritoApi = async (): Promise<number> => {
   try {
     const respuesta = await fetch(urlCarrito, {
@@ -353,8 +335,6 @@ export const obtenerCantidadCarritoApi = async (): Promise<number> => {
     throw error;
   }
 };
-//🆕 fin consultas carrito
-//🆕 obtener carrito completo
 export const obtenerCarritoApi = async (): Promise<any> => {
   try {
     const respuesta = await fetch(urlCarrito, {
@@ -373,8 +353,6 @@ export const obtenerCarritoApi = async (): Promise<any> => {
     throw error;
   }
 };
-
-//🆕 crear preferencia de pago (MercadoPago) - backend crea la preferencia y devuelve init_point
 export const crearPreferenciaPagoApi = async (): Promise<Response> => {
   try {
     const respuesta = await fetch(`${urlPagoProducto}/crear-preferencia`, {
