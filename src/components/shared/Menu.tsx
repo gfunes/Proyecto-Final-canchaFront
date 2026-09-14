@@ -1,7 +1,8 @@
-import { useState } from "react";
-import { LuMenu, LuX, LuCodeXml, LuLogOut } from "react-icons/lu";
+import { useState} from "react";
+import { LuMenu, LuX, LuLogOut } from "react-icons/lu";
 import { Link, NavLink, useNavigate } from "react-router";
 import { useAppContext } from "../../context/AppContext";
+import { GiShoppingCart } from "react-icons/gi";
 
 const Menu = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -23,16 +24,23 @@ const Menu = () => {
     setIsMenuOpen(false);
     navegacion("/");
   };
+  const nombreMostrar =
+    usuarioLogueado?.nombre ||
+    usuarioLogueado?.email?.split("@")[0] ||
+    "Usuario";
+
   return (
     <nav className="bg-slate-500 border-b border-zinc-800 text-zinc-100 sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
+         
           <img
             src="https://res.cloudinary.com/ddhyg9uee/image/upload/v1788274566/rollingclub_nohrp6.png"
             alt="logo institucional"
-            className="h-30"
+            className="h-16 w-auto object-contain"
           />
-
+                 
+  
           <div className="md:hidden flex items-center">
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -62,19 +70,29 @@ const Menu = () => {
                     </NavLink>
                 )}
                   <NavLink
-                    to="/administrador/productos"
+                    to="/productos"
                     className={navLinkStyles}
                   >
                     Productos
                   </NavLink>
 
                   <NavLink
-                    to="/administrador/reservas"
+                    to="/reservas"
                     className={navLinkStyles}
                   >
                     Reservas
                   </NavLink>
-                
+                <Link
+                    to="/carrito"
+                    className="flex items-center gap-2 bg-zinc-800/80 hover:bg-zinc-800 text-green-400 px-3.5 py-1.5 rounded-lg border border-zinc-700/80 hover:border-green-500/50 transition-all text-sm font-semibold shadow-sm"
+                    title="Ver mi carrito / reservas"
+                  >
+                    <GiShoppingCart className="text-2xl text-green-400" />
+                    <span>{nombreMostrar}</span>
+                  </Link>
+
+
+
                   <button
                     onClick={logout}
                     className="flex items-center gap-2 bg-zinc-800 hover:bg-red-900/40 text-red-400 px-4 py-2 rounded-md text-sm font-medium transition-all border border-zinc-700 hover:border-red-500/50"
@@ -89,6 +107,8 @@ const Menu = () => {
                 </NavLink>
               )}
             </div>
+
+            
           </div>
         </div>
       </div>
@@ -138,6 +158,16 @@ const Menu = () => {
             >
               Reservas
             </NavLink>
+
+            <Link
+                to="/carrito"
+                onClick={() => setIsMenuOpen(false)}
+                className="flex items-center gap-2 bg-zinc-800/80 text-green-400 px-3 py-2 rounded-lg border border-zinc-700/80 text-sm font-semibold my-1"
+              >
+                <GiShoppingCart className="text-xl" />
+                <span>{nombreMostrar}</span>
+              </Link>
+
                  <button
                 onClick={logout}
                 className="w-full flex items-center justify-center gap-2 bg-zinc-800 hover:bg-red-900/40 text-red-400 px-4 py-2 rounded-md text-sm font-medium transition-all border border-zinc-700 hover:border-red-500/50 mt-2"
