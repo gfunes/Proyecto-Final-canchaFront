@@ -27,7 +27,6 @@ export interface ListarReservasParams {
   limite?: number;
   termino?: string;
 }
-
 export const listarCanchasApi = async (): Promise<Response> => {
  try {
 
@@ -288,7 +287,7 @@ export const agregarAlCarritoApi = async (
   cantidad = 1
 ): Promise<Response> => {
   try {
-    const respuesta = await fetch('urlCarrito', {
+    const respuesta = await fetch(urlCarrito, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       credentials: 'include',
