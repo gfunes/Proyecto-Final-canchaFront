@@ -201,7 +201,7 @@ export default function CalendarioReservas() {
           >
             {CANCHAS.map((cancha: any) => (
               <option key={cancha.id} value={cancha.id}>
-                {cancha.nombre}
+                {cancha.nombreCancha}
               </option>
             ))}
           </select>
