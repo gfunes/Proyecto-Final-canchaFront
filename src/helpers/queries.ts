@@ -8,7 +8,9 @@ const urlUsuarios = `${import.meta.env.VITE_ALQUILER_CANCHAS}/usuarios`;
 const urlProductos = `${import.meta.env.VITE_ALQUILER_CANCHAS}/productos`;
 const urlCategoriasProductos = `${import.meta.env.VITE_ALQUILER_CANCHAS}/categoriaProductos`;
 const urlCarrito = `${import.meta.env.VITE_ALQUILER_CANCHAS}/carrito`;
-const urlPago = `${import.meta.env.VITE_ALQUILER_CANCHAS}/pago`;
+const urlPagoProducto = `${import.meta.env.VITE_ALQUILER_CANCHAS}/pagoProducto`;
+const urlPagoCancha = `${import.meta.env.VITE_ALQUILER_CANCHAS}/pagoCancha`;
+const urlMisReservas = `${import.meta.env.VITE_ALQUILER_CANCHAS}/reservas/mis-reservas`;
 
 export interface ListarProductosParams {
   // support both legacy frontend names and backend names
@@ -17,7 +19,14 @@ export interface ListarProductosParams {
   pagina?: number;
   limite?: number;
   termino?: string;
-
+}
+export interface ListarReservasParams {
+  // support both legacy frontend names and backend names
+  paginaNumero?: number;
+  cantReservas?: number;
+  pagina?: number;
+  limite?: number;
+  termino?: string;
 }
 
 export const listarCanchasApi = async (): Promise<Response> => {
@@ -117,6 +126,28 @@ export const borrarCanchaApi = async (id: string): Promise<Response> => {
   }
 };
 
+
+
+export const listarReservasApiAdm = async (
+  params: ListarReservasParams = {},
+): Promise<Response> => {
+  try {
+ const query = new URLSearchParams();
+    // Backend espera `pagina` y `limite`. el termino es optativo
+    const pagina = params.pagina ?? params.paginaNumero ?? 1;
+    const limite = params.limite ?? params.cantReservas ?? 8;
+    query.set("pagina", String(pagina));
+    query.set("limite", String(limite));
+    if (params.termino) {
+      query.set("termino", params.termino);
+    }
+    const respuesta = await fetch(`${urlMisReservas}?${query.toString()}`);
+    return respuesta;
+  } catch (error) {
+    console.error("Error al listar Reservas:", error);
+    throw error;
+  }
+};
 export const listarReservasApi = async (
   canchaId: string,
   fecha: string,
@@ -134,6 +165,20 @@ export const listarReservasApi = async (
       throw error;
     }
     console.error("Error al conectar con la API de reservas/turnos:", error);
+    throw error;
+  }
+};
+export const borrarReservaApi = async (
+  id: string | number,
+): Promise<Response> => {
+  try {
+    const respuesta = await fetch(`${urlReservas}/${id}`, {
+      method: "DELETE",
+      credentials:'include',
+    });
+    return respuesta;
+  } catch (error) {
+    console.error(error);
     throw error;
   }
 };
@@ -354,7 +399,7 @@ export const obtenerCarritoApi = async (): Promise<any> => {
 //🆕 crear preferencia de pago (MercadoPago) - backend crea la preferencia y devuelve init_point
 export const crearPreferenciaPagoApi = async (): Promise<Response> => {
   try {
-    const respuesta = await fetch(`${urlPago}/crear-preferencia`, {
+    const respuesta = await fetch(`${urlPagoProducto}/crear-preferencia`, {
       method: 'POST',
       credentials: 'include',
     });
@@ -363,4 +408,19 @@ export const crearPreferenciaPagoApi = async (): Promise<Response> => {
     console.error(error);
     throw error;
   }
+};
+
+export const crearPreferenciaReservaApi = async (reservaId:any) => {
+  // Recuperamos el token/usuario guardado
+  const usuario = JSON.parse(sessionStorage.getItem("usuarioLogueado") || "{}");
+  const token = usuario?.token; // Ajusta según la clave donde guardes el token JWT
+
+  return await fetch(`${urlPagoCancha}/crear-preferencia`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`, // Necesario para req.user.id en tu backend
+    },
+    body: JSON.stringify({ reservaId }), // Enviamos el ID que espera req.body
+  });
 };
