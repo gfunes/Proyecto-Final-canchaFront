@@ -1,11 +1,14 @@
 import React from 'react';
 import type { Cancha } from '../../interfaces/canchas';
+import { useState } from "react";
+import { Link } from "react-router";
+import Swal from "sweetalert2";
+import { useAppContext } from "../../context/AppContext";
+
 
 interface CardCanchaProps {
   cancha: Cancha,
   onVerTurnos: (cancha: Cancha) => void;
-
-
 }
 
 const CardCancha = ({ cancha, onVerTurnos }: CardCanchaProps) => {
@@ -44,7 +47,7 @@ const CardCancha = ({ cancha, onVerTurnos }: CardCanchaProps) => {
             onClick={() => onVerTurnos(cancha)}
             className="bg-slate-900 hover:bg-green-600 text-white font-bold py-2.5 px-3 rounded-xl shadow-md transition-colors duration-300 transform active:scale-95 uppercase text-[10px] tracking-wider text-center max-w-32.5 cursor-pointer"
           >
-            Ver turnos disponibles
+            Ver canchas disponibles
           </button>
 
         </div>
