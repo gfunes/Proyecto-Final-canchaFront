@@ -10,8 +10,8 @@ import Swal from "sweetalert2";
 const respuesta = await listarCanchasApi();
 const canchasData = await respuesta.json();
 const lista = canchasData.canchas;
-const { usuarioLogueado } = useAppContext();
 
+  
 const CANCHAS = lista.map((cancha: any) => ({
   id: cancha._id,
   nombre: cancha.nombreCancha, // o cancha.nombreCancha / cancha.nombre?.cancha según tu backend
@@ -46,9 +46,9 @@ export default function CalendarioReservas() {
   const [turnoSeleccionado, setTurnoSeleccionado] = useState<any>(null);
   const [cargando, setCargando] = useState(false);
   const [error, setError] = useState("");
-
-  const [mostrarModal, setMostrarModal] = useState(false);
   const [loading, setLoading] = useState<boolean>(false);
+  const { usuarioLogueado } = useAppContext();
+  const [mostrarModal, setMostrarModal] = useState(false);
   const fechaISO = convertirFechaAISO(fechaSeleccionada);
   const navegacion = useNavigate();
   useEffect(() => {
@@ -127,6 +127,7 @@ export default function CalendarioReservas() {
   // 3. Si SÍ está logueado, abrimos el comprobante de reserva
 
   const handleComprar = async () => {
+  
     if (!usuarioLogueado) return navegacion('/login');
     setLoading(true);
     try {
