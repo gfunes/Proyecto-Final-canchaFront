@@ -1,14 +1,16 @@
 import { useEffect, useState } from "react";
+import { useAppContext } from "../../context/AppContext";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import { useNavigate } from "react-router";
 import { obtenerDisponibilidad } from "../services/disponibilidadService";
-import { listarCanchasApi } from "../../helpers/queries";
+import { listarCanchasApi, crearPreferenciaPagoApi } from "../../helpers/queries";
 import Swal from "sweetalert2";
 
 const respuesta = await listarCanchasApi();
 const canchasData = await respuesta.json();
 const lista = canchasData.canchas;
+const { usuarioLogueado } = useAppContext();
 
 const CANCHAS = lista.map((cancha: any) => ({
   id: cancha._id,
@@ -46,6 +48,7 @@ export default function CalendarioReservas() {
   const [error, setError] = useState("");
 
   const [mostrarModal, setMostrarModal] = useState(false);
+  const [loading, setLoading] = useState<boolean>(false);
   const fechaISO = convertirFechaAISO(fechaSeleccionada);
   const navegacion = useNavigate();
   useEffect(() => {
@@ -123,15 +126,26 @@ export default function CalendarioReservas() {
 
   // 3. Si SÍ está logueado, abrimos el comprobante de reserva
 
-  function procesarPago() {
-    console.log("Procesando pago de reserva:", {
-      cancha: canchaId,
-      fecha: fechaISO,
-      turno: turnoSeleccionado,
-    });
-    alert("¡Redirigiendo a la pasarela de pago!");
-    setMostrarModal(false);
-  }
+  const handleComprar = async () => {
+    if (!usuarioLogueado) return navegacion('/login');
+    setLoading(true);
+    try {
+      const resp = await crearPreferenciaPagoApi();
+      if (!resp.ok) throw new Error('Error creando preferencia');
+      const data = await resp.json();
+      const redirectUrl = data.init_point || data.sandbox_init_point;
+      if (redirectUrl) {
+        // backend redirige a MercadoPago, nosotros cambiamos la location
+        window.location.href = redirectUrl;
+      } else {
+        console.error('Respuesta inválida de preferencia', data);
+      }
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   // Clases dinámicas según el estado (Verde: Disponible, Rojo: Reservado, Amarillo: Pendiente)
   const getEstilosTurno = (turno: any, isSelected: boolean) => {
@@ -379,7 +393,7 @@ export default function CalendarioReservas() {
             {/* Botón Pagar */}
             <button
               type="button"
-              onClick={procesarPago}
+              onClick={handleComprar}
               className="w-full py-4 bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-extrabold rounded-xl transition-all shadow-lg shadow-emerald-500/30 active:scale-95 text-center text-base flex items-center justify-center gap-2"
             >
               💳 Pagar Reserva
