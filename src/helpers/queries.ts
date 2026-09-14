@@ -291,11 +291,14 @@ export const agregarAlCarritoApi = async (
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       credentials: 'include',
-      body: JSON.stringify({ productoId, cantidad }),
+      body: JSON.stringify({
+         producto: productoId, 
+         cantidad 
+        }),
     });
     return respuesta;
   } catch (error) {
-    console.error(error);
+    console.error("Error al agregar al carrito:", error);
     throw error;
   }
 };
