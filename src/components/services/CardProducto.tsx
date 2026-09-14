@@ -64,14 +64,15 @@ const CardProducto = ({ producto }: CardProductoProps) => {
         </p>
 
         {/* Borde inferior (Precio y Botón) */}
-        <div className="flex justify-between items-end border-t-2 border-dashed border-green-200 pt-4 mt-auto">
+        <div className="border-t-2 border-dashed border-green-200 pt-4 mt-auto flex flex-col gap-3">
           <div>
-            <span className="block text-l font-bold text-slate-400 uppercase tracking-wider mb-1">
+            <span className="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">
               Precio
             </span>
             <span className="text-2xl font-black text-green-600 flex items-start">
-              <span className="text-lg mt-1 mr-1">$</span>
-              {producto.precio}
+              <span className="text-lg mt-0.5 mr-1">$</span>
+
+              {Number(producto.precio).toLocaleString("es-AR")}
             </span>
           </div>
 {/* Selector de Cantidad + Botón Agregar */}
@@ -89,7 +90,7 @@ const CardProducto = ({ producto }: CardProductoProps) => {
               onClick={handleAgregar}
               className="flex-1 bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2.5 px-4 rounded-xl flex items-center justify-center gap-2 shadow-md transition-all duration-200 active:scale-95 cursor-pointer"
             >
-              <GiShoppingCartclassName="text-lg" />
+              <GiShoppingCart className="text-lg" />
               <span>Agregar</span>
             </button>
           </div>
