@@ -1,7 +1,11 @@
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router";
+import type { Cancha, CanchaFormData } from "../../interfaces/canchas";
 import Swal from "sweetalert2";
-import { crearCanchaApi, listarCategoriasApi } from "../../helpers/queries";
+import { crearCanchaApi,
+   listarCategoriasApi,
+   editarCanchaApi,
+  buscarCanchaApi} from "../../helpers/queries";
 import { useEffect, useState } from "react";
 
 interface Categoria {
