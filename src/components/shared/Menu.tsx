@@ -70,14 +70,14 @@ const Menu = () => {
                     </NavLink>
                 )}
                   <NavLink
-                    to="/administrador/productos"
+                    to="/productos"
                     className={navLinkStyles}
                   >
                     Productos
                   </NavLink>
 
                   <NavLink
-                    to="/administrador/reservas"
+                    to="/reservas"
                     className={navLinkStyles}
                   >
                     Reservas
