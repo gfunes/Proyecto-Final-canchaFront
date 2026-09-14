@@ -8,7 +8,8 @@ const urlUsuarios = `${import.meta.env.VITE_ALQUILER_CANCHAS}/usuarios`;
 const urlProductos = `${import.meta.env.VITE_ALQUILER_CANCHAS}/productos`;
 const urlCategoriasProductos = `${import.meta.env.VITE_ALQUILER_CANCHAS}/categoriaProductos`;
 const urlCarrito = `${import.meta.env.VITE_ALQUILER_CANCHAS}/carrito`;
-const urlPago = `${import.meta.env.VITE_ALQUILER_CANCHAS}/pago`;
+const urlPagoProducto = `${import.meta.env.VITE_ALQUILER_CANCHAS}/pagoProducto`;
+const urlMisReservas = `${import.meta.env.VITE_ALQUILER_CANCHAS}/reservas/mis-reservas`;
 
 export interface ListarProductosParams {
   // support both legacy frontend names and backend names
@@ -17,7 +18,14 @@ export interface ListarProductosParams {
   pagina?: number;
   limite?: number;
   termino?: string;
-
+}
+export interface ListarReservasParams {
+  // support both legacy frontend names and backend names
+  paginaNumero?: number;
+  cantReservas?: number;
+  pagina?: number;
+  limite?: number;
+  termino?: string;
 }
 
 export const listarCanchasApi = async (): Promise<Response> => {
@@ -97,23 +105,58 @@ export const borrarCanchaApi = async (id: string): Promise<Response> => {
   }
 };
 
+
+
 export const listarReservasApi = async (
-  canchaId: string,
-  fecha: string,
-  signal?: AbortSignal,
+  params: ListarReservasParams = {},
 ): Promise<Response> => {
   try {
-    const respuesta = await fetch(
-      `${urlReservas}?canchaId=${encodeURIComponent(canchaId)}&fecha=${encodeURIComponent(fecha)}`,
-      { signal },
-    );
-    return respuesta;
-  } catch (error: any) {
-    // Si fue cancelada intencionalmente por cambio de fecha o StrictMode, no lo imprimimos como error
-    if (error.name === "AbortError") {
-      throw error;
+ const query = new URLSearchParams();
+    // Backend espera `pagina` y `limite`. el termino es optativo
+    const pagina = params.pagina ?? params.paginaNumero ?? 1;
+    const limite = params.limite ?? params.cantReservas ?? 8;
+    query.set("pagina", String(pagina));
+    query.set("limite", String(limite));
+    if (params.termino) {
+      query.set("termino", params.termino);
     }
-    console.error("Error al conectar con la API de reservas/turnos:", error);
+    const respuesta = await fetch(`${urlMisReservas}?${query.toString()}`);
+    return respuesta;
+  } catch (error) {
+    console.error("Error al listar Reservas:", error);
+    throw error;
+  }
+};
+//   canchaId: string,
+//   fecha: string,
+//   signal?: AbortSignal,
+// ): Promise<Response> => {
+//   try {
+//     const respuesta = await fetch(
+//       `${urlReservas}?canchaId=${encodeURIComponent(canchaId)}&fecha=${encodeURIComponent(fecha)}`,
+//       { signal },
+//     );
+//     return respuesta;
+//   } catch (error: any) {
+//     // Si fue cancelada intencionalmente por cambio de fecha o StrictMode, no lo imprimimos como error
+//     if (error.name === "AbortError") {
+//       throw error;
+//     }
+//     console.error("Error al conectar con la API de reservas/turnos:", error);
+//     throw error;
+//   }
+// };
+export const borrarReservaApi = async (
+  id: string | number,
+): Promise<Response> => {
+  try {
+    const respuesta = await fetch(`${urlReservas}/${id}`, {
+      method: "DELETE",
+      credentials:'include',
+    });
+    return respuesta;
+  } catch (error) {
+    console.error(error);
     throw error;
   }
 };
@@ -334,7 +377,7 @@ export const obtenerCarritoApi = async (): Promise<any> => {
 //🆕 crear preferencia de pago (MercadoPago) - backend crea la preferencia y devuelve init_point
 export const crearPreferenciaPagoApi = async (): Promise<Response> => {
   try {
-    const respuesta = await fetch(`${urlPago}/crear-preferencia`, {
+    const respuesta = await fetch(`${urlPagoProducto}/crear-preferencia`, {
       method: 'POST',
       credentials: 'include',
     });
