@@ -5,9 +5,10 @@ const urlCanchas = `${import.meta.env.VITE_ALQUILER_CANCHAS}/canchas`;
 const urlReservas = `${import.meta.env.VITE_ALQUILER_CANCHAS}/reservas/disponibles`;
 const urlCategorias = `${import.meta.env.VITE_ALQUILER_CANCHAS}/categoriaCanchas`;
 const urlUsuarios = `${import.meta.env.VITE_ALQUILER_CANCHAS}/usuarios`;
-
 const urlProductos = `${import.meta.env.VITE_ALQUILER_CANCHAS}/productos`;
 const urlCategoriasProductos = `${import.meta.env.VITE_ALQUILER_CANCHAS}/categoriaProductos`;
+const urlCarrito = `${import.meta.env.VITE_ALQUILER_CANCHAS}/carrito`;
+const urlPago = `${import.meta.env.VITE_ALQUILER_CANCHAS}/pago`;
 
 export interface ListarProductosParams {
   // support both legacy frontend names and backend names
@@ -239,7 +240,7 @@ export const loginBackendApi = async (usuario: any): Promise<Response> => {
       headers: {
         "Content-Type": "application/json",
       },
-      credentials: "include", // <-- OBLIGATORIO para aceptar y enviar cookies
+      credentials: "include", 
       body: JSON.stringify(usuario),
     });
     return respuesta;
@@ -254,9 +255,12 @@ export const logoutBackendApi = async (): Promise<Response> => {
     credentials: "include",
   });
 };
-export const agregarAlCarritoApi = async (productoId: string, cantidad = 1): Promise<Response> => {
+export const agregarAlCarritoApi = async (
+  productoId: string, 
+  cantidad = 1
+): Promise<Response> => {
   try {
-    const respuesta = await fetch('http://localhost:3000/api/carrito', {
+    const respuesta = await fetch('urlCarrito', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       credentials: 'include',
@@ -270,7 +274,7 @@ export const agregarAlCarritoApi = async (productoId: string, cantidad = 1): Pro
 };
 
 export const restarDelCarritoApi = async (productoId: string): Promise<Response> => {
-  const respuesta = await fetch(`http://localhost:3000/api/carrito/restar/${productoId}`, {
+  const respuesta = await fetch(`${urlCarrito}/restar/${productoId}`, {
     method: 'PATCH',
     credentials: 'include',
   });
@@ -278,7 +282,7 @@ export const restarDelCarritoApi = async (productoId: string): Promise<Response>
 };
 
 export const eliminarProductoDelCarritoApi = async (productoId: string): Promise<Response> => {
-  const respuesta = await fetch(`http://localhost:3000/api/carrito/producto/${productoId}`, {
+  const respuesta = await fetch(`${urlCarrito}/producto/${productoId}`, {
     method: 'DELETE',
     credentials: 'include',
   });
@@ -287,7 +291,7 @@ export const eliminarProductoDelCarritoApi = async (productoId: string): Promise
 
 export const obtenerCantidadCarritoApi = async (): Promise<number> => {
   try {
-    const respuesta = await fetch('http://localhost:3000/api/carrito', {
+    const respuesta = await fetch(urlCarrito, {
       method: 'GET',
       credentials: 'include',
     });
@@ -310,7 +314,7 @@ export const obtenerCantidadCarritoApi = async (): Promise<number> => {
 //🆕 obtener carrito completo
 export const obtenerCarritoApi = async (): Promise<any> => {
   try {
-    const respuesta = await fetch('http://localhost:3002/api/carrito', {
+    const respuesta = await fetch(urlCarrito, {
       method: 'GET',
       credentials: 'include',
     });
@@ -330,7 +334,7 @@ export const obtenerCarritoApi = async (): Promise<any> => {
 //🆕 crear preferencia de pago (MercadoPago) - backend crea la preferencia y devuelve init_point
 export const crearPreferenciaPagoApi = async (): Promise<Response> => {
   try {
-    const respuesta = await fetch('http://localhost:3002/api/pago/crear-preferencia', {
+    const respuesta = await fetch(`${urlPago}/crear-preferencia`, {
       method: 'POST',
       credentials: 'include',
     });
