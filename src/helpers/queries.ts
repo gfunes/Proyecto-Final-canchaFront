@@ -348,11 +348,11 @@ export const agregarAlCarritoApi = async (
   cantidad = 1
 ): Promise<Response> => {
   try {
-    const respuesta = await fetch('urlCarrito', {
+    const respuesta = await fetch(urlCarrito, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       credentials: 'include',
-      body: JSON.stringify({ productoId, cantidad }),
+      body: JSON.stringify({ producto:productoId, cantidad }),
     });
     return respuesta;
   } catch (error) {

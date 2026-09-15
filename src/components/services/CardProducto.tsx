@@ -15,7 +15,6 @@ const CardProducto = ({ producto }: CardProductoProps) => {
   const [cantidad, setCantidad] = useState<number>(1);
   const [cargando, setCargando] = useState<boolean>(false);
   const navigate = useNavigate();
-  //const { agregarAlCarrito } = useAppContext();
 
   const handleAgregar = async () => {
     if (cantidad < 1) return;
@@ -46,14 +45,7 @@ if (!usuarioLogueado) {
       if (refreshCarritoCount) {
         await refreshCarritoCount();
       }
-
-    // if (agregarAlCarrito) {
-    //   agregarAlCarrito({
-    //     ...producto,
-    //     cantidad,
-    //   });
-    // }
-
+      
     Swal.fire({
       toast: true,
       position: "top-end",
