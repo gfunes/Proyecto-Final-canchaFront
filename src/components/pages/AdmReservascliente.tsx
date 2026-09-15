@@ -1,12 +1,4 @@
-import ItemTablaReservaClientes from "../services/itemtablaReservaClientes";
-import {  listarReservasApiCliente} from "../../helpers/queries";
-import type { Reserva } from "../../interfaces/reserva";
-import { LuCirclePlus } from "react-icons/lu";
-import { Link } from "react-router";
-import { useEffect, useState } from "react";
-import Swal from "sweetalert2";
-
-
+import ItemTabla from "../services/itemTablaReservas";
 
 const AdmReservasClientes = () => {
    const [reservas, setReservas] = useState<Reserva[]>([]);
