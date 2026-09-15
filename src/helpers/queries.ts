@@ -304,10 +304,7 @@ export const agregarAlCarritoApi = async (
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       credentials: 'include',
-      body: JSON.stringify({
-         producto: productoId, 
-         cantidad 
-        }),
+      body: JSON.stringify({ producto:productoId, cantidad }),
     });
     return respuesta;
   } catch (error) {
