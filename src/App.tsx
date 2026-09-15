@@ -77,7 +77,7 @@ const refreshCarritoCount = async (): Promise<void> => {
     value={{
       usuarioLogueado,
       setUsuarioLogueado,
-      loadingSession:false, 
+      loadingSession, 
       carritoCount, 
       setCarritoCount,
       refreshCarritoCount,
