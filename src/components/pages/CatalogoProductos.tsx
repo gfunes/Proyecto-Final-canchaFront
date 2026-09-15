@@ -1,5 +1,5 @@
 import CardProducto from "../services/CardProducto";
-import {NavLink} from "react-router";
+import { NavLink } from "react-router";
 import { useEffect, useState, type SubmitEvent } from "react";
 import { listarProductosApi } from "../../helpers/queries";
 import type { Producto } from "../../interfaces/productos";
@@ -77,29 +77,34 @@ const Inicio = () => {
     setPaginaActual(pagina);
   };
   return (
-       <section className="space-y-8 animate-fadeIn px-10 my-5">
-        <div className="flex flex-col md:flex-row md:items-center justify-between border-b border-zinc-800 pb-5 gap-4">
-          <div>
-            <h1 className="text-3xl font-bold text-white tracking-tight text-center md:text-start">
-              Catálogo de <span className="text-green-500">Productos</span>
-            </h1>
-            <p className="text-zinc-400 mt-1 text-sm text-center md:text-start">
-              Agrega los productos que quieras al carrito y luego termina tu
-              compra
-            </p>
+    <section className="space-y-8 animate-fadeIn px-10 my-5">
+      <div className="flex flex-col md:flex-row md:items-center justify-between border-b border-zinc-800 pb-5 gap-4">
+        <div>
+          <h1 className="text-3xl font-bold text-white tracking-tight text-center md:text-start">
+            Catálogo de <span className="text-green-500">Productos</span>
+          </h1>
+          <p className="text-zinc-400 mt-1 text-sm text-center md:text-start">
+            Agrega los productos que quieras al carrito y luego termina tu
+            compra
+          </p>
+        </div>
+        <div className="flex flex-col sm:flex-row sm:items-center gap-3">
+          <div className="text-xs text-zinc-500 bg-zinc-900 px-3 py-1 rounded-full border border-zinc-800">
+            {cantidadProductos} productos disponibles
           </div>
-          <div className="flex flex-col sm:flex-row sm:items-center gap-3">
-            <div className="text-xs text-zinc-500 bg-zinc-900 px-3 py-1 rounded-full border border-zinc-800">
-              {cantidadProductos} productos disponibles
-            </div>
-            <div className="text-xs text-zinc-500 bg-zinc-900 px-3 py-1 rounded-full border border-zinc-800">
-              Página {paginaActual} de {totalPaginas}
-            </div>
+          <div className="text-xs text-zinc-500 bg-zinc-900 px-3 py-1 rounded-full border border-zinc-800">
+            Página {paginaActual} de {totalPaginas}
           </div>
-          <NavLink to="/" className={"bg-green-500 hover:bg-green-600 transition text-l py-2 px-3 rounded-2xl font-bold cursor-pointer text-center md:text-start"}>
-            Volver al juego ⚽
-          </NavLink>
-          <form
+        </div>
+        <NavLink
+          to="/"
+          className={
+            "bg-green-500 hover:bg-green-600 transition text-l py-2 px-3 rounded-2xl font-bold cursor-pointer text-center md:text-start"
+          }
+        >
+          Volver al juego ⚽
+        </NavLink>
+        <form
           onSubmit={handleBuscar}
           className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3"
         >
@@ -130,57 +135,47 @@ const Inicio = () => {
             </button>
           )}
         </form>
-        </div>
-        
-        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
-            {productos.map((producto) => (
-              <CardProducto key={producto._id} producto={producto} />
-            ))}
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        {productos.map((producto) => (
+          <CardProducto key={producto._id} producto={producto} />
+        ))}
+      </div>
+      {/* <CardProducto/> */}
+
+      {(totalPaginas > 1 || cantidadProductos > cantProductos) && (
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-3 mt-6">
+          <div className="text-sm text-zinc-400">
+            Mostrando {productos.length} de {cantidadProductos} resultados
           </div>
-        {/* <CardProducto/> */}
-       
-        {(totalPaginas > 1 || cantidadProductos > cantProductos) && (
-            <div className="flex flex-col sm:flex-row items-center justify-between gap-3 mt-6">
-              <div className="text-sm text-zinc-400">
-                Mostrando {productos.length} de {cantidadProductos} resultados
-              </div>
-              {/* botones de paginacion */}
-              <div className="flex flex-wrap items-center justify-center gap-2">
-                <button
-                  type="button"
-                  disabled={paginaActual === 1}
-                  onClick={() => cambiarPagina(paginaActual - 1)}
-                  className="px-4 py-2 rounded-xl text-sm font-semibold transition-colors disabled:opacity-40 disabled:cursor-not-allowed bg-zinc-900 border border-zinc-800 hover:bg-zinc-800"
-                >
-                  Anterior
-                </button>
+          {/* botones de paginacion */}
+          <div className="flex flex-wrap items-center justify-center gap-2">
+            <button
+              type="button"
+              disabled={paginaActual === 1}
+              onClick={() => cambiarPagina(paginaActual - 1)}
+              className="px-4 py-2 rounded-xl text-sm font-semibold transition-colors disabled:opacity-40 disabled:cursor-not-allowed bg-zinc-900 border border-zinc-800 hover:bg-zinc-800"
+            >
+              Anterior
+            </button>
 
-                <span className="px-3 py-2 text-sm text-zinc-400">
-                  Página {paginaActual} de {totalPaginas}
-                </span>
+            <span className="px-3 py-2 text-sm text-zinc-400">
+              Página {paginaActual} de {totalPaginas}
+            </span>
 
-                <button
-                  type="button"
-                  disabled={paginaActual === totalPaginas}
-                  onClick={() => cambiarPagina(paginaActual + 1)}
-                  className="px-4 py-2 rounded-xl text-sm font-semibold transition-colors disabled:opacity-40 disabled:cursor-not-allowed bg-zinc-900 border border-zinc-800 hover:bg-zinc-800"
-                >
-                  Siguiente
-                </button>
-              </div>
-            </div>
-          )}
-         <div className="flex flex-col items-center justify-center py-20 bg-zinc-900/50 rounded-xl border border-dashed border-zinc-800">
-          <i className="bi bi-search text-4xl text-zinc-700 mb-4"></i>
-          <p className="text-zinc-500">
-            No se encontraron productos{" "}
-            {filtro ? `para '${filtro}'` : "disponibles"}.
-          </p>
+            <button
+              type="button"
+              disabled={paginaActual === totalPaginas}
+              onClick={() => cambiarPagina(paginaActual + 1)}
+              className="px-4 py-2 rounded-xl text-sm font-semibold transition-colors disabled:opacity-40 disabled:cursor-not-allowed bg-zinc-900 border border-zinc-800 hover:bg-zinc-800"
+            >
+              Siguiente
+            </button>
+          </div>
         </div>
-      
-        
-      </section>
-    
+      )}
+    </section>
   );
 };
 

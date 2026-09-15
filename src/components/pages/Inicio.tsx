@@ -32,9 +32,9 @@ const Inicio = () => {
 
     <section className="space-y-8 animate-fadeIn">
       <Carousel />
-       <div className="flex flex-col md:flex-row md:items-center justify-between border-b border-zinc-800 pb-5 gap-4">
+       <div className="flex flex-col md:flex-row md:items-center justify-center border-b border-zinc-800 pb-5 gap-4">
           <NavLink to="/productos" className={"bg-green-500 hover:bg-green-600 transition text-l py-2 px-3 rounded-2xl font-bold cursor-pointer"}>
-            Compra tus productos 🥤🌭
+            Compra tus productos
           </NavLink>
         </div>
       <div className="flex flex-col md:flex-row md:items-center justify-between border-b border-zinc-800 pb-5 gap-4">

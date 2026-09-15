@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { LuMenu, LuX, LuLogOut } from "react-icons/lu";
-import { Link, NavLink, useNavigate} from "react-router";
+import { Link, NavLink, useNavigate } from "react-router";
 import { useAppContext } from "../../context/AppContext";
 import { GiShoppingCart } from "react-icons/gi";
 
@@ -10,12 +10,13 @@ const Menu = () => {
   const navegacion = useNavigate();
 
   const isAdmin = usuarioLogueado?.rol === "admin";
-  console.log("usuario", usuarioLogueado)
+  console.log("usuario", usuarioLogueado);
 
   const navLinkStyles = ({ isActive }: { isActive: boolean }) =>
-    `block py-2 px-3 transition-colors duration-200 md:p-0 ${isActive
-      ? "text-green-500 font-semibold"
-      : "text-zinc-300 hover:text-gren-600"
+    `block py-2 px-3 transition-colors duration-200 md:p-0 ${
+      isActive
+        ? "text-green-500 font-semibold"
+        : "text-zinc-300 hover:text-gren-600"
     }`;
   const logout = () => {
     sessionStorage.removeItem("usuarioLogueado");
@@ -33,13 +34,11 @@ const Menu = () => {
     <nav className="bg-slate-500 border-b border-zinc-800 text-zinc-100 sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
-
           <img
             src="https://res.cloudinary.com/ddhyg9uee/image/upload/v1788274566/rollingclub_nohrp6.png"
             alt="logo institucional"
             className="h-16 w-auto object-contain"
           />
-
 
           <div className="md:hidden flex items-center">
             <button
@@ -86,24 +85,24 @@ const Menu = () => {
                     </NavLink>
                   )}
                   {!isAdmin && (
-                  <NavLink
-                  to={`/reservas/mis-reservas/${usuarioLogueado?._id}`}
-                    //to="/reservas"
-                    className={navLinkStyles}
-                  >
-                    Tus Reservas
-                  </NavLink>
+                    <NavLink
+                      to={`/reservas/mis-reservas/${usuarioLogueado?._id}`}
+                      //to="/reservas"
+                      className={navLinkStyles}
+                    >
+                      Tus Reservas
+                    </NavLink>
                   )}
-                  <Link
-                    to="/carrito"
-                    className="flex items-center gap-2 bg-zinc-800/80 hover:bg-zinc-800 text-green-400 px-3.5 py-1.5 rounded-lg border border-zinc-700/80 hover:border-green-500/50 transition-all text-sm font-semibold shadow-sm"
-                    title="Ver mi carrito / reservas"
-                  >
-                    <GiShoppingCart className="text-2xl text-green-400" />
-                    <span>{nombreMostrar}</span>
-                  </Link>
-
-
+                  {!isAdmin && (
+                    <Link
+                      to="/carrito"
+                      className="flex items-center gap-2 bg-zinc-800/80 hover:bg-zinc-800 text-green-400 px-3.5 py-1.5 rounded-lg border border-zinc-700/80 hover:border-green-500/50 transition-all text-sm font-semibold shadow-sm"
+                      title="Ver mi carrito / reservas"
+                    >
+                      <GiShoppingCart className="text-2xl text-green-400" />
+                      <span>{nombreMostrar}</span>
+                    </Link>
+                  )}
 
                   <button
                     onClick={logout}
@@ -119,17 +118,16 @@ const Menu = () => {
                 </NavLink>
               )}
             </div>
-
-
           </div>
         </div>
       </div>
       {/* Menú Mobile Desplegable */}
       <div
-        className={`${isMenuOpen
+        className={`${
+          isMenuOpen
             ? "max-h-96 opacity-100"
             : "max-h-0 opacity-0 overflow-hidden"
-          } md:hidden transition-all duration-300 ease-in-out bg-zinc-900 border-t border-zinc-800`}
+        } md:hidden transition-all duration-300 ease-in-out bg-zinc-900 border-t border-zinc-800`}
       >
         <div className="px-4 pt-2 pb-6 space-y-2">
           <NavLink
@@ -169,12 +167,9 @@ const Menu = () => {
                   Reservas
                 </NavLink>
               )}
-              <NavLink
-                    to="/reservas"
-                    className={navLinkStyles}
-                  >
-                    Tus Reservas
-                  </NavLink>
+              <NavLink to="/reservas" className={navLinkStyles}>
+                Tus Reservas
+              </NavLink>
               <Link
                 to="/carrito"
                 onClick={() => setIsMenuOpen(false)}
