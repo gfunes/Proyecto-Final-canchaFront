@@ -1,4 +1,4 @@
-import type { Cancha } from "../interfaces/canchas";
+import type { Cancha, CanchaFormData } from "../interfaces/canchas";
 import type { Producto, ProductoFormData } from "../interfaces/productos";
 
 const urlCanchas = `${import.meta.env.VITE_ALQUILER_CANCHAS}/canchas`;
@@ -10,6 +10,7 @@ const urlProductos = `${import.meta.env.VITE_ALQUILER_CANCHAS}/productos`;
 const urlCategoriasProductos = `${import.meta.env.VITE_ALQUILER_CANCHAS}/categoriaProductos`;
 const urlCarrito = `${import.meta.env.VITE_ALQUILER_CANCHAS}/carrito`;
 const urlPagoProducto = `${import.meta.env.VITE_ALQUILER_CANCHAS}/pagoProducto`;
+const urlPagoCancha = `${import.meta.env.VITE_ALQUILER_CANCHAS}/pagoCancha`;
 const urlMisReservas = `${import.meta.env.VITE_ALQUILER_CANCHAS}/reservas/mis-reservas`;
 
 export interface ListarProductosParams {
@@ -47,6 +48,7 @@ export const buscarCanchaApi = async (id: string): Promise<Response> => {
     throw error;
   }
 };
+
 export const crearCanchaApi = async (cancha: Cancha): Promise<Response> => {
   try {
     const token = sessionStorage.getItem("token") || localStorage.getItem("token");
@@ -65,9 +67,10 @@ export const crearCanchaApi = async (cancha: Cancha): Promise<Response> => {
     throw error;
   }
 };
+
 export const editarCanchaApi = async (
   id: string,
-  cancha: Cancha,
+  cancha: CanchaFormData,
 ): Promise<Response> => {
   try {
     const respuesta = await fetch(`${urlCanchas}/${id}`, {
@@ -100,6 +103,9 @@ export const borrarCanchaApi = async (id: string): Promise<Response> => {
     throw error;
   }
 };
+
+
+
 export const listarReservasApi = async (
   params: ListarReservasParams = {},
 ): Promise<Response> => {
@@ -126,25 +132,25 @@ export const listarReservasApi = async (
     throw error;
   }
 };
-// // //   canchaId: string,
-// // //   fecha: string,
-// // //   signal?: AbortSignal,
-// // // ): Promise<Response> => {
-// // //   try {
-// // //     const respuesta = await fetch(
-// // //       `${urlReservas}?canchaId=${encodeURIComponent(canchaId)}&fecha=${encodeURIComponent(fecha)}`,
-// // //       { signal },
-// // //     );
-// // //     return respuesta;
-// // //   } catch (error: any) {
-// // //     // Si fue cancelada intencionalmente por cambio de fecha o StrictMode, no lo imprimimos como error
-// // //     if (error.name === "AbortError") {
-// // //       throw error;
-// // //     }
-// // //     console.error("Error al conectar con la API de reservas/turnos:", error);
-// // //     throw error;
-// // //   }
-// // // };
+//   canchaId: string,
+//   fecha: string,
+//   signal?: AbortSignal,
+// ): Promise<Response> => {
+//   try {
+//     const respuesta = await fetch(
+//       `${urlReservas}?canchaId=${encodeURIComponent(canchaId)}&fecha=${encodeURIComponent(fecha)}`,
+//       { signal },
+//     );
+//     return respuesta;
+//   } catch (error: any) {
+//     // Si fue cancelada intencionalmente por cambio de fecha o StrictMode, no lo imprimimos como error
+//     if (error.name === "AbortError") {
+//       throw error;
+//     }
+//     console.error("Error al conectar con la API de reservas/turnos:", error);
+//     throw error;
+//   }
+// };
 export const borrarReservaApi = async (
   id: string | number,
 ): Promise<Response> => {

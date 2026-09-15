@@ -4,7 +4,7 @@ import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import { useNavigate } from "react-router";
 import { obtenerDisponibilidad } from "../services/disponibilidadService";
-import { listarCanchasApi, crearPreferenciaPagoApi } from "../../helpers/queries";
+import { listarCanchasApi, crearPreferenciaReservaApi } from "../../helpers/queries";
 import Swal from "sweetalert2";
 
 const respuesta = await listarCanchasApi();
@@ -126,27 +126,48 @@ export default function CalendarioReservas() {
 
   // 3. Si SÍ está logueado, abrimos el comprobante de reserva
 
-  const handleComprar = async () => {
-  
-    if (!usuarioLogueado) return navegacion('/login');
-    setLoading(true);
-    try {
-      const resp = await crearPreferenciaPagoApi();
-      if (!resp.ok) throw new Error('Error creando preferencia');
-      const data = await resp.json();
-      const redirectUrl = data.init_point || data.sandbox_init_point;
-      if (redirectUrl) {
-        // backend redirige a MercadoPago, nosotros cambiamos la location
-        window.location.href = redirectUrl;
-      } else {
-        console.error('Respuesta inválida de preferencia', data);
-      }
-    } catch (error) {
-      console.error(error);
-    } finally {
-      setLoading(false);
+ const handleComprar = async () => {
+  if (!usuarioLogueado) return navegacion("/login");
+
+  // Verificamos que tengamos la reserva seleccionada
+  const idReserva = turnoSeleccionado?.id || turnoSeleccionado?._id;
+
+  if (!idReserva) {
+    return Swal.fire("Error", "No se encontró el ID de la reserva a pagar", "error");
+  }
+
+  setLoading(true);
+
+  try {
+    // 🟢 Le pasamos el ID que el backend va a buscar en MongoDB
+    const resp = await crearPreferenciaReservaApi(idReserva);
+
+    if (!resp.ok) {
+      const errorJson = await resp.json().catch(() => ({}));
+      throw new Error(errorJson.mensaje || "Error al generar la preferencia de pago");
     }
-  };
+
+    const data = await resp.json();
+    const redirectUrl = data.init_point || data.sandbox_init_point;
+
+    if (redirectUrl) {
+      // Redirección hacia Mercado Pago
+      window.location.href = redirectUrl;
+    } else {
+      console.error("Respuesta inválida de preferencia", data);
+      Swal.fire("Error", "No se obtuvo la URL de pago", "error");
+    }
+  } catch (error) {
+    console.error("Error al procesar la compra:", error);
+    Swal.fire({
+      icon: "error",
+      title: "No se pudo iniciar el pago",
+      text: error.message,
+    });
+  } finally {
+    setLoading(false);
+  }
+};
 
   // Clases dinámicas según el estado (Verde: Disponible, Rojo: Reservado, Amarillo: Pendiente)
   const getEstilosTurno = (turno: any, isSelected: boolean) => {

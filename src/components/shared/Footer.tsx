@@ -29,16 +29,25 @@ const Footer = () => {
 
           {/* Enlaces legales */}
           <div className="flex gap-4 text-xs font-bold text-slate-500 uppercase tracking-widest">
-            <a className="hover:text-green-400 cursor-pointer transition-colors duration-300" href="*">
+            <a
+              className="hover:text-green-400 cursor-pointer transition-colors duration-300"
+              href="*"
+            >
               Privacidad
             </a>
             <span className="text-green-700/50">•</span>
-            <a className="hover:text-green-400 cursor-pointer transition-colors duration-300" href="*">
-              Términos
+            <a
+              className="hover:text-green-400 cursor-pointer transition-colors duration-300"
+              href="/contacto"
+            >
+              Contacto
             </a>
             <span className="text-green-700/50">•</span>
-            <a className="hover:text-green-400 cursor-pointer transition-colors duration-300" href="*">
-              Contacto
+            <a
+              className="hover:text-green-400 cursor-pointer transition-colors duration-300"
+              href="/quienessomos"
+            >
+              Nosotros
             </a>
           </div>
         </div>
