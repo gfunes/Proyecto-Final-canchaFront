@@ -30,7 +30,7 @@ function App() {
     return sesion ? JSON.parse(sesion) : null;
   }); 
  
-  const [loadingSession, setLoadingSession] = useState(false);
+  const [loadingSession, setLoadingSession] = useState(true);
 
   //const [loadingSession ] = useState<boolean>(true);
      

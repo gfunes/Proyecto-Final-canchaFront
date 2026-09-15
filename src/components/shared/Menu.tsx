@@ -6,17 +6,16 @@ import { GiShoppingCart } from "react-icons/gi";
 
 const Menu = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const { usuarioLogueado, setUsuarioLogueado } = useAppContext();
+  const { usuarioLogueado, setUsuarioLogueado, loadingSession } = useAppContext();
   const navegacion = useNavigate();
 
   const isAdmin = usuarioLogueado?.rol === "admin";
   console.log("usuario", usuarioLogueado);
 
   const navLinkStyles = ({ isActive }: { isActive: boolean }) =>
-    `block py-2 px-3 transition-colors duration-200 md:p-0 ${
-      isActive
-        ? "text-green-500 font-semibold"
-        : "text-zinc-300 hover:text-gren-600"
+    `block py-2 px-3 transition-colors duration-200 md:p-0 ${isActive
+      ? "text-green-500 font-semibold"
+      : "text-zinc-300 hover:text-gren-600"
     }`;
   const logout = () => {
     sessionStorage.removeItem("usuarioLogueado");
@@ -61,73 +60,76 @@ const Menu = () => {
               <NavLink to="/" className={navLinkStyles}>
                 Inicio
               </NavLink>
-              {usuarioLogueado ? (
-                <>
-                  {isAdmin && (
-                    <NavLink to="/administrador" className={navLinkStyles}>
-                      Administrador
-                    </NavLink>
-                  )}
-                  {isAdmin && (
-                    <NavLink
-                      to="/administrador/productos"
-                      className={navLinkStyles}
-                    >
-                      Productos
-                    </NavLink>
-                  )}
-                  {isAdmin && (
-                    <NavLink
-                      to="/administrador/reservas"
-                      className={navLinkStyles}
-                    >
-                      Reservas
-                    </NavLink>
-                  )}
-                  {!isAdmin && (
-                    <NavLink
-                      to={`/reservas/mis-reservas/${usuarioLogueado?._id}`}
-                      //to="/reservas"
-                      className={navLinkStyles}
-                    >
-                      Tus Reservas
-                    </NavLink>
-                  )}
-                  {!isAdmin && (
-                    <Link
-                      to="/carrito"
-                      className="flex items-center gap-2 bg-zinc-800/80 hover:bg-zinc-800 text-green-400 px-3.5 py-1.5 rounded-lg border border-zinc-700/80 hover:border-green-500/50 transition-all text-sm font-semibold shadow-sm"
-                      title="Ver mi carrito / reservas"
-                    >
-                      <GiShoppingCart className="text-2xl text-green-400" />
-                      <span>{nombreMostrar}</span>
-                    </Link>
-                  )}
 
-                  <button
-                    onClick={logout}
-                    className="flex items-center gap-2 bg-zinc-800 hover:bg-red-900/40 text-red-400 px-4 py-2 rounded-md text-sm font-medium transition-all border border-zinc-700 hover:border-red-500/50"
-                  >
-                    <LuLogOut />
-                    Logout
-                  </button>
-                </>
-              ) : (
-                <NavLink to="/login" className={navLinkStyles}>
-                  Login
-                </NavLink>
-              )}
+              {loadingSession ? (
+                <span className="px-3 py-2 text-sm text-zinc-400">Cargando...</span>
+              )
+                : usuarioLogueado ? (
+                  <>
+                    {isAdmin && (
+                      <NavLink to="/administrador" className={navLinkStyles}>
+                        Administrador
+                      </NavLink>
+                    )}
+                    {isAdmin && (
+                      <NavLink
+                        to="/administrador/productos"
+                        className={navLinkStyles}
+                      >
+                        Productos
+                      </NavLink>
+                    )}
+                    {isAdmin && (
+                      <NavLink
+                        to="/administrador/reservas"
+                        className={navLinkStyles}
+                      >
+                        Reservas
+                      </NavLink>
+                    )}
+                    {!isAdmin && (
+                      <NavLink
+                        to={`/reservas/mis-reservas/${usuarioLogueado?._id}`}
+                        //to="/reservas"
+                        className={navLinkStyles}
+                      >
+                        Tus Reservas
+                      </NavLink>
+                    )}
+                    {!isAdmin && (
+                      <Link
+                        to="/carrito"
+                        className="flex items-center gap-2 bg-zinc-800/80 hover:bg-zinc-800 text-green-400 px-3.5 py-1.5 rounded-lg border border-zinc-700/80 hover:border-green-500/50 transition-all text-sm font-semibold shadow-sm"
+                        title="Ver mi carrito / reservas"
+                      >
+                        <GiShoppingCart className="text-2xl text-green-400" />
+                        <span>{nombreMostrar}</span>
+                      </Link>
+                    )}
+
+                    <button
+                      onClick={logout}
+                      className="flex items-center gap-2 bg-zinc-800 hover:bg-red-900/40 text-red-400 px-4 py-2 rounded-md text-sm font-medium transition-all border border-zinc-700 hover:border-red-500/50"
+                    >
+                      <LuLogOut />
+                      Logout
+                    </button>
+                  </>
+                ) : (
+                  <NavLink to="/login" className={navLinkStyles}>
+                    Login
+                  </NavLink>
+                )}
             </div>
           </div>
         </div>
       </div>
       {/* Menú Mobile Desplegable */}
       <div
-        className={`${
-          isMenuOpen
+        className={`${isMenuOpen
             ? "max-h-96 opacity-100"
             : "max-h-0 opacity-0 overflow-hidden"
-        } md:hidden transition-all duration-300 ease-in-out bg-zinc-900 border-t border-zinc-800`}
+          } md:hidden transition-all duration-300 ease-in-out bg-zinc-900 border-t border-zinc-800`}
       >
         <div className="px-4 pt-2 pb-6 space-y-2">
           <NavLink
@@ -138,64 +140,67 @@ const Menu = () => {
             Inicio
           </NavLink>
 
-          {usuarioLogueado ? (
-            <>
-              {isAdmin && (
-                <NavLink
-                  to="/administrador"
-                  className={navLinkStyles}
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  Administrador
+          {loadingSession ? (
+            <span className="px-3 py-2 text-sm text-zinc-400">Cargando...</span>
+          )
+            : usuarioLogueado ? (
+              <>
+                {isAdmin && (
+                  <NavLink
+                    to="/administrador"
+                    className={navLinkStyles}
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    Administrador
+                  </NavLink>
+                )}
+                {isAdmin && (
+                  <NavLink
+                    to="/administrador/productos"
+                    className={navLinkStyles}
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    Productos
+                  </NavLink>
+                )}
+                {isAdmin && (
+                  <NavLink
+                    to="/administrador/reservas"
+                    className={navLinkStyles}
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    Reservas
+                  </NavLink>
+                )}
+                <NavLink to="/reservas" className={navLinkStyles}>
+                  Tus Reservas
                 </NavLink>
-              )}
-              {isAdmin && (
-                <NavLink
-                  to="/administrador/productos"
-                  className={navLinkStyles}
+                <Link
+                  to="/carrito"
                   onClick={() => setIsMenuOpen(false)}
+                  className="flex items-center gap-2 bg-zinc-800/80 text-green-400 px-3 py-2 rounded-lg border border-zinc-700/80 text-sm font-semibold my-1"
                 >
-                  Productos
-                </NavLink>
-              )}
-              {isAdmin && (
-                <NavLink
-                  to="/administrador/reservas"
-                  className={navLinkStyles}
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  Reservas
-                </NavLink>
-              )}
-              <NavLink to="/reservas" className={navLinkStyles}>
-                Tus Reservas
-              </NavLink>
-              <Link
-                to="/carrito"
-                onClick={() => setIsMenuOpen(false)}
-                className="flex items-center gap-2 bg-zinc-800/80 text-green-400 px-3 py-2 rounded-lg border border-zinc-700/80 text-sm font-semibold my-1"
-              >
-                <GiShoppingCart className="text-xl" />
-                <span>{nombreMostrar}</span>
-              </Link>
+                  <GiShoppingCart className="text-xl" />
+                  <span>{nombreMostrar}</span>
+                </Link>
 
-              <button
-                onClick={logout}
-                className="w-full flex items-center justify-center gap-2 bg-zinc-800 hover:bg-red-900/40 text-red-400 px-4 py-2 rounded-md text-sm font-medium transition-all border border-zinc-700 hover:border-red-500/50 mt-2"
+                <button
+                  onClick={logout}
+                  className="w-full flex items-center justify-center gap-2 bg-zinc-800 hover:bg-red-900/40 text-red-400 px-4 py-2 rounded-md text-sm font-medium transition-all border border-zinc-700 hover:border-red-500/50 mt-2"
+                >
+                  <LuLogOut />
+                  Logout
+                </button>
+              </>
+            ) : (
+              <NavLink
+                to="/login"
+                className={navLinkStyles}
+                onClick={() => setIsMenuOpen(false)}
               >
-                <LuLogOut />
-                Logout
-              </button>
-            </>
-          ) : (
-            <NavLink
-              to="/login"
-              className={navLinkStyles}
-              onClick={() => setIsMenuOpen(false)}
-            >
-              Login
-            </NavLink>
-          )}
+                Login
+              </NavLink>
+            )}
         </div>
       </div>
     </nav>
