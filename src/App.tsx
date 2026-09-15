@@ -21,20 +21,51 @@ import DetalleProducto from "./components/pages/DetalleProducto"
 import Carrito from "./components/pages/Carrito" 
 import type { Usuario } from "./interfaces/usuarios"
 import AdmReservasClientes from "./components/pages/AdmReservascliente"
+import { loginBackendApi } from "./helpers/queries"
 
 function App() {
 
   const [usuarioLogueado, setUsuarioLogueado] = useState<Usuario | null>(() => {
     const sesion = sessionStorage.getItem("usuarioKey");
     return sesion ? JSON.parse(sesion) : null;
-  });  
-  //const [loadingSession, setLoadingSession] = useState<boolean>(true);
+  }); 
+ 
+  const [loadingSession, setLoadingSession] = useState(false);
+
+  //const [loadingSession ] = useState<boolean>(true);
      
-  
-  // const usuarioSessionStorage = JSON.parse(
-  //   sessionStorage.getItem("usuarioLogueado") || "false",
-  // );
-  
+
+const [carritoCount, setCarritoCount] = useState<number>(0);
+  // Funciones requeridas por la interfaz
+// const loginBackend = async (email: string, pass: string): Promise<Usuario | null> => {
+//   // Lógica de login o llamada a tu helper
+//   return null;
+// };
+const loginBackend = async (email: string, pass: string): Promise<Usuario | null> => {
+  try {
+    setLoadingSession(true);
+    const resp = await loginBackendApi(email, pass);
+    if (!resp.ok) return null;
+    
+    const data = await resp.json();
+    setUsuarioLogueado(data);
+    return data;
+  } catch (error) {
+    console.error("Error en login:", error);
+    return null;
+  } finally {
+    setLoadingSession(false);
+  }
+};
+
+const logoutBackend = async (): Promise<void> => {
+  setUsuarioLogueado(null);
+  localStorage.removeItem("usuario");
+};
+
+const refreshCarritoCount = async (): Promise<void> => {
+  // Lógica para actualizar contador si aplica
+};
 
    useEffect(() => {
     sessionStorage.setItem("usuarioKey", JSON.stringify(usuarioLogueado));
@@ -45,7 +76,16 @@ function App() {
     <AppContext.Provider 
     value={{
       usuarioLogueado,
-      setUsuarioLogueado
+      setUsuarioLogueado,
+      loadingSession:false, 
+      carritoCount, 
+      setCarritoCount,
+      refreshCarritoCount,
+      logoutBackend,
+      loginBackend,
+      
+      
+      
     }}>
     <BrowserRouter>
       <div className="min-h-screen bg-zinc-950 text-zinc-100 flex flex-col">
@@ -54,7 +94,8 @@ function App() {
           <Routes>
             <Route path="/" element={<Inicio></Inicio>}/>
             <Route path="/login" element={<Login></Login>}/>
-            <Route path="/reservas" element={<AdmReservasClientes/>} />           <Route path="/registrate" element={<RegistroUsuario/>} />
+            <Route path="/reservas" element={<AdmReservasClientes/>} />  
+            <Route path="/registrate" element={<RegistroUsuario/>} />
             <Route path="/administrador" element={<ProtectorRutas />}>
 
               <Route index element={<Administrador />} />
