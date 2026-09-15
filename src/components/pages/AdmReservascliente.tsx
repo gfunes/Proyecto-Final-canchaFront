@@ -1,6 +1,36 @@
-import ItemTabla from "../services/itemTablaReservas";
+import ItemTablaReservaClientes from "../services/itemtablaReservaClientes";
+import {  listarReservasApiCliente} from "../../helpers/queries";
+import type { Reserva } from "../../interfaces/reserva";
+import { LuCirclePlus } from "react-icons/lu";
+import { Link } from "react-router";
+import { useEffect, useState } from "react";
+import Swal from "sweetalert2";
+
+
 
 const AdmReservasClientes = () => {
+   const [reservas, setReservas] = useState<Reserva[]>([]);
+  
+    useEffect(() => {
+      cargarReservas();
+    }, []);
+    const cargarReservas = async () => {
+      const respuestaReserva = await listarReservasApiCliente();
+  console.log("respuesta reserva",respuestaReserva)
+      if (respuestaReserva && respuestaReserva.status === 200) {
+        const data = await respuestaReserva.json();
+  
+        setReservas(data.reservas);
+        console.log("consulta datos :", data);
+      } else {
+        Swal.fire({
+          title: "Ocurrio un error",
+          text: `no se puede mostrar las reservas en este momento`,
+          icon: "success",
+        });
+      }
+    };
+  
   return (
     <section className="animate-fadeIn space-y-6">
       {/* Header de la sección */}
@@ -37,7 +67,25 @@ const AdmReservasClientes = () => {
             </tr>
           </thead>
           <tbody className="divide-y divide-slate-400">
-            <ItemTabla />
+             {reservas.length > 0 ? (
+              reservas.map((Reserva, indice) => (
+                <ItemTablaReservaClientes
+                  key={Reserva._id}
+                  reserva={Reserva}
+                  fila={indice + 1}
+                  setReservas={setReservas}
+            />
+             ))
+            ) : (
+              <tr>
+                <td
+                  colSpan={4}
+                  className="px-6 py-12 text-center text-zinc-500 italic"
+                >
+                  No hay reservas registradas con tu usuario .
+                </td>
+              </tr>
+            )}
           </tbody>
         </table>
       </div>
@@ -45,4 +93,4 @@ const AdmReservasClientes = () => {
   );
 };
 
-export default AdmReservas;
+export default AdmReservasClientes;

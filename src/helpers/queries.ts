@@ -12,6 +12,7 @@ const urlCarrito = `${import.meta.env.VITE_ALQUILER_CANCHAS}/carrito`;
 const urlPagoProducto = `${import.meta.env.VITE_ALQUILER_CANCHAS}/pagoProducto`;
 const urlPagoCancha = `${import.meta.env.VITE_ALQUILER_CANCHAS}/pagoCancha`;
 const urlMisReservas = `${import.meta.env.VITE_ALQUILER_CANCHAS}/reservas/mis-reservas`;
+const urlReservasTotales = `${import.meta.env.VITE_ALQUILER_CANCHAS}/reservas`;
 
 export interface ListarProductosParams {
   // support both legacy frontend names and backend names
@@ -119,6 +120,28 @@ export const listarReservasApi = async (
     if (params.termino) {
       query.set("termino", params.termino);
     }
+    const respuesta = await fetch(`${urlReservasTotales}?${query.toString()}`);
+    return respuesta;
+  } catch (error) {
+    console.error("Error al listar Reservas:", error);
+    throw error;
+  }
+};
+export const listarReservasApiCliente = async (
+  _id: string | number,
+  params: ListarReservasParams = {},
+): Promise<Response> => {
+  try {
+ const query = new URLSearchParams();
+    // Backend espera `pagina` y `limite`. el termino es optativo
+    const pagina = params.pagina ?? params.paginaNumero ?? 1;
+    const limite = params.limite ?? params.cantReservas ?? 8;
+    query.set("pagina", String(pagina));
+    query.set("limite", String(limite));
+    if (params.termino) {
+      query.set("termino", params.termino);
+    }
+    const respuesta = await fetch(`${urlMisReservas}?/${_id}`);
     const respuesta = await fetch(`${urlReservas}?${query.toString()}`, {
       method: "GET",
       credentials: "include",

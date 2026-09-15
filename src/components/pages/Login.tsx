@@ -18,7 +18,7 @@ const Login = () => {
   const navegacion = useNavigate()
 
   const onSubmit = async (data: LoginFormInputs) => {
-    //console.log(data);
+    console.log("algun data",data);
     try {
       // 1. Llamar al backend real en Render
       const respuesta = await fetch(
@@ -34,12 +34,12 @@ const Login = () => {
       );
 
       const resultado = await respuesta.json();
-  
+  console.log("set usuario resultado",resultado)
     if (respuesta.status === 200) {
     
 // 1. Guardar el objeto con nombre y rol en el context (y en sessionStorage si lo usas)
   const datosSesion = {
-    _id: resultado._id,
+    _id: resultado.id,
     email: resultado.email,
     nombre: resultado.nombre,
     rol: resultado.rol, // "admin" o "cliente"
@@ -47,7 +47,7 @@ const Login = () => {
 
    sessionStorage.setItem("usuarioLogueado", JSON.stringify(datosSesion));
    setUsuarioLogueado(datosSesion);
-
+console.log("set usuario",datosSesion)
 // 2. Personalizar mensaje y redirección según el rol
   if (resultado.rol?.toLowerCase() === "admin") {
     Swal.fire({

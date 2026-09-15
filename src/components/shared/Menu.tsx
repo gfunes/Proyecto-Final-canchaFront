@@ -1,4 +1,4 @@
-import { useState} from "react";
+import { useState } from "react";
 import { LuMenu, LuX, LuLogOut } from "react-icons/lu";
 import { Link, NavLink, useNavigate} from "react-router";
 import { useAppContext } from "../../context/AppContext";
@@ -10,12 +10,12 @@ const Menu = () => {
   const navegacion = useNavigate();
 
   const isAdmin = usuarioLogueado?.rol === "admin";
+  console.log("usuario", usuarioLogueado)
 
   const navLinkStyles = ({ isActive }: { isActive: boolean }) =>
-    `block py-2 px-3 transition-colors duration-200 md:p-0 ${
-      isActive
-        ? "text-green-500 font-semibold"
-        : "text-zinc-300 hover:text-gren-600"
+    `block py-2 px-3 transition-colors duration-200 md:p-0 ${isActive
+      ? "text-green-500 font-semibold"
+      : "text-zinc-300 hover:text-gren-600"
     }`;
   const logout = () => {
     sessionStorage.removeItem("usuarioLogueado");
@@ -33,14 +33,14 @@ const Menu = () => {
     <nav className="bg-slate-500 border-b border-zinc-800 text-zinc-100 sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
-         
+
           <img
             src="https://res.cloudinary.com/ddhyg9uee/image/upload/v1788274566/rollingclub_nohrp6.png"
             alt="logo institucional"
             className="h-16 w-auto object-contain"
           />
-                 
-  
+
+
           <div className="md:hidden flex items-center">
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -64,26 +64,37 @@ const Menu = () => {
               </NavLink>
               {usuarioLogueado ? (
                 <>
-                {isAdmin && (
-                  <>
+                  {isAdmin && (
                     <NavLink to="/administrador" className={navLinkStyles}>
                       Administrador
                     </NavLink>
+                  )}
+                  {isAdmin && (
                     <NavLink
-                    to="/administrador/productos"
-                    className={navLinkStyles}
-                  >
-                    Productos
-                  </NavLink>
-</>
-                )}
+                      to="/administrador/productos"
+                      className={navLinkStyles}
+                    >
+                      Productos
+                    </NavLink>
+                  )}
+                  {isAdmin && (
+                    <NavLink
+                      to="/administrador/reservas"
+                      className={navLinkStyles}
+                    >
+                      Reservas
+                    </NavLink>
+                  )}
+                  {!isAdmin && (
                   <NavLink
-                    to="/administrador/reservas"
+                  to={`/reservas/mis-reservas/${usuarioLogueado?._id}`}
+                    //to="/reservas"
                     className={navLinkStyles}
                   >
-                    Reservas
+                    Tus Reservas
                   </NavLink>
-                <Link
+                  )}
+                  <Link
                     to="/carrito"
                     className="flex items-center gap-2 bg-zinc-800/80 hover:bg-zinc-800 text-green-400 px-3.5 py-1.5 rounded-lg border border-zinc-700/80 hover:border-green-500/50 transition-all text-sm font-semibold shadow-sm"
                     title="Ver mi carrito / reservas"
@@ -108,16 +119,17 @@ const Menu = () => {
                 </NavLink>
               )}
             </div>
-           </div>
+
+
+          </div>
         </div>
       </div>
       {/* Menú Mobile Desplegable */}
       <div
-        className={`${
-          isMenuOpen
+        className={`${isMenuOpen
             ? "max-h-96 opacity-100"
             : "max-h-0 opacity-0 overflow-hidden"
-        } md:hidden transition-all duration-300 ease-in-out bg-zinc-900 border-t border-zinc-800`}
+          } md:hidden transition-all duration-300 ease-in-out bg-zinc-900 border-t border-zinc-800`}
       >
         <div className="px-4 pt-2 pb-6 space-y-2">
           <NavLink
@@ -126,39 +138,44 @@ const Menu = () => {
             onClick={() => setIsMenuOpen(false)}
           >
             Inicio
-        </NavLink>
+          </NavLink>
 
-        {usuarioLogueado ? (
-          <>
-          {isAdmin && (
-            <>        
-              <NavLink
-                to="/administrador"
-                className={navLinkStyles}
-                onClick={() => setIsMenuOpen(false)}
-              >
-                Administrador
-              </NavLink>
-            
-            {/* Enlace general de productos para clientes y admins */}
-            <NavLink
-              to="/administrador/productos"
-              className={navLinkStyles}
-              onClick={() => setIsMenuOpen(false)}
-            >
-              Productos
-            </NavLink>
-</>
+          {usuarioLogueado ? (
+            <>
+              {isAdmin && (
+                <NavLink
+                  to="/administrador"
+                  className={navLinkStyles}
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  Administrador
+                </NavLink>
               )}
-            <NavLink
-              to="/administrador/reservas"
-              className={navLinkStyles}
-              onClick={() => setIsMenuOpen(false)}
-            >
-              Reservas
-            </NavLink>
-
-            <Link
+              {isAdmin && (
+                <NavLink
+                  to="/administrador/productos"
+                  className={navLinkStyles}
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  Productos
+                </NavLink>
+              )}
+              {isAdmin && (
+                <NavLink
+                  to="/administrador/reservas"
+                  className={navLinkStyles}
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  Reservas
+                </NavLink>
+              )}
+              <NavLink
+                    to="/reservas"
+                    className={navLinkStyles}
+                  >
+                    Tus Reservas
+                  </NavLink>
+              <Link
                 to="/carrito"
                 onClick={() => setIsMenuOpen(false)}
                 className="flex items-center gap-2 bg-zinc-800/80 text-green-400 px-3 py-2 rounded-lg border border-zinc-700/80 text-sm font-semibold my-1"
@@ -167,23 +184,23 @@ const Menu = () => {
                 <span>{nombreMostrar}</span>
               </Link>
 
-                 <button
+              <button
                 onClick={logout}
                 className="w-full flex items-center justify-center gap-2 bg-zinc-800 hover:bg-red-900/40 text-red-400 px-4 py-2 rounded-md text-sm font-medium transition-all border border-zinc-700 hover:border-red-500/50 mt-2"
               >
                 <LuLogOut />
                 Logout
               </button>
-          </>
-        ) : (
-          <NavLink
-            to="/login"
-            className={navLinkStyles}
-            onClick={() => setIsMenuOpen(false)}
-          >
-            Login
-          </NavLink>
-        )}
+            </>
+          ) : (
+            <NavLink
+              to="/login"
+              className={navLinkStyles}
+              onClick={() => setIsMenuOpen(false)}
+            >
+              Login
+            </NavLink>
+          )}
         </div>
       </div>
     </nav>
