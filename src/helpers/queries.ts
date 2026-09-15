@@ -149,6 +149,27 @@ export const listarReservasApiAdm = async (
     throw error;
   }
 };
+export const listarReservasApiCliente = async (
+  _id: string | number,
+  params: ListarReservasParams = {},
+): Promise<Response> => {
+  try {
+ const query = new URLSearchParams();
+    // Backend espera `pagina` y `limite`. el termino es optativo
+    const pagina = params.pagina ?? params.paginaNumero ?? 1;
+    const limite = params.limite ?? params.cantReservas ?? 8;
+    query.set("pagina", String(pagina));
+    query.set("limite", String(limite));
+    if (params.termino) {
+      query.set("termino", params.termino);
+    }
+    const respuesta = await fetch(`${urlMisReservas}?/${_id}`);
+    return respuesta;
+  } catch (error) {
+    console.error("Error al listar Reservas:", error);
+    throw error;
+  }
+};
 export const listarReservasApi = async (
   canchaId: string,
   fecha: string,

@@ -10,6 +10,7 @@ const Menu = () => {
   const navegacion = useNavigate();
 
   const isAdmin = usuarioLogueado?.rol === "admin";
+  console.log("usuario", usuarioLogueado)
 
   const navLinkStyles = ({ isActive }: { isActive: boolean }) =>
     `block py-2 px-3 transition-colors duration-200 md:p-0 ${isActive
@@ -84,12 +85,15 @@ const Menu = () => {
                       Reservas
                     </NavLink>
                   )}
+                  {!isAdmin && (
                   <NavLink
-                    to="/reservas"
+                  to={`/reservas/mis-reservas/${usuarioLogueado?._id}`}
+                    //to="/reservas"
                     className={navLinkStyles}
                   >
                     Tus Reservas
                   </NavLink>
+                  )}
                   <Link
                     to="/carrito"
                     className="flex items-center gap-2 bg-zinc-800/80 hover:bg-zinc-800 text-green-400 px-3.5 py-1.5 rounded-lg border border-zinc-700/80 hover:border-green-500/50 transition-all text-sm font-semibold shadow-sm"
