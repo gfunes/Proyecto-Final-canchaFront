@@ -2,7 +2,8 @@ import type { Cancha } from "../interfaces/canchas";
 import type { Producto, ProductoFormData } from "../interfaces/productos";
 
 const urlCanchas = `${import.meta.env.VITE_ALQUILER_CANCHAS}/canchas`;
-const urlReservas = `${import.meta.env.VITE_ALQUILER_CANCHAS}/reservas/disponibles`;
+const urlReservas = `${import.meta.env.VITE_ALQUILER_CANCHAS}/reservas`;
+const urlReservasDisponibles = `${import.meta.env.VITE_ALQUILER_CANCHAS}/reservas/disponibles`;
 const urlCategorias = `${import.meta.env.VITE_ALQUILER_CANCHAS}/categoriaCanchas`;
 const urlUsuarios = `${import.meta.env.VITE_ALQUILER_CANCHAS}/usuarios`;
 const urlProductos = `${import.meta.env.VITE_ALQUILER_CANCHAS}/productos`;
@@ -112,32 +113,38 @@ export const listarReservasApi = async (
     if (params.termino) {
       query.set("termino", params.termino);
     }
-    const respuesta = await fetch(`${urlMisReservas}?${query.toString()}`);
+    const respuesta = await fetch(`${urlReservas}?${query.toString()}`, {
+      method: "GET",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
     return respuesta;
   } catch (error) {
     console.error("Error al listar Reservas:", error);
     throw error;
   }
 };
-//   canchaId: string,
-//   fecha: string,
-//   signal?: AbortSignal,
-// ): Promise<Response> => {
-//   try {
-//     const respuesta = await fetch(
-//       `${urlReservas}?canchaId=${encodeURIComponent(canchaId)}&fecha=${encodeURIComponent(fecha)}`,
-//       { signal },
-//     );
-//     return respuesta;
-//   } catch (error: any) {
-//     // Si fue cancelada intencionalmente por cambio de fecha o StrictMode, no lo imprimimos como error
-//     if (error.name === "AbortError") {
-//       throw error;
-//     }
-//     console.error("Error al conectar con la API de reservas/turnos:", error);
-//     throw error;
-//   }
-// };
+// // //   canchaId: string,
+// // //   fecha: string,
+// // //   signal?: AbortSignal,
+// // // ): Promise<Response> => {
+// // //   try {
+// // //     const respuesta = await fetch(
+// // //       `${urlReservas}?canchaId=${encodeURIComponent(canchaId)}&fecha=${encodeURIComponent(fecha)}`,
+// // //       { signal },
+// // //     );
+// // //     return respuesta;
+// // //   } catch (error: any) {
+// // //     // Si fue cancelada intencionalmente por cambio de fecha o StrictMode, no lo imprimimos como error
+// // //     if (error.name === "AbortError") {
+// // //       throw error;
+// // //     }
+// // //     console.error("Error al conectar con la API de reservas/turnos:", error);
+// // //     throw error;
+// // //   }
+// // // };
 export const borrarReservaApi = async (
   id: string | number,
 ): Promise<Response> => {
