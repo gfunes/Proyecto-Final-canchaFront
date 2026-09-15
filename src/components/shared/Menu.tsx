@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { LuMenu, LuX, LuLogOut } from "react-icons/lu";
-import { Link, NavLink, useNavigate } from "react-router";
+import { Link, NavLink, useNavigate} from "react-router";
 import { useAppContext } from "../../context/AppContext";
 import { GiShoppingCart } from "react-icons/gi";
 
