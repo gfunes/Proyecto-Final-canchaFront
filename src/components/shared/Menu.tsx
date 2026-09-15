@@ -1,6 +1,6 @@
 import { useState} from "react";
 import { LuMenu, LuX, LuLogOut } from "react-icons/lu";
-import { Link, NavLink, useNavigate } from "react-router";
+import { Link, NavLink, useNavigate} from "react-router";
 import { useAppContext } from "../../context/AppContext";
 import { GiShoppingCart } from "react-icons/gi";
 
@@ -65,17 +65,18 @@ const Menu = () => {
               {usuarioLogueado ? (
                 <>
                 {isAdmin && (
+                  <>
                     <NavLink to="/administrador" className={navLinkStyles}>
                       Administrador
                     </NavLink>
-                )}
-                  <NavLink
+                    <NavLink
                     to="/administrador/productos"
                     className={navLinkStyles}
                   >
                     Productos
                   </NavLink>
-
+</>
+                )}
                   <NavLink
                     to="/administrador/reservas"
                     className={navLinkStyles}
@@ -107,9 +108,7 @@ const Menu = () => {
                 </NavLink>
               )}
             </div>
-
-            
-          </div>
+           </div>
         </div>
       </div>
       {/* Menú Mobile Desplegable */}
@@ -132,7 +131,7 @@ const Menu = () => {
         {usuarioLogueado ? (
           <>
           {isAdmin && (
-                    
+            <>        
               <NavLink
                 to="/administrador"
                 className={navLinkStyles}
@@ -140,8 +139,7 @@ const Menu = () => {
               >
                 Administrador
               </NavLink>
-            )}
-
+            
             {/* Enlace general de productos para clientes y admins */}
             <NavLink
               to="/administrador/productos"
@@ -150,7 +148,8 @@ const Menu = () => {
             >
               Productos
             </NavLink>
-
+</>
+              )}
             <NavLink
               to="/administrador/reservas"
               className={navLinkStyles}

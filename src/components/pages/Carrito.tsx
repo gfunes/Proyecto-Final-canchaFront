@@ -3,11 +3,11 @@ import { useAppContext } from "../../context/AppContext";
 import {
   agregarAlCarritoApi,
   crearPreferenciaPagoApi,
-  eliminarProductoDelCarritoApi,
   obtenerCarritoApi,
   restarDelCarritoApi,
 } from "../../helpers/queries";
 import { Link, useNavigate } from "react-router";
+import swal from "sweetalert2";
 
 const Carrito = () => {
   const { usuarioLogueado, refreshCarritoCount } = useAppContext();
@@ -35,7 +35,11 @@ const Carrito = () => {
 
   const calcularTotal = () => {
     if (!carrito || !Array.isArray(carrito.items)) return 0;
-    return carrito.items.reduce((acc: number, it: any) => acc + (Number(it.producto?.precio || 0) * Number(it.cantidad || 0)), 0);
+    return carrito.items.reduce(
+      (acc: number, it: any) =>
+        acc + Number(it.producto?.precio || 0) * Number(it.cantidad || 0),
+      0
+    );
   };
 
   const actualizarCantidad = async (item: any, nuevaCantidad: number) => {
@@ -58,7 +62,7 @@ const Carrito = () => {
         }
       }
       await fetchCarrito();
-      await refreshCarritoCount();
+      await refreshCarritoCount?.();
     } catch (error) {
       console.error("No se pudo actualizar la cantidad", error);
     } finally {
@@ -66,36 +70,75 @@ const Carrito = () => {
     }
   };
 
+  // ✅ FUNCIÓN ELIMINAR ITEM (usa restarDelCarritoApi hasta vaciar el producto)
   const eliminarItem = async (item: any) => {
     const productoId = String(item.producto?._id || item.productoId);
     if (!productoId) return;
 
+    const confirmacion = await swal.fire({
+      title: "¿Eliminar producto?",
+      text: `¿Deseas quitar "${item.producto?.nombreProducto || "este producto"}" del carrito?`,
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#ef4444",
+      cancelButtonColor: "#3f3f46",
+      confirmButtonText: "Sí, eliminar",
+      cancelButtonText: "Cancelar",
+      background: "#18181b",
+      color: "#f4f4f5",
+    });
+
+    if (!confirmacion.isConfirmed) return;
+
     setUpdatingItem(String(item._id));
     try {
-      const respuesta = await eliminarProductoDelCarritoApi(productoId);
-      if (!respuesta.ok) throw new Error("No se pudo eliminar el producto");
+      const cantidadTotal = Number(item.cantidad) || 1;
+
+      for (let i = 0; i < cantidadTotal; i += 1) {
+        const respuesta = await restarDelCarritoApi(productoId);
+        if (!respuesta.ok) throw new Error("No se pudo eliminar el producto");
+      }
+
       await fetchCarrito();
-      await refreshCarritoCount();
+      await refreshCarritoCount?.();
+
+      swal.fire({
+        toast: true,
+        position: "top-end",
+        icon: "success",
+        title: "Producto eliminado",
+        showConfirmButton: false,
+        timer: 1500,
+        background: "#18181b",
+        color: "#f4f4f5",
+      });
     } catch (error) {
       console.error("No se pudo eliminar el producto del carrito", error);
+      swal.fire({
+        icon: "error",
+        title: "Error",
+        text: "No se pudo eliminar el producto",
+        background: "#18181b",
+        color: "#f4f4f5",
+      });
     } finally {
       setUpdatingItem(null);
     }
   };
 
+  // ✅ FUNCIÓN COMPRAR (Mercado Pago)
   const handleComprar = async () => {
-    if (!usuarioLogueado) return navegacion('/login');
+    if (!usuarioLogueado) return navegacion("/login");
     setLoading(true);
     try {
       const resp = await crearPreferenciaPagoApi();
-      if (!resp.ok) throw new Error('Error creando preferencia');
+      if (!resp.ok) throw new Error("Error creando preferencia");
       const data = await resp.json();
       const redirectUrl = data.init_point || data.sandbox_init_point;
       if (redirectUrl) {
-        // backend redirige a MercadoPago, nosotros cambiamos la location
         window.location.href = redirectUrl;
       } else {
-        console.error('Respuesta inválida de preferencia', data);
+        console.error("Respuesta inválida de preferencia", data);
       }
     } catch (error) {
       console.error(error);
@@ -107,7 +150,12 @@ const Carrito = () => {
   if (!usuarioLogueado) {
     return (
       <div className="max-w-3xl mx-auto">
-        <p className="text-center text-zinc-300">Debes iniciar sesión para ver tu carrito. <Link to="/login" className="text-blue-400">Login</Link></p>
+        <p className="text-center text-zinc-300">
+          Debes iniciar sesión para ver tu carrito.{" "}
+          <Link to="/login" className="text-blue-400">
+            Login
+          </Link>
+        </p>
       </div>
     );
   }

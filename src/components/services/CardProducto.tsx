@@ -1,9 +1,10 @@
 import { GiShoppingCart } from "react-icons/gi";
 import type { Producto } from "../../interfaces/productos";
 import { useState } from "react";
-import { Link } from "react-router";
+import { Link, useNavigate} from "react-router";
 import Swal from "sweetalert2";
 import { useAppContext } from "../../context/AppContext";
+import { agregarAlCarritoApi } from "../../helpers/queries";
 
 interface CardProductoProps {
   producto: Producto;
@@ -12,17 +13,46 @@ interface CardProductoProps {
 const CardProducto = ({ producto }: CardProductoProps) => {
   const { usuarioLogueado, refreshCarritoCount } = useAppContext();
   const [cantidad, setCantidad] = useState<number>(1);
-  const { agregarAlCarrito } = useAppContext();
+  const [cargando, setCargando] = useState<boolean>(false);
+  const navigate = useNavigate();
+  //const { agregarAlCarrito } = useAppContext();
 
-  const handleAgregar = () => {
+  const handleAgregar = async () => {
     if (cantidad < 1) return;
 
-    if (agregarAlCarrito) {
-      agregarAlCarrito({
-        ...producto,
-        cantidad,
+if (!usuarioLogueado) {
+      Swal.fire({
+        icon: "warning",
+        title: "Inicia sesión",
+        text: "Debes iniciar sesión para agregar productos al carrito",
+        confirmButtonColor: "#059669",
       });
+      navigate("/login");
+      return;
     }
+
+    const idProducto = String(producto._id || (producto as any).id);
+
+    try {
+      setCargando(true);
+      // 👈 2. Llamada real al backend enviando el producto y cantidad
+      const resp = await agregarAlCarritoApi(idProducto, cantidad);
+
+      if (!resp.ok) {
+        throw new Error("No se pudo agregar al carrito");
+      }
+
+      // Actualizar el contador global del carrito en el navbar si existe
+      if (refreshCarritoCount) {
+        await refreshCarritoCount();
+      }
+
+    // if (agregarAlCarrito) {
+    //   agregarAlCarrito({
+    //     ...producto,
+    //     cantidad,
+    //   });
+    // }
 
     Swal.fire({
       toast: true,
@@ -34,6 +64,16 @@ const CardProducto = ({ producto }: CardProductoProps) => {
       background: "#18181b",
       color: "#f4f4f5",
     });
+  }catch (error) {
+      console.error(error);
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: "No se pudo agregar el producto al carrito",
+      });
+    } finally {
+      setCargando(false);
+    }
   };
 
   return (
@@ -88,10 +128,11 @@ const CardProducto = ({ producto }: CardProductoProps) => {
 
             <button
               onClick={handleAgregar}
+              disabled={cargando}
               className="flex-1 bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2.5 px-4 rounded-xl flex items-center justify-center gap-2 shadow-md transition-all duration-200 active:scale-95 cursor-pointer"
             >
               <GiShoppingCart className="text-lg" />
-              <span>Agregar</span>
+              <span>{cargando ? "Agregando..." : "Agregar"}</span>
             </button>
           </div>
 
