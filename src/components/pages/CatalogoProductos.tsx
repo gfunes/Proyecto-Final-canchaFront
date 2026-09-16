@@ -9,9 +9,8 @@ const Inicio = () => {
   const [cantidadProductos, setCantidadProductos] = useState(0);
   const [paginaActual, setPaginaActual] = useState(1);
   const [totalPaginas, setTotalPaginas] = useState(1);
-  const [termino, setTermino] = useState(""); //Es lo que el usuario escribe en tiempo real
-  const [filtro, setFiltro] = useState(""); //Es el valor confirmado para buscar en el submit
- // const [setIsLoading] = useState(false);
+  const [termino, setTermino] = useState("");
+  const [filtro, setFiltro] = useState("");
   const cantProductos = 8;
 
   useEffect(() => {
@@ -22,8 +21,6 @@ const Inicio = () => {
     paginaNumero: number,
     terminoFiltro: string,
   ) => {
-    //estamos cargando los datos
-    //setIsLoading(true);
     try {
       const respuestaProductos = await listarProductosApi({
         pagina: paginaNumero,
@@ -33,9 +30,7 @@ const Inicio = () => {
 
       if (respuestaProductos.ok) {
         const datos = await respuestaProductos.json();
-        // Con || (OR lógico) cualquier falsy 0, false, null, undefined
-        // Con ?? (Fusión nula, Nullish Coalescing Operator)
-        setProductos(datos.productos ?? []); // ?? retorna B unicamente si es A es null
+        setProductos(datos.productos ?? []);
         setCantidadProductos(datos.cantidadProductos ?? 0);
         setTotalPaginas(datos.totalPaginas ?? 1);
 
@@ -56,7 +51,7 @@ const Inicio = () => {
       setCantidadProductos(0);
       setTotalPaginas(1);
     } finally {
-     // setIsLoading(false);
+      // setIsLoading(false);
     }
   };
 
@@ -142,14 +137,12 @@ const Inicio = () => {
           <CardProducto key={producto._id} producto={producto} />
         ))}
       </div>
-      {/* <CardProducto/> */}
-
       {(totalPaginas > 1 || cantidadProductos > cantProductos) && (
         <div className="flex flex-col sm:flex-row items-center justify-between gap-3 mt-6">
           <div className="text-sm text-zinc-400">
             Mostrando {productos.length} de {cantidadProductos} resultados
           </div>
-          {/* botones de paginacion */}
+
           <div className="flex flex-wrap items-center justify-center gap-2">
             <button
               type="button"

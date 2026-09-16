@@ -9,80 +9,73 @@ interface LoginFormInputs {
 }
 
 const Login = () => {
-   const {setUsuarioLogueado} = useAppContext()
+  const { setUsuarioLogueado } = useAppContext();
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<LoginFormInputs>();
-  const navegacion = useNavigate()
+  const navegacion = useNavigate();
 
   const onSubmit = async (data: LoginFormInputs) => {
-    console.log("algun data",data);
     try {
-      // 1. Llamar al backend real en Render
       const respuesta = await fetch(
-        "https://alquiler-cancha-proyecto-final-backend.onrender.com/api/usuarios/login", // O la variable de entorno que uses para la URL base
+        "https://alquiler-cancha-proyecto-final-backend.onrender.com/api/usuarios/login",
         {
           method: "POST",
-          credentials: "include", // <-- OBLIGATORIO: guarda la cookie enviada por Render
+          credentials: "include",
           headers: {
             "Content-Type": "application/json",
           },
           body: JSON.stringify(data),
-        }
+        },
       );
 
       const resultado = await respuesta.json();
-  console.log("set usuario resultado",resultado)
-    if (respuesta.status === 200) {
-    
-// 1. Guardar el objeto con nombre y rol en el context (y en sessionStorage si lo usas)
-  const datosSesion = {
-    _id: resultado.id,
-    email: resultado.email,
-    nombre: resultado.nombre,
-    rol: resultado.rol, // "admin" o "cliente"
-  };
 
-   sessionStorage.setItem("usuarioLogueado", JSON.stringify(datosSesion));
-   setUsuarioLogueado(datosSesion);
-console.log("set usuario",datosSesion)
-// 2. Personalizar mensaje y redirección según el rol
-  if (resultado.rol?.toLowerCase() === "admin") {
-    Swal.fire({
-      title: `Bienvenido Administrador`,
-      text: `Hola ${resultado.nombre}, ingresando al panel de control`,
-      icon: "success",
-      background: "#18181b",
-      color: "#f4f4f5",
-      confirmButtonColor: "#3b82f6",
-    });
-    navegacion("/administrador");
-  } else {
-    Swal.fire({
-      title: `Bienvenido/a`,
-      text: `Hola ${resultado.nombre}, ingresando al sistema`,
-      icon: "success",
-      background: "#18181b",
-      color: "#f4f4f5",
-      confirmButtonColor: "#3b82f6",
-    });
-    navegacion("/"); 
-  }
-    
-    } else {
-      Swal.fire({
-        title: "Ocurrió un error",
-        text: "Credenciales incorrectas",
-        icon: "error",
-        background: "#18181b",
-        color: "#f4f4f5",
-        confirmButtonColor: "#ef4444",
-      });
-    }
-   
-  } catch (error) {
+      if (respuesta.status === 200) {
+        const datosSesion = {
+          _id: resultado.id,
+          email: resultado.email,
+          nombre: resultado.nombre,
+          rol: resultado.rol,
+        };
+
+        sessionStorage.setItem("usuarioLogueado", JSON.stringify(datosSesion));
+        setUsuarioLogueado(datosSesion);
+
+        if (resultado.rol?.toLowerCase() === "admin") {
+          Swal.fire({
+            title: `Bienvenido Administrador`,
+            text: `Hola ${resultado.nombre}, ingresando al panel de control`,
+            icon: "success",
+            background: "#18181b",
+            color: "#f4f4f5",
+            confirmButtonColor: "#3b82f6",
+          });
+          navegacion("/administrador");
+        } else {
+          Swal.fire({
+            title: `Bienvenido/a`,
+            text: `Hola ${resultado.nombre}, ingresando al sistema`,
+            icon: "success",
+            background: "#18181b",
+            color: "#f4f4f5",
+            confirmButtonColor: "#3b82f6",
+          });
+          navegacion("/");
+        }
+      } else {
+        Swal.fire({
+          title: "Ocurrió un error",
+          text: "Credenciales incorrectas",
+          icon: "error",
+          background: "#18181b",
+          color: "#f4f4f5",
+          confirmButtonColor: "#ef4444",
+        });
+      }
+    } catch (error) {
       console.error(error);
       Swal.fire({
         title: "Error de conexión",
@@ -103,14 +96,13 @@ console.log("set usuario",datosSesion)
             Iniciar Sesión
           </h2>
           <p className="mt-2 text-center text-sm text-zinc-400">
-            Accede al panel de {" "}
+            Accede al panel de{" "}
             <span className="text-green-500 font-semibold">RollingClub</span>
           </p>
         </div>
 
         <form className="mt-8 space-y-6" onSubmit={handleSubmit(onSubmit)}>
           <div className="space-y-4">
-            {/* Email Field */}
             <div>
               <label
                 htmlFor="email"
@@ -127,8 +119,7 @@ console.log("set usuario",datosSesion)
                 {...register("email", {
                   required: "El email es obligatorio",
                   pattern: {
-                    value:
-                           /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+                    value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
                     message: "Email no válido",
                   },
                 })}
@@ -139,8 +130,6 @@ console.log("set usuario",datosSesion)
                 </p>
               )}
             </div>
-
-            {/* Password Field */}
             <div>
               <label
                 htmlFor="password"
@@ -179,15 +168,15 @@ console.log("set usuario",datosSesion)
             >
               Ingresar al sistema
             </button>
-            </div>
-            <p className="text-center text-sm text-[#64748B] mt-6">
-          ¿No tienes cuenta?{" "}
-          <a
-            href="/registrate"
-            className="text-green-500 hover:text-green-600 font-semibold"
-          >
-            Click Aqui
-          </a>
+          </div>
+          <p className="text-center text-sm text-[#64748B] mt-6">
+            ¿No tienes cuenta?{" "}
+            <a
+              href="/registrate"
+              className="text-green-500 hover:text-green-600 font-semibold"
+            >
+              Click Aqui
+            </a>
           </p>
         </form>
       </div>

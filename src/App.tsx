@@ -64,9 +64,7 @@ function App() {
     localStorage.removeItem("usuario");
   };
 
-  const refreshCarritoCount = async (): Promise<void> => {
-    // Lógica para actualizar contador si aplica
-  };
+  const refreshCarritoCount = async (): Promise<void> => {};
 
   useEffect(() => {
     sessionStorage.setItem("usuarioKey", JSON.stringify(usuarioLogueado));
@@ -94,7 +92,6 @@ function App() {
               <Route path="/login" element={<Login></Login>} />
               <Route path="/reservas" element={<AdmReservasClientes />} />
               <Route path="/registrate" element={<RegistroUsuario />} />
-
               <Route path="/administrador" element={<ProtectorRutas />}>
                 <Route index element={<Administrador />} />
                 <Route
@@ -126,7 +123,6 @@ function App() {
                   element={<FormCancha titulo={"Editar cancha"}></FormCancha>}
                 />
               </Route>
-
               <Route
                 path="/productos"
                 element={<CatalogoProductos></CatalogoProductos>}
@@ -135,13 +131,13 @@ function App() {
                 path="/productos/detalle/:id"
                 element={<DetalleProducto />}
               />
+              <Route path="*" element={<Error404></Error404>} />
               <Route
                 path="/quienessomos"
                 element={<QuienesSomos></QuienesSomos>}
               />
               <Route path="/contacto" element={<Contacto></Contacto>} />
               <Route path="/carrito" element={<Carrito />} />
-              <Route path="*" element={<Error404></Error404>} />
             </Routes>
           </main>
           <Footer />

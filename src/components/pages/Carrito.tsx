@@ -38,7 +38,7 @@ const Carrito = () => {
     return carrito.items.reduce(
       (acc: number, it: any) =>
         acc + Number(it.producto?.precio || 0) * Number(it.cantidad || 0),
-      0
+      0,
     );
   };
 
@@ -58,7 +58,8 @@ const Carrito = () => {
       } else {
         for (let index = 0; index < Math.abs(diferencia); index += 1) {
           const respuesta = await restarDelCarritoApi(productoId);
-          if (!respuesta.ok) throw new Error("No se pudo disminuir la cantidad");
+          if (!respuesta.ok)
+            throw new Error("No se pudo disminuir la cantidad");
         }
       }
       await fetchCarrito();
@@ -70,7 +71,6 @@ const Carrito = () => {
     }
   };
 
-  // ✅ FUNCIÓN ELIMINAR ITEM (usa restarDelCarritoApi hasta vaciar el producto)
   const eliminarItem = async (item: any) => {
     const productoId = String(item.producto?._id || item.productoId);
     if (!productoId) return;
@@ -126,7 +126,6 @@ const Carrito = () => {
     }
   };
 
-  // ✅ FUNCIÓN COMPRAR (Mercado Pago)
   const handleComprar = async () => {
     if (!usuarioLogueado) return navegacion("/login");
     setLoading(true);
@@ -173,16 +172,33 @@ const Carrito = () => {
           <ul className="space-y-4">
             {carrito.items.map((it: any) => (
               <li key={it._id} className="flex items-center gap-4">
-                <img src={it.producto?.imagen} alt={it.producto?.nombreProducto} className="w-20 h-20 object-cover rounded" />
+                <img
+                  src={it.producto?.imagen}
+                  alt={it.producto?.nombreProducto}
+                  className="w-20 h-20 object-cover rounded"
+                />
                 <div className="flex-1">
                   <div className="flex items-center justify-between">
-                    <h3 className="font-semibold">{it.producto?.nombreProducto}</h3>
+                    <h3 className="font-semibold">
+                      {it.producto?.nombreProducto}
+                    </h3>
                     <div className="text-right">
                       <div className="text-sm text-zinc-400">
-                        Unitario: {(it.producto?.precio || 0).toLocaleString('es-AR', { style: 'currency', currency: 'ARS' })}
+                        Unitario:{" "}
+                        {(it.producto?.precio || 0).toLocaleString("es-AR", {
+                          style: "currency",
+                          currency: "ARS",
+                        })}
                       </div>
                       <div className="font-semibold text-zinc-200">
-                        Subtotal: {((Number(it.producto?.precio) || 0) * (Number(it.cantidad) || 0)).toLocaleString('es-AR', { style: 'currency', currency: 'ARS' })}
+                        Subtotal:{" "}
+                        {(
+                          (Number(it.producto?.precio) || 0) *
+                          (Number(it.cantidad) || 0)
+                        ).toLocaleString("es-AR", {
+                          style: "currency",
+                          currency: "ARS",
+                        })}
                       </div>
                     </div>
                   </div>
@@ -194,7 +210,9 @@ const Carrito = () => {
                       min="1"
                       value={it.cantidad}
                       disabled={updatingItem === String(it._id)}
-                      onChange={(event) => void actualizarCantidad(it, Number(event.target.value))}
+                      onChange={(event) =>
+                        void actualizarCantidad(it, Number(event.target.value))
+                      }
                       className="w-20 rounded border border-zinc-700 bg-zinc-950 px-2 py-1 text-center text-zinc-100"
                     />
                     <button
@@ -212,10 +230,20 @@ const Carrito = () => {
           </ul>
 
           <div className="mt-6 flex items-center justify-between">
-            <div className="text-lg font-bold">Total: {calcularTotal().toLocaleString('es-AR', { style: 'currency', currency: 'ARS' })}</div>
+            <div className="text-lg font-bold">
+              Total:{" "}
+              {calcularTotal().toLocaleString("es-AR", {
+                style: "currency",
+                currency: "ARS",
+              })}
+            </div>
             <div>
-              <button onClick={() => void handleComprar()} disabled={loading} className="bg-emerald-600 hover:bg-emerald-500 text-white px-4 py-2 rounded font-semibold">
-                {loading ? 'Redirigiendo...' : 'Comprar'}
+              <button
+                onClick={() => void handleComprar()}
+                disabled={loading}
+                className="bg-emerald-600 hover:bg-emerald-500 text-white px-4 py-2 rounded font-semibold"
+              >
+                {loading ? "Redirigiendo..." : "Comprar"}
               </button>
             </div>
           </div>
