@@ -33,7 +33,7 @@ const QuienesSomos = () => {
   return (
     <div className="min-h-screen bg-slate-400 border border-slate-400/50 rounded-2xl text-white flex flex-col justify-between font-sans">
       {/* Main Content */}
-      <main className="max-w-5xl mx-auto px-4 py-12 flex-grow flex flex-col items-center justify-center">
+      <main className="max-w-5xl mx-auto px-4 py-12 grow flex flex-col items-center justify-center">
         {/* Título Principal */}
         <h2 className="text-4xl md:text-5xl font-extrabold text-center mb-12 text-green-600 tracking-tight">
           ¿Quiénes somos?
