@@ -28,8 +28,8 @@ export default function SistemaReservas({canchas}:SistemaReservasProps) {
         <SelectorCancha  canchas={canchas} onSeleccionarCancha={setCanchaSeleccionada} />
       ) : (
         <CalendarioReservas 
-          cancha={canchaSeleccionada} 
-          onVolver={() => setCanchaSeleccionada(null)} 
+          // cancha={canchaSeleccionada} 
+          // onVolver={() => setCanchaSeleccionada(null)} 
         />
       )}
     </main>
