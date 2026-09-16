@@ -53,7 +53,7 @@ export async function obtenerDisponibilidad(
     };
 
     // 4. Mapeamos cada hora asignándole su estado y color
-    const turnosCompletos = horasDelDia.map((hora, index) => {
+    const turnosCompletos = horasDelDia.map((hora:any, index:any) => {
       let estado = "disponible";
 
       if (ocupados.includes(hora)) {

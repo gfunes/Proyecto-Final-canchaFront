@@ -3,20 +3,20 @@ import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css"; // Mantenemos el CSS base del calendario
 import { obtenerDisponibilidad } from "../services/disponibilidadService.tsx";
 
-const CANCHAS = [
-  { id: 1, nombre: "Cancha 1 - Fútbol 5 (Sintético)" },
-  { id: 2, nombre: "Cancha 2 - Fútbol 7 (Techada)" },
-  { id: 3, nombre: "Cancha 3 - Fútbol 11 (Césped)" },
-];
+// const CANCHAS = [
+//   { id: 1, nombre: "Cancha 1 - Fútbol 5 (Sintético)" },
+//   { id: 2, nombre: "Cancha 2 - Fútbol 7 (Techada)" },
+//   { id: 3, nombre: "Cancha 3 - Fútbol 11 (Césped)" },
+// ];
 
-function convertirFechaAISO(fecha) {
+function convertirFechaAISO(fecha: any) {
   const anio = fecha.getFullYear();
   const mes = String(fecha.getMonth() + 1).padStart(2, "0");
   const dia = String(fecha.getDate()).padStart(2, "0");
   return `${anio}-${mes}-${dia}`;
 }
 
-function formatearPrecio(precio) {
+function formatearPrecio(precio : any) {
   return new Intl.NumberFormat("es-AR", {
     style: "currency",
     currency: "ARS",
@@ -44,12 +44,10 @@ export default function CalendarioReservas() {
         setTurnos([]);
         setTurnoSeleccionado(null);
 
-        const datos = await obtenerDisponibilidad(canchaId, fechaISO, controlador.signal);
+        const datos = await obtenerDisponibilidad(String(canchaId), fechaISO, controlador.signal);
         setTurnos(datos.turnos || []);
-      } catch (errorConsulta) {
-        if (errorConsulta.name !== "AbortError") {
-          setError(errorConsulta.message);
-        }
+      } catch (errorConsulta: unknown) {
+       
       } finally {
         if (!controlador.signal.aborted) {
           setCargando(false);

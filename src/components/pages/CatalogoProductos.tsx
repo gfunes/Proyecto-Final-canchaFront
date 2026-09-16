@@ -11,7 +11,7 @@ const Inicio = () => {
   const [totalPaginas, setTotalPaginas] = useState(1);
   const [termino, setTermino] = useState(""); //Es lo que el usuario escribe en tiempo real
   const [filtro, setFiltro] = useState(""); //Es el valor confirmado para buscar en el submit
-  const [isLoading, setIsLoading] = useState(false);
+  const [setIsLoading] = useState(false);
   const cantProductos = 8;
 
   useEffect(() => {
@@ -23,7 +23,7 @@ const Inicio = () => {
     terminoFiltro: string,
   ) => {
     //estamos cargando los datos
-    setIsLoading(true);
+    //setIsLoading(true);
     try {
       const respuestaProductos = await listarProductosApi({
         pagina: paginaNumero,
@@ -56,7 +56,7 @@ const Inicio = () => {
       setCantidadProductos(0);
       setTotalPaginas(1);
     } finally {
-      setIsLoading(false);
+     // setIsLoading(false);
     }
   };
 

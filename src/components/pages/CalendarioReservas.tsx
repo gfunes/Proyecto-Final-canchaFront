@@ -46,7 +46,6 @@ export default function CalendarioReservas() {
   const [turnoSeleccionado, setTurnoSeleccionado] = useState<any>(null);
   const [cargando, setCargando] = useState(false);
   const [error, setError] = useState("");
-  const [setLoading] = useState<boolean>(false);
   const { usuarioLogueado } = useAppContext();
   const [mostrarModal, setMostrarModal] = useState(false);
   const fechaISO = convertirFechaAISO(fechaSeleccionada);
@@ -162,7 +161,7 @@ export default function CalendarioReservas() {
     Swal.fire({
       icon: "error",
       title: "No se pudo iniciar el pago",
-      text: error.message,
+     //text: error?.message || "Error inesperado",
     });
   } finally {
     //setLoading(false);
@@ -259,14 +258,7 @@ export default function CalendarioReservas() {
               <span className="w-3 h-3 rounded-full bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.5)]"></span>
               Disponible
             </span>
-            <span className="flex items-center gap-2">
-              <span className="w-3 h-3 rounded-full bg-red-500"></span>
-              Reservado
-            </span>
-            <span className="flex items-center gap-2">
-              <span className="w-3 h-3 rounded-full bg-amber-500"></span>
-              Pendiente
-            </span>
+            
           </div>
 
           {cargando && (
