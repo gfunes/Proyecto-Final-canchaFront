@@ -1,4 +1,4 @@
-import ItemTabla from "../services/ItemTablaCanchas";
+
 
 const AdmCanchas = () => {
   return (
@@ -41,7 +41,7 @@ const AdmCanchas = () => {
             </tr>
           </thead>
           <tbody className="divide-y divide-zinc-800/50">
-            <ItemTabla />
+          
           </tbody>
         </table>
       </div>

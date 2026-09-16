@@ -1,4 +1,3 @@
-import React from "react";
 import { useForm } from "react-hook-form";
 import { FaWhatsapp } from "react-icons/fa";
 import { FaInstagram } from "react-icons/fa";
@@ -11,8 +10,8 @@ const Contacto = () => {
     formState: { errors, isSubmitting },
   } = useForm();
 
-  const onSubmit = (data) => {
-    console.log("Datos enviados:", data);
+  const onSubmit = () => {
+    console.log("Datos enviados:",);
     // Acá podés conectar la llamada a tu API / backend en Node
     alert("¡Mensaje enviado con éxito!");
     reset();
@@ -47,7 +46,7 @@ const Contacto = () => {
             />
             {errors.fullName && (
               <span className="text-red-400 text-xs mt-1 block">
-                {errors.fullName.message}
+
               </span>
             )}
           </div>
@@ -68,7 +67,7 @@ const Contacto = () => {
             />
             {errors.email && (
               <span className="text-red-400 text-xs mt-1 block">
-                {errors.email.message}
+
               </span>
             )}
           </div>
@@ -89,7 +88,7 @@ const Contacto = () => {
             />
             {errors.phone && (
               <span className="text-red-400 text-xs mt-1 block">
-                {errors.phone.message}
+
               </span>
             )}
           </div>
@@ -110,7 +109,7 @@ const Contacto = () => {
             ></textarea>
             {errors.message && (
               <span className="text-red-400 text-xs mt-1 block">
-                {errors.message.message}
+
               </span>
             )}
           </div>

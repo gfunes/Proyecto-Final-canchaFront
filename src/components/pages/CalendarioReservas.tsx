@@ -46,7 +46,7 @@ export default function CalendarioReservas() {
   const [turnoSeleccionado, setTurnoSeleccionado] = useState<any>(null);
   const [cargando, setCargando] = useState(false);
   const [error, setError] = useState("");
-  const [loading, setLoading] = useState<boolean>(false);
+  const [setLoading] = useState<boolean>(false);
   const { usuarioLogueado } = useAppContext();
   const [mostrarModal, setMostrarModal] = useState(false);
   const fechaISO = convertirFechaAISO(fechaSeleccionada);
@@ -136,7 +136,7 @@ export default function CalendarioReservas() {
     return Swal.fire("Error", "No se encontró el ID de la reserva a pagar", "error");
   }
 
-  setLoading(true);
+  //setLoading(true);
 
   try {
     // 🟢 Le pasamos el ID que el backend va a buscar en MongoDB
@@ -165,7 +165,7 @@ export default function CalendarioReservas() {
       text: error.message,
     });
   } finally {
-    setLoading(false);
+    //setLoading(false);
   }
 };
 
