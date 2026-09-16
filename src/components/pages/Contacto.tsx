@@ -96,8 +96,7 @@ const Contacto = () => {
           {/* Mensaje */}
           <div>
             <textarea
-              rows="4"
-              placeholder="Escribe detalladamente aquí..."
+               placeholder="Escribe detalladamente aquí..."
               className="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-3 text-white placeholder-slate-500 focus:outline-none focus:border-[#22C55E] transition-colors resize-none"
               {...register("message", {
                 required: "Por favor escribe tu consulta",

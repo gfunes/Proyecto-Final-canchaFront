@@ -1,4 +1,4 @@
-import type { Cancha, CanchaFormData } from "../interfaces/canchas";
+import type {  CanchaFormData } from "../interfaces/canchas";
 import type { Producto, ProductoFormData } from "../interfaces/productos";
 
 const urlCanchas = `${import.meta.env.VITE_ALQUILER_CANCHAS}/canchas`;

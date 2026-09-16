@@ -375,7 +375,7 @@ export default function CalendarioReservas() {
               <div className="flex justify-between items-center text-slate-600">
                 <span>Cancha:</span>
                 <strong className="text-slate-900 font-bold">
-                  {CANCHAS.find((e)=>e.id === canchaId)?.nombre || "Cancha seleccionada"}
+                  {CANCHAS.find((e: any)=>e.id === canchaId)?.nombre || "Cancha seleccionada"}
                 </strong>
               </div>
               <div className="flex justify-between items-center text-slate-600">

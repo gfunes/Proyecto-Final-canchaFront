@@ -11,7 +11,7 @@ const Inicio = () => {
   const [totalPaginas, setTotalPaginas] = useState(1);
   const [termino, setTermino] = useState(""); //Es lo que el usuario escribe en tiempo real
   const [filtro, setFiltro] = useState(""); //Es el valor confirmado para buscar en el submit
-  const [setIsLoading] = useState(false);
+ // const [setIsLoading] = useState(false);
   const cantProductos = 8;
 
   useEffect(() => {

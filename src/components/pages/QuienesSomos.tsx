@@ -1,4 +1,4 @@
-import React from "react";
+
 
 const QuienesSomos = () => {
   // Datos del equipo (puedes ajustar los nombres e imágenes)

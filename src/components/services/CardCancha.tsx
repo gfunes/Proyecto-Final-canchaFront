@@ -1,10 +1,4 @@
-import React from 'react';
 import type { Cancha } from '../../interfaces/canchas';
-import { useState } from "react";
-import { Link } from "react-router";
-import Swal from "sweetalert2";
-import { useAppContext } from "../../context/AppContext";
-
 
 interface CardCanchaProps {
   cancha: Cancha,
