@@ -30,7 +30,7 @@ function App() {
     return sesion ? JSON.parse(sesion) : null;
   }); 
  
-  const [loadingSession, setLoadingSession] = useState(true);
+  const [loadingSession, setLoadingSession] = useState(false);
 
   //const [loadingSession ] = useState<boolean>(true);
      
@@ -44,7 +44,7 @@ const [carritoCount, setCarritoCount] = useState<number>(0);
 const loginBackend = async (email: string, pass: string): Promise<Usuario | null> => {
   try {
     setLoadingSession(true);
-    const resp = await loginBackendApi(email, pass);
+    const resp = await loginBackendApi({email, pass });
     if (!resp.ok) return null;
     
     const data = await resp.json();

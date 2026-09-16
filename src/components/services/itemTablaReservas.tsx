@@ -53,10 +53,10 @@ const ItemTablaReserva = ({reserva, fila, setReservas }: ItemReservaProps) => {
         {reserva.nombreReserva}
       </td>
       <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-zinc-200">
-        {reserva.descripcion}
+        {reserva.fechaInicio}
       </td>
       <td className="px-6 py-4 whitespace-nowrap text-sm text-zinc-400 font-mono">
-        $ {reserva.precio}
+        $ {reserva.estado}
       </td>
       
       <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
