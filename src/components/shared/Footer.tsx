@@ -1,3 +1,6 @@
+import { Link } from "react-router";
+
+
 const Footer = () => {
   const currentYear = new Date().getFullYear();
 
@@ -21,26 +24,15 @@ const Footer = () => {
           </p>
           <div className="w-32 border-t-2 border-dashed border-green-500/30 my-3"></div>
           <div className="flex gap-4 text-xs font-bold text-slate-500 uppercase tracking-widest">
-            <a
-              className="hover:text-green-400 cursor-pointer transition-colors duration-300"
-              href="*"
-            >
-              Privacidad
-            </a>
+            <Link className="hover:text-green-400 cursor-pointer transition-colors duration-300" 
+            to="*">Privacidad</Link>
             <span className="text-green-700/50">•</span>
-            <a
-              className="hover:text-green-400 cursor-pointer transition-colors duration-300"
-              href="/contacto"
-            >
-              Contacto
-            </a>
+            <Link className="hover:text-green-400 cursor-pointer transition-colors duration-300" 
+            to="/contacto">Contacto</Link>
             <span className="text-green-700/50">•</span>
-            <a
-              className="hover:text-green-400 cursor-pointer transition-colors duration-300"
-              href="/quienessomos"
-            >
-              Nosotros
-            </a>
+            <Link className="hover:text-green-400 cursor-pointer transition-colors duration-300" 
+            to="/quienessomos">Nosotros</Link>
+
           </div>
         </div>
       </div>
