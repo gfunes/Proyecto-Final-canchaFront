@@ -154,6 +154,7 @@ const Menu = () => {
               <NavLink to="/reservas" className={navLinkStyles}>
                 Tus Reservas
               </NavLink>
+              {!isAdmin && (
               <Link
                 to="/carrito"
                 onClick={() => setIsMenuOpen(false)}
@@ -162,6 +163,7 @@ const Menu = () => {
                 <GiShoppingCart className="text-xl" />
                 <span>{nombreMostrar}</span>
               </Link>
+              )}
               <button
                 onClick={logout}
                 className="w-full flex items-center justify-center gap-2 bg-zinc-800 hover:bg-red-900/40 text-red-400 px-4 py-2 rounded-md text-sm font-medium transition-all border border-zinc-700 hover:border-red-500/50 mt-2"
