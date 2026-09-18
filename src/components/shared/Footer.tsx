@@ -30,14 +30,14 @@ const Footer = () => {
             <span className="text-green-700/50">•</span>
             <a
               className="hover:text-green-400 cursor-pointer transition-colors duration-300"
-              href="./Contacto"
+              href="/contacto"
             >
               Contacto
             </a>
             <span className="text-green-700/50">•</span>
             <a
               className="hover:text-green-400 cursor-pointer transition-colors duration-300"
-              href="./QuienesSomos"
+              href="/quienessomos"
             >
               Nosotros
             </a>
