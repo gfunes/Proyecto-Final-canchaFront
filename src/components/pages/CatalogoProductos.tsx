@@ -85,7 +85,7 @@ const Inicio = () => {
         </div>
         <div className="flex flex-col sm:flex-row sm:items-center gap-3">
           <div className="text-xs text-zinc-500 bg-zinc-900 px-3 py-1 rounded-full border border-zinc-800">
-            {cantidadProductos} productos disponibles
+           
           </div>
           <div className="text-xs text-zinc-500 bg-zinc-900 px-3 py-1 rounded-full border border-zinc-800">
             Página {paginaActual} de {totalPaginas}
